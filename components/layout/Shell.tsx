@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { brand, contact, copy, nav, type Locale } from "@/app/site-data";
+import { brand, channel, contact, copy, nav, type Locale } from "@/app/site-data";
 
 export function Shell({ locale, page, children }: { locale: Locale; page: string; children: React.ReactNode }) {
   const opposite = locale === "th" ? "en" : "th";
@@ -98,7 +98,16 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
       <footer className="site-footer">
         <div><span className="brand-mark">{brand.mark}</span><strong>{brand.name}</strong></div>
         <p>{brand.tagline[locale]}</p>
-        <div className="footer-links"><a href={`mailto:${contact.email}`}>{contact.email}</a><a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a></div>
+        <div className="footer-links">
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          <a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a>
+          <a href={channel.youtube} target="_blank" rel="noopener noreferrer">
+            YouTube {channel.handle} ↗
+          </a>
+          <a href={channel.tiktok} target="_blank" rel="noopener noreferrer">
+            TikTok ↗
+          </a>
+        </div>
       </footer>
     </div>
   );

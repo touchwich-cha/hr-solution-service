@@ -18,35 +18,78 @@ export const contact = {
   phone: "+66818121311",
   phoneDisplay: "081-812-1311",
   hours: { th: "จ-ศ 09:00–18:00 น.", en: "Mon–Fri 09:00–18:00" },
+  /** LINE QR image lives in public/ — swap the file to change it. */
+  lineQr: "/line-qr.jpg",
+} as const;
+
+// ─── Social channels (the YouTube channel credits this website in its bio) ───
+
+export const channel = {
+  name: "Food Safety Thailand",
+  handle: "@foodsafetythailand",
+  youtube: "https://www.youtube.com/@foodsafetythailand",
+  tiktok: "https://www.tiktok.com/@hrsolutionservice",
+  playlists: "https://www.youtube.com/@foodsafetythailand/playlists",
+  gmp420Playlist: "https://www.youtube.com/playlist?list=PL4xb7oWk_9ZseVRyUhnjli0zrOOkj0JVw",
+  quizPlaylist: "https://www.youtube.com/playlist?list=PLWp3qWsnq67k",
+  /** Verified 2026-10-28: 15 long-form + 19 shorts. */
+  videoCount: 34,
 } as const;
 
 // ─── Navigation ───
 
 export const nav = {
   th: [
-    ["หน้าแรก", ""], ["บริการ", "services"], ["ผลงานสื่อ", "portfolio"], ["ระบบงาน HR", "hr-systems"],
-    ["ขั้นตอน", "process"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
+    ["หน้าแรก", ""], ["บริการ", "services"], ["ผลงานสื่อ", "portfolio"], ["วิดีโอ", "videos"],
+    ["ระบบงาน HR", "hr-systems"], ["ขั้นตอน", "process"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
   ],
   en: [
-    ["Home", ""], ["Services", "services"], ["Learning Media", "portfolio"], ["HR Systems", "hr-systems"],
-    ["Process", "process"], ["About", "about"], ["Contact", "contact"],
+    ["Home", ""], ["Services", "services"], ["Learning Media", "portfolio"], ["Videos", "videos"],
+    ["HR Systems", "hr-systems"], ["Process", "process"], ["About", "about"], ["Contact", "contact"],
   ],
 } as const;
 
 // ─── Real, verifiable numbers only ───
 
+// Every number here is checkable:
+//   512 = distinct successful frames in "Youtube_Foodsafety 16x9 - Image Log.csv"
+//         (551 logged rows · 548 success · 30 story titles · 2025-04 → 2026-10)
+//    34 = videos published on the Food Safety Thailand channel
+//     6 = HR systems running in real workplaces
 export const proofStats = [
-  { value: 300, suffix: "+", label: { th: "ภาพฉากสื่ออบรมที่ผลิตจริง", en: "training frames produced" } },
-  { value: 10, suffix: "", label: { th: "โมดูล GMP / Food Safety", en: "GMP / food-safety modules" } },
+  { value: 512, suffix: "", label: { th: "ภาพฉากสื่ออบรมที่ผลิตจริง", en: "training frames produced" } },
+  { value: 34, suffix: "", label: { th: "วิดีโอเผยแพร่บน YouTube", en: "videos published on YouTube" } },
   { value: 6, suffix: "", label: { th: "ระบบงาน HR ที่ใช้งานจริง", en: "HR systems in real use" } },
 ] as const;
 
-// ─── Published videos (Food Safety Thailand — GMP420 series) ───
+// ─── Video library (Food Safety Thailand — 34 published videos) ───
+//
+// IDs, durations and grouping were read from the channel on 2026-10-28.
+// Views are intentionally NOT stored: they change daily, durations do not.
+// The home page shows `videos` (curated); /videos renders every `videoGroups` entry.
 
-export const videos = [
+export type VideoItem = {
+  id: string;
+  aspect: "wide" | "tall";
+  duration?: string;
+  title: { th: string; en: string };
+};
+
+export type VideoGroup = {
+  slug: string;
+  eyebrow: { th: string; en: string };
+  title: { th: string; en: string };
+  description: { th: string; en: string };
+  playlist?: string;
+  videos: readonly VideoItem[];
+};
+
+/** Curated for the home page — first entry is the featured player. */
+export const videos: readonly VideoItem[] = [
   {
     id: "6WkrbKnv7SA",
     aspect: "wide",
+    duration: "7:04",
     title: {
       th: "GMP420 ข้อ 1.8 — ห้องบรรจุและการป้องกันการปนเปื้อนซ้ำ",
       en: "GMP420 1.8 — Packing room & recontamination control",
@@ -55,12 +98,324 @@ export const videos = [
   {
     id: "0T3cIlHFhcs",
     aspect: "tall",
+    duration: "9:16",
     title: {
       th: "GMP420 ข้อ 2.6 — การทำความสะอาดเครื่องมือ (แนวตั้ง)",
       en: "GMP420 2.6 — Equipment cleaning (vertical)",
     },
   },
-] as const;
+  {
+    id: "RWzfivHF0cg",
+    aspect: "wide",
+    duration: "8:29",
+    title: {
+      th: "ผลิตอาหารได้ทุกวัน แต่อาจไม่ผ่านมาตรฐานเพราะเรื่องเครื่องจักร",
+      en: "Daily production still fails the standard — because of the machines",
+    },
+  },
+  {
+    id: "nmVLPBOSAMQ",
+    aspect: "wide",
+    duration: "8:27",
+    title: {
+      th: "GMP420 ข้อ 1.7 — ไขข้อสงสัยมาตรฐานโรงงานอาหาร",
+      en: "GMP420 1.7 — What the clause actually requires",
+    },
+  },
+  {
+    id: "_kHF1uBlQH0",
+    aspect: "wide",
+    duration: "4:39",
+    title: {
+      th: "โรงงานไฟสลัว เสี่ยงปิดกิจการ — แสงสว่างที่คนผลิตต้องรู้",
+      en: "Dim factory lighting — the cost of poor light",
+    },
+  },
+];
+
+// Publish dates read from each watch page on 2026-10-28 (ISO date, converted to
+// the site's timezone-neutral form). Used for VideoObject structured data and
+// for the "latest" ordering on /videos — never invent a date that is missing here.
+export const videoPublished: Readonly<Record<string, string>> = {
+  "xUx-B5UXwHc": "2026-10-28",
+  "Fq6Pr2-6QbI": "2026-10-28",
+  "orzPIGHbHzU": "2026-10-26",
+  "oR6Pd8N28bA": "2026-10-25",
+  "mXL6UEW0Yq0": "2026-10-24",
+  "--vvO8UX3Oc": "2026-10-22",
+  "tukNj3UaG_c": "2026-10-21",
+  "iBy6hDm6wAo": "2026-10-19",
+  "0pW6im2VtSg": "2026-10-17",
+  "7IXFhBYK_zU": "2026-10-18",
+  "I_NUAdniuf4": "2026-10-17",
+  "vClgeIsX6bE": "2026-10-18",
+  "h0TLcXk853E": "2026-10-16",
+  "DT0SR0kTVOQ": "2026-10-11",
+  "QT9w3Ua41rU": "2026-10-09",
+  "_QrDP_a6pM8": "2026-09-24",
+  "RWzfivHF0cg": "2026-09-19",
+  "s6BsJsnHUTU": "2026-09-12",
+  "NBdkCiRGJzw": "2026-08-23",
+  "_kHF1uBlQH0": "2026-07-24",
+  "58b6BniBg_w": "2026-07-18",
+  "6WkrbKnv7SA": "2026-07-17",
+  "0uOeNrh7nz0": "2026-07-12",
+  "k9RVdPM4RZM": "2026-07-03",
+  "o3Qe2uc-VDc": "2026-06-26",
+  "rbpWjQxRRq8": "2026-06-25",
+  "yumHjKvIRYo": "2026-06-20",
+  "oth_TmBLdQE": "2026-06-18",
+  "0T3cIlHFhcs": "2026-06-14",
+  "Ek5T5TiNLhg": "2026-06-13",
+  "nmVLPBOSAMQ": "2026-06-12",
+  "5qTwJHTQyZU": "2026-06-12",
+  "r_JeSnBx0Dw": "2026-06-08",
+  "djgjUUzkm7A": "2026-06-07",
+};
+
+// ─── Full video library, grouped the way the channel is organised ───
+
+export const videoGroups: readonly VideoGroup[] = [
+  {
+    slug: "gmp420",
+    eyebrow: { th: "ซีรีส์หลัก · 16:9", en: "Core series · 16:9" },
+    title: { th: "ซีรีส์ GMP420 ฉบับเต็ม", en: "The full GMP420 series" },
+    description: {
+      th: "อธิบายข้อกำหนด GMP420 ทีละข้อด้วยแอนิเมชัน 3D คลิปละ 4–10 นาที ใช้ได้ทั้งอบรมในห้องและให้พนักงานดูเองก่อนเข้าพื้นที่ผลิต",
+      en: "Every GMP420 clause explained with 3D animation, 4–10 minutes each — for classroom sessions or self-paced learning before staff enter the production area.",
+    },
+    playlist: channel.gmp420Playlist,
+    videos: [
+      {
+        id: "6WkrbKnv7SA",
+        aspect: "wide",
+        duration: "7:04",
+        title: { th: "GMP420 ข้อ 1.8 — ห้องบรรจุและการป้องกันการปนเปื้อนซ้ำ", en: "GMP420 1.8 — Packing room & recontamination control" },
+      },
+      {
+        id: "yumHjKvIRYo",
+        aspect: "wide",
+        duration: "4:46",
+        title: { th: "GMP420 หมวด 1 — การทำความสะอาดและบำรุงรักษา", en: "GMP420 Part 1 — Cleaning and maintenance" },
+      },
+      {
+        id: "djgjUUzkm7A",
+        aspect: "wide",
+        duration: "5:07",
+        title: { th: "GMP420 ข้อ 1.2 — ห้ามสะสมของที่ไม่ใช้แล้วในพื้นที่ผลิต", en: "GMP420 1.2 — No unused items in the production area" },
+      },
+      {
+        id: "r_JeSnBx0Dw",
+        aspect: "wide",
+        duration: "5:10",
+        title: { th: "GMP420 ข้อ 1.4 — ข้อกำหนดที่คนในโรงงานมักมองข้าม", en: "GMP420 1.4 — The clause factory teams overlook most" },
+      },
+      {
+        id: "o3Qe2uc-VDc",
+        aspect: "wide",
+        duration: "5:13",
+        title: { th: "GMP420 ข้อ 1.4.1 — 3 เรื่องที่ต้องรู้เกี่ยวกับพื้นโรงงานผลิตอาหาร", en: "GMP420 1.4.1 — Three things to know about factory floors" },
+      },
+      {
+        id: "k9RVdPM4RZM",
+        aspect: "wide",
+        duration: "8:43",
+        title: { th: "GMP420 ข้อ 1.4.3 — เพดานที่ลดทั้งค่าทำความสะอาดและความเสี่ยงปนเปื้อน", en: "GMP420 1.4.3 — Ceilings that cut cleaning cost and contamination risk" },
+      },
+      {
+        id: "nmVLPBOSAMQ",
+        aspect: "wide",
+        duration: "8:27",
+        title: { th: "GMP420 ข้อ 1.7 — ไขข้อสงสัยมาตรฐานโรงงานอาหาร", en: "GMP420 1.7 — What the clause actually requires" },
+      },
+      {
+        id: "0uOeNrh7nz0",
+        aspect: "wide",
+        duration: "6:03",
+        title: { th: "GMP420 ข้อ 1.1 — กฎของโรงงานอาหาร เลือกที่ตั้งผิดชีวิตเปลี่ยน", en: "GMP420 1.1 — Choosing the right factory location" },
+      },
+      {
+        id: "58b6BniBg_w",
+        aspect: "wide",
+        duration: "6:10",
+        title: { th: "GMP420 ข้อ 2.1 — เครื่องมือและเครื่องจักรที่สัมผัสอาหารต้องออกแบบถูกสุขลักษณะ", en: "GMP420 2.1 — Hygienic design for food-contact equipment" },
+      },
+      {
+        id: "NBdkCiRGJzw",
+        aspect: "wide",
+        duration: "5:30",
+        title: { th: "วางเครื่องจักรให้ทำความสะอาดง่าย ผ่าน Audit ทุกครั้ง", en: "Lay out machinery for easy cleaning and pass every audit" },
+      },
+      {
+        id: "s6BsJsnHUTU",
+        aspect: "wide",
+        duration: "10:27",
+        title: { th: "GMP420 ข้อ 2.7 — บำรุงรักษาเครื่องมือให้อยู่ในสภาพดี", en: "GMP420 2.7 — Keeping equipment in good condition" },
+      },
+      {
+        id: "_kHF1uBlQH0",
+        aspect: "wide",
+        duration: "4:39",
+        title: { th: "โรงงานไฟสลัว เสี่ยงปิดกิจการ — แสงสว่างที่คนผลิตต้องรู้", en: "Dim factory lighting — the cost of poor light" },
+      },
+      {
+        id: "vClgeIsX6bE",
+        aspect: "wide",
+        duration: "8:13",
+        title: { th: "เลือกภาชนะบรรจุผิด อาหารเสียก่อนวันหมดอายุ", en: "Wrong packaging material and food spoils before its expiry date" },
+      },
+      {
+        id: "RWzfivHF0cg",
+        aspect: "wide",
+        duration: "8:29",
+        title: { th: "ผลิตอาหารได้ทุกวัน แต่อาจไม่ผ่านมาตรฐานเพราะเรื่องเครื่องจักร", en: "Daily production still fails the standard — because of the machines" },
+      },
+      {
+        id: "_QrDP_a6pM8",
+        aspect: "wide",
+        duration: "9:48",
+        title: { th: "หลังบ้านสายการผลิตอาหาร ทำไมทุกขั้นตอนต้องมีการควบคุม", en: "Behind the production line — why every step needs control" },
+      },
+    ],
+  },
+  {
+    slug: "micro-learning",
+    eyebrow: { th: "Micro Learning · 9:16", en: "Micro learning · 9:16" },
+    title: { th: "คลิปสั้นที่พนักงานดูจนจบ", en: "Short clips staff actually finish" },
+    description: {
+      th: "เหตุการณ์จริงในโรงงานที่ย่อเหลือคลิปสั้น — ใช้เปิดประชุมเช้า แชร์เข้ากลุ่มทีม หรือให้พนักงานใหม่ดูก่อนเข้าพื้นที่ผลิต",
+      en: "Real factory incidents compressed into short vertical clips — open a shift meeting with one, drop it in the team chat, or show it to new hires before they enter production.",
+    },
+    videos: [
+      {
+        id: "Ek5T5TiNLhg",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ความลาดเอียงของพื้น อาวุธลับที่ทำให้โรงงานปลอดเชื้อรา", en: "Floor slope — the hidden weapon against mould" },
+      },
+      {
+        id: "0T3cIlHFhcs",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "GMP420 ข้อ 2.6 — การทำความสะอาดเครื่องมือ", en: "GMP420 2.6 — Cleaning equipment properly" },
+      },
+      {
+        id: "5qTwJHTQyZU",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "เช็คลิสต์ท่อระบายน้ำ GMP — ต้องลาดเอียงและไม่อุดตัน", en: "GMP drain checklist — sloped and never blocked" },
+      },
+      {
+        id: "tukNj3UaG_c",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "แค่ความเย็นผิดพลาด อาจสูญเสียสินค้าทั้งหมด", en: "One cold-chain mistake can cost the whole batch" },
+      },
+      {
+        id: "iBy6hDm6wAo",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "โรงงานปลาป่นกลิ่นเหม็นทะลักชุมชน วัดค่าได้ 18 เกินมาตรฐาน", en: "Fishmeal plant odour — the reading that broke the limit" },
+      },
+      {
+        id: "h0TLcXk853E",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ท่ออาหารที่ดูสะอาดทุกวัน แต่ข้างในซ่อนจุดที่ล้างไม่ออก", en: "Food pipes look clean — until you see inside" },
+      },
+      {
+        id: "0pW6im2VtSg",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "อาหารปลอม = วัตถุดิบไม่ตรงกับฉลาก ความผิดร้ายแรงทางกฎหมาย", en: "Food fraud: ingredients that don't match the label" },
+      },
+      {
+        id: "7IXFhBYK_zU",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ประตูคลังวัตถุดิบเปิดทิ้งไว้ เสี่ยงสัตว์พาหะ", en: "Raw-material store left open — pest risk at the door" },
+      },
+      {
+        id: "I_NUAdniuf4",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "GMP420 ข้อ 3.8 — ข้อมูลเพื่อการตามสอบย้อนกลับ", en: "GMP420 3.8 — Traceability that actually works" },
+      },
+      {
+        id: "DT0SR0kTVOQ",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "เครื่องชั่งไม่สอบเทียบปีละครั้ง กำลังโกหกคุณ", en: "A scale that's never calibrated is lying to you" },
+      },
+      {
+        id: "--vvO8UX3Oc",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ลดเชื้ออย่างถูกวิธี และบันทึกตามหลัก GMP 3.4", en: "Reduce microbes the right way — and log it under GMP 3.4" },
+      },
+      {
+        id: "oR6Pd8N28bA",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "อ่างล้างมือครบ แต่ไม่มีสบู่ เท่ากับศูนย์", en: "A hand-wash station with no soap still counts as zero" },
+      },
+      {
+        id: "mXL6UEW0Yq0",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ชั่งเป๊ะตามสูตร แต่ค่าที่ได้ไม่ตรงฉลาก", en: "Weighed to the recipe, yet the label doesn't match" },
+      },
+      {
+        id: "rbpWjQxRRq8",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "รถเข็นที่ไม่ถูกล้าง ต้นเหตุโรงงานเสียใบรับรอง", en: "Trolleys nobody washes — and a lost certificate" },
+      },
+      {
+        id: "oth_TmBLdQE",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "รอยร้าวที่มองไม่เห็น ต้นเหตุความเสียหายระดับล้าน", en: "The invisible crack that costs millions" },
+      },
+      {
+        id: "QT9w3Ua41rU",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ทำไมโต๊ะเตรียมอาหารต้องสูง 60 เซนติเมตร", en: "Why prep tables must stand 60 cm high" },
+      },
+      {
+        id: "Fq6Pr2-6QbI",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "เห็ดเข็มทองดิบเจอเชื้อลิสทิเรีย 5 จาก 5 ตัวอย่าง", en: "Raw enoki mushrooms: Listeria in 5 of 5 samples" },
+      },
+    ],
+  },
+  {
+    slug: "quiz",
+    eyebrow: { th: "ควิซ · 9:16", en: "Quiz · 9:16" },
+    title: { th: "เกมส์ทายภาพ GMP", en: "The GMP picture quiz" },
+    description: {
+      th: "ให้พนักงานทายว่าภาพนี้ผิดตรงไหน แล้วเฉลยด้วยภาพเดียวกัน — ใช้ปิดการอบรมหรือเล่นในกลุ่มไลน์ทีมได้ทันที และเป็นตัวอย่างของระบบ Gamification ที่เราออกแบบให้องค์กร",
+      en: "Staff guess what is wrong in the scene, then the same clip reveals the answer — perfect as a session closer or a team LINE challenge, and a live sample of the gamification systems we build.",
+    },
+    playlist: channel.quizPlaylist,
+    videos: [
+      {
+        id: "xUx-B5UXwHc",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ทายซิ ภาพนี้ผิดตรงไหน? ทายถูกกี่ข้อ", en: "Spot the mistake — how many did you get right?" },
+      },
+      {
+        id: "orzPIGHbHzU",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "เรียนสนุกเหมือนพิชิตด่านเกม", en: "Learning that feels like clearing a game level" },
+      },
+    ],
+  },
+];
 
 // ─── Two service pillars ───
 
@@ -74,8 +429,8 @@ export const servicePillars = [
       en: "Trained GMP again and again — and it still doesn't stick?",
     },
     intro: {
-      th: "เราเปลี่ยนข้อกำหนดในกระดาษให้เป็นฉากภาพ 3D ที่เล่าเป็นเรื่อง ผลิตแล้วกว่า 300 เฟรม ครอบคลุม 10 โมดูล Food Safety พร้อมวิดีโอเผยแพร่จริงบน YouTube",
-      en: "We turn paper regulations into story-driven 3D scenes — 300+ frames across 10 food-safety modules, with published videos on YouTube.",
+      th: "เราเปลี่ยนข้อกำหนดในกระดาษให้เป็นฉากภาพ 3D ที่เล่าเป็นเรื่อง ผลิตแล้วกว่า 500 เฟรม ครอบคลุม 10 โมดูล Food Safety พร้อมวิดีโอเผยแพร่จริง 34 คลิปบน YouTube",
+      en: "We turn paper regulations into story-driven 3D scenes — 500+ frames across 10 food-safety modules, with 34 videos published on YouTube.",
     },
     items: [
       ["01", { th: "ชุดภาพเล่าเรื่อง GMP / Safety", en: "GMP / safety story scenes" }, {
@@ -152,7 +507,7 @@ export const featureHighlights = [
       th: "จำลองสถานการณ์จริงในโรงงานด้วยตัวละคร 3D ให้พนักงานจดจำได้มากกว่าคู่มือกระดาษ",
       en: "Simulate real factory situations with 3D characters — more memorable than a paper manual.",
     },
-    tags: [{ th: "300+ เฟรม", en: "300+ frames" }, { th: "10 โมดูล", en: "10 modules" }],
+    tags: [{ th: "512 เฟรม", en: "512 frames" }, { th: "10 โมดูล", en: "10 modules" }],
   },
   {
     icon: "video",
@@ -441,6 +796,8 @@ export type AdditionalTool = {
   description: { th: string; en: string };
   stack: readonly string[];
   images: readonly string[];
+  /** Optional link to a live, public example of the tool. */
+  link?: { label: { th: string; en: string }; href: string };
 };
 
 export const additionalTools: readonly AdditionalTool[] = [
@@ -463,6 +820,10 @@ export const additionalTools: readonly AdditionalTool[] = [
     },
     stack: ["Google Apps Script", "Google Sheets"],
     images: ["gamifications-04.webp", "gamifications-05.webp", "gamifications-06.webp"],
+    link: {
+      label: { th: "ดูตัวอย่างจริงบน YouTube", en: "Watch the live example on YouTube" },
+      href: channel.quizPlaylist,
+    },
   },
 ];
 
@@ -646,7 +1007,7 @@ export const copy = {
     viewWork: "ดูผลงานสื่อ",
     viewSystems: "ดูระบบงาน HR",
     selected: "ผลงานสื่อชุดล่าสุด",
-    selectedSub: "ซีรีส์ Food Safety แบบ 3D กว่า 300 เฟรมจากงานจริง — คัดมาให้ชมบางส่วน",
+    selectedSub: "ซีรีส์ Food Safety แบบ 3D กว่า 500 เฟรมจากงานจริง และ 34 คลิปที่เผยแพร่บน YouTube — คัดมาให้ชมบางส่วน",
     services: "สิ่งที่เราทำ",
   },
   en: {
@@ -658,7 +1019,7 @@ export const copy = {
     viewWork: "View media work",
     viewSystems: "See HR systems",
     selected: "Latest media series",
-    selectedSub: "A 3D food-safety series — 300+ frames from real production, curated highlights below.",
+    selectedSub: "A 3D food-safety series — 500+ frames from real production, plus 34 videos published on YouTube. Curated highlights below.",
     services: "What we do",
   },
 } as const;

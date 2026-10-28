@@ -133,7 +133,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               </svg>
             </span>
             <span>
-              <b>300+</b>
+              <b>512</b>
               {locale === "th" ? "เฟรมผลิตจริง" : "frames produced"}
             </span>
           </div>

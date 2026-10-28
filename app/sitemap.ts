@@ -3,7 +3,7 @@ import { siteUrl } from "@/app/site-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["th", "en"];
-  const pages = ["", "services", "portfolio", "hr-systems", "process", "about", "contact"];
+  const pages = ["", "services", "portfolio", "videos", "hr-systems", "process", "about", "contact"];
   const lastModified = new Date();
 
   return locales.flatMap((locale) =>

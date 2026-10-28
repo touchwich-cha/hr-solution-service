@@ -9,10 +9,10 @@
 
 | ที่อยู่ | หน้าที่ |
 |---|---|
-| `app/site-data.ts` | **เนื้อหาทั้งเว็บอยู่ไฟล์เดียว** — brand, nav, copy, servicePillars, caseStudies, projectGroups, videos, contact |
-| `app/[locale]/[[...slug]]/page.tsx` | Router เดียวของทุกหน้า: `/{th\|en}/{slug}` (7 slugs) |
-| `components/pages/*` | คอมโพเนนต์ 7 หน้า (Home, Services, Portfolio, HrSystems, Process, About, Contact) |
-| `components/shared/*` | ProjectCard, CaseStudyCard, QuoteForm, VideoCard, ฯลฯ |
+| `app/site-data.ts` | **เนื้อหาทั้งเว็บอยู่ไฟล์เดียว** — brand, nav, copy, servicePillars, caseStudies, projectGroups, videos/videoGroups/videoPublished, channel, contact |
+| `app/[locale]/[[...slug]]/page.tsx` | Router เดียวของทุกหน้า: `/{th\|en}/{slug}` (8 slugs) |
+| `components/pages/*` | คอมโพเนนต์ 8 หน้า (Home, Services, Portfolio, Videos, HrSystems, Process, About, Contact) |
+| `components/shared/*` | ProjectCard, CaseStudyCard, QuoteForm, VideoCard, VideoTile, ฯลฯ |
 | `app/globals.css` | Design system ทั้งหมด (design tokens + component styles) |
 | `scripts/prepare-images.mjs` | Pipeline คัด/ย่อ/บีบอัดรูปผลงานเป็น WebP |
 
@@ -76,6 +76,26 @@ function doPost(e) {
 Deploy เป็น **Web App** (Execute as: Me · Who has access: Anyone) แล้วเอา URL ที่ลงท้าย `/exec` ไปใส่ `NEXT_PUBLIC_QUOTE_ENDPOINT`
 
 ทดสอบ local: ใส่ค่าใน `.env.local` (ดูตัวอย่างที่ `.env.example`) แล้วรัน dev ใหม่
+
+## วิดีโอ (ช่อง Food Safety Thailand)
+
+ช่อง YouTube `@foodsafetythailand` เป็นผลงานของเรา (คำโปรยช่องระบุ "ผลิตโดย HR Solution Service" และลิงก์กลับมาที่เว็บนี้)
+
+| ข้อมูล | ที่อยู่ |
+|---|---|
+| `channel` | ลิงก์ช่อง/เพลย์ลิสต์/TikTok + `videoCount` (ใช้ใน header, footer, JSON-LD `sameAs`) |
+| `videos` | 5 คลิปคัดสำหรับหน้าแรก (ตัวแรก = ตัวเล่นหลัก) |
+| `videoGroups` | คลังเต็ม 34 คลิป แบ่ง 3 หมวด: `gmp420` (15), `micro-learning` (17), `quiz` (2) |
+| `videoPublished` | วันที่เผยแพร่จริงของทุกคลิป (ใช้ทำ `VideoObject` schema) — **ห้ามเดา ถ้าไม่มีข้อมูลให้เว้น** |
+
+- หน้า `/{th|en}/videos` เรนเดอร์จาก `videoGroups` + สร้าง `CollectionPage`/`VideoObject` JSON-LD อัตโนมัติ
+- `VideoTile` เป็น **click-to-play**: ยังไม่คลิก = โหลดแค่ thumbnail จาก `i.ytimg.com`, คลิกแล้วจึงใส่ iframe (`youtube-nocookie`) — หน้าเดียวมี 30+ คลิปก็ไม่หนัก
+- เพิ่มคลิปใหม่: เพิ่ม object ใน `videoGroups` (id/duration/title TH-EN) แล้วเพิ่มวันที่ใน `videoPublished` และอัปเดต `channel.videoCount`
+
+## QR Code LINE (หน้า Contact)
+
+ไฟล์อยู่ที่ `public/line-qr.jpg` และอ้างจาก `contact.lineQr` ใน `app/site-data.ts`
+เปลี่ยน QR ได้โดยทับไฟล์ชื่อเดิม (ไม่ต้องแก้โค้ด) — ขนาดที่แนะนำ 900×900 px ขึ้นไป
 
 ## หน้า HR Systems (case studies)
 

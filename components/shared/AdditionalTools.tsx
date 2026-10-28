@@ -35,6 +35,11 @@ export function AdditionalTools({ locale }: { locale: Locale }) {
                 <span key={tech} className="stack-badge">{tech}</span>
               ))}
             </div>
+            {tool.link && (
+              <a className="text-link tool-link" href={tool.link.href} target="_blank" rel="noopener noreferrer">
+                {tool.link.label[locale]} ↗
+              </a>
+            )}
           </article>
         ))}
       </div>
