@@ -1,10 +1,13 @@
 import Image from "next/image";
-import { contact, type Locale } from "@/app/site-data";
+import { contact, pageSeo, type Locale } from "@/app/site-data";
+import { breadcrumbJsonLd } from "@/app/seo";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { QuoteForm } from "@/components/shared/QuoteForm";
 
 export function ContactPage({ locale }: { locale: Locale }) {
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd(locale, pageSeo[""].crumb[locale], [{ name: pageSeo.contact.crumb[locale], path: "contact" }])} />
       <section className="contact-page section-pad">
         <div className="contact-content">
           <p className="eyebrow">Start a project</p>
@@ -57,7 +60,7 @@ export function ContactPage({ locale }: { locale: Locale }) {
                 ? "สแกน QR Code ด้วยแอป LINE เพื่อคุยกับทีมเราโดยตรง ส่งโจทย์งานสื่อหรือระบบ พร้อมขอใบเสนอราคาได้ทันที"
                 : "Scan the QR code with the LINE app to reach our team directly — send a media or systems brief and ask for a quote in the same chat."}
             </p>
-            <a className="text-link" href={`/${locale}/videos`}>
+            <a className="text-link" href={`/${locale}/training-media#videos`}>
               {locale === "th" ? "ดูวิดีโอผลงานก่อนตัดสินใจ" : "Watch our published videos first"}
             </a>
           </div>

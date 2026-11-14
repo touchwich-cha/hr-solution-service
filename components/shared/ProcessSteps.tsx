@@ -1,6 +1,4 @@
-import { type Locale } from "@/app/site-data";
-import { PageIntro } from "@/components/shared/PageIntro";
-import { CallToAction } from "@/components/shared/CallToAction";
+import type { Locale } from "@/app/site-data";
 
 const processIcons = [
   "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
@@ -10,7 +8,8 @@ const processIcons = [
   "M13 10V3L4 14h7v7l9-11h-7z",
 ];
 
-export function ProcessPage({ locale }: { locale: Locale }) {
+/** The 5-step working process (shown on the About page, #process). */
+export function ProcessSteps({ locale }: { locale: Locale }) {
   const steps = locale === "th"
     ? [
         ["01", "Discovery", "ค้นหาโจทย์ร่วมกัน", "คุยเป้าหมาย กลุ่มผู้ใช้ เนื้อหา และหน้างานจริง ทั้งงานสื่อและงานระบบ"],
@@ -28,35 +27,33 @@ export function ProcessPage({ locale }: { locale: Locale }) {
       ];
 
   return (
-    <main>
-      <PageIntro
-        eyebrow="Our process"
-        title={locale === "th" ? "เส้นทางโปร่งใสสู่งานที่ใช้ได้จริง" : "A clear path to work that ships"}
-        body={locale === "th"
-          ? "ขั้นตอนเดียวกันทั้งงานสื่อและงานระบบ — ตั้งแต่คุยครั้งแรกจนถึงส่งมอบและสอนใช้งาน"
-          : "One process for media and systems — from first conversation to delivery and handover."}
-      />
-      <section className="timeline section-pad">
-        {steps.map(([number, en, title, body], i) => (
-          <article key={number} className="process-step" style={{ "--step-delay": `${i * 0.12}s` } as React.CSSProperties}>
-            <div className="step-number-wrap">
-              <span className="step-number">{number}</span>
-              <div className="step-line" />
-            </div>
-            <div className="step-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d={processIcons[i]} />
-              </svg>
-            </div>
-            <div className="step-content">
-              <span className="step-tag">{en.toUpperCase()}</span>
-              <h2>{title}</h2>
-              <p>{body}</p>
-            </div>
-          </article>
-        ))}
-      </section>
-      <CallToAction locale={locale} />
-    </main>
+    <section id="process" className="timeline section-pad">
+      <div className="product-heading reveal">
+        <h2>{locale === "th" ? "เส้นทางโปร่งใสสู่งานที่ใช้ได้จริง" : "A clear path to work that ships"}</h2>
+        <p>
+          {locale === "th"
+            ? "ขั้นตอนเดียวกันทั้งงานสื่อและงานระบบ — ตั้งแต่คุยครั้งแรกจนถึงส่งมอบและสอนใช้งาน"
+            : "One process for media and systems — from first conversation to delivery and handover."}
+        </p>
+      </div>
+      {steps.map(([number, en, title, body], i) => (
+        <article key={number} className="process-step" style={{ "--step-delay": `${i * 0.12}s` } as React.CSSProperties}>
+          <div className="step-number-wrap">
+            <span className="step-number">{number}</span>
+            <div className="step-line" />
+          </div>
+          <div className="step-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d={processIcons[i]} />
+            </svg>
+          </div>
+          <div className="step-content">
+            <span className="step-tag">{en.toUpperCase()}</span>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </div>
+        </article>
+      ))}
+    </section>
   );
 }

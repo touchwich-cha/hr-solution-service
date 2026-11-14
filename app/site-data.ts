@@ -48,14 +48,62 @@ export const heroVideo = {
 
 export const nav = {
   th: [
-    ["หน้าแรก", ""], ["บริการ", "services"], ["ผลงานสื่อ", "portfolio"], ["วิดีโอ", "videos"],
-    ["สินค้า", "products"], ["ระบบงาน HR", "hr-systems"], ["ขั้นตอน", "process"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
+    ["หน้าแรก", ""], ["ระบบอัตโนมัติ", "products"], ["สื่ออบรม", "training-media"],
+    ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
   ],
   en: [
-    ["Home", ""], ["Services", "services"], ["Learning Media", "portfolio"], ["Videos", "videos"],
-    ["Products", "products"], ["HR Systems", "hr-systems"], ["Process", "process"], ["About", "about"], ["Contact", "contact"],
+    ["Home", ""], ["Automation", "products"], ["Training media", "training-media"],
+    ["About", "about"], ["Contact", "contact"],
   ],
 } as const;
+
+/** Last real content update (used by the sitemap — never "now"). */
+export const siteUpdated = "2026-11-14";
+
+/** Search snippet + breadcrumb label for each static page. Every page has its own title and description. */
+export const pageSeo = {
+  "": {
+    title: { th: "ระบบผู้ช่วยอัตโนมัติสำหรับ HR และสื่ออบรม Food Safety", en: "Automation assistants for HR and Food Safety training media" },
+    description: {
+      th: "ให้ระบบจัดการงานซ้ำซ้อน เพื่อให้คุณโฟกัสงานสำคัญ — ผู้ช่วยบน LINE ตอบผู้สมัครงาน เตือนสัญญาหมดอายุ อ่านสลิป และสื่ออบรม GMP แบบ 3D",
+      en: "Let the system handle repetitive work so you can focus on what matters — LINE assistants for applicants, contract expiry reminders, slip reading, and 3D GMP training media.",
+    },
+    crumb: { th: "หน้าแรก", en: "Home" },
+  },
+  products: {
+    title: { th: "ระบบผู้ช่วยอัตโนมัติ 5 บริการ จัดการเอกสารและผู้คน", en: "5 automation assistants for documents and people" },
+    description: {
+      th: "น้องรับสมัคร AI, น้อง จป. AI, ระบบตอบคอมเมนต์, Slip OCR Alert และ Contract Watch พร้อมระบบ HR ที่ใช้งานจริงบน Google Workspace",
+      en: "HR LINE Assistant, Safety Officer AI, Comment Reply Assistant, Slip OCR Alert and Contract Watch — plus HR systems running in real workplaces on Google Workspace.",
+    },
+    crumb: { th: "ระบบอัตโนมัติ", en: "Automation" },
+  },
+  "training-media": {
+    title: { th: "สื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอ", en: "3D GMP / Food Safety training media and videos" },
+    description: {
+      th: `ผลงานสื่ออบรมแอนิเมชัน 3D สำหรับโรงงานอาหาร ซีรีส์ GMP420 คลิปสั้นสำหรับมือถือ และเกมส์ทายภาพ เผยแพร่จริงบน YouTube ${channel.videoCount} คลิป`,
+      en: `3D-animated training media for food factories: the GMP420 series, mobile-sized clips and picture quizzes — ${channel.videoCount} videos published on YouTube.`,
+    },
+    crumb: { th: "สื่ออบรม", en: "Training media" },
+  },
+  about: {
+    title: { th: "เกี่ยวกับเรา และวิธีทำงาน 5 ขั้นตอน", en: "About us and our 5-step process" },
+    description: {
+      th: "เราออกแบบสื่อที่คนจดจำได้และสร้างระบบที่ลดงานซ้ำซ้อน ทำงานเป็น 5 ขั้นตอนเดียวกันทั้งงานสื่อและงานระบบ ตั้งแต่คุยโจทย์จนถึงส่งมอบ",
+      en: "We design media people remember and build systems that cut repetitive work — one 5-step process for both, from the first conversation to delivery.",
+    },
+    crumb: { th: "เกี่ยวกับเรา", en: "About" },
+  },
+  contact: {
+    title: { th: "ติดต่อ ขอทดลองใช้ หรือรับใบเสนอราคา", en: "Contact us — request a trial or a quote" },
+    description: {
+      th: "เล่าโจทย์ของคุณ แล้วเราจะแนะนำระบบหรือสื่ออบรมที่เหมาะ ติดต่อผ่านฟอร์ม อีเมล หรือโทรศัพท์",
+      en: "Tell us your brief and we'll recommend the right system or training media. Reach us by form, email or phone.",
+    },
+    crumb: { th: "ติดต่อ", en: "Contact" },
+  },
+} as const;
+
 
 // ─── Real, verifiable numbers only ───
 
@@ -123,6 +171,12 @@ export const videos: readonly VideoItem[] = [
     },
   },
 ];
+
+/** Clips shown on the Training media page (the rest live on the channel). Resolved from `videoGroups`. */
+export const featuredVideoIds = {
+  wide: ["Ycn8a4AeDCY", "mAt1oZ4j1nQ", "RWzfivHF0cg"],
+  tall: ["0T3cIlHFhcs", "Ek5T5TiNLhg", "xUx-B5UXwHc"],
+} as const;
 
 // Publish dates read from each watch page on 2026-10-28 (ISO date, converted to
 // the site's timezone-neutral form). Used for VideoObject structured data and
@@ -581,74 +635,13 @@ export const servicePillars = [
 
 // ─── Feature grid highlights (Home, light empeo-style card grid) ───
 
-export const featureHighlights = [
-  {
-    icon: "scene",
-    tone: "teal",
-    title: { th: "ชุดภาพเล่าเรื่อง 3D", en: "3D story scenes" },
-    description: {
-      th: "จำลองสถานการณ์จริงในโรงงานด้วยตัวละคร 3D ให้พนักงานจดจำได้มากกว่าคู่มือกระดาษ",
-      en: "Simulate real factory situations with 3D characters — more memorable than a paper manual.",
-    },
-    tags: [{ th: "512 เฟรม", en: "512 frames" }, { th: "10 โมดูล", en: "10 modules" }],
-  },
-  {
-    icon: "video",
-    tone: "mint",
-    title: { th: "วิดีโอพร้อมเผยแพร่", en: "Publish-ready video" },
-    description: {
-      th: "ผลิตทั้งจอกว้าง 16:9 และแนวตั้ง 9:16 พร้อมใช้บน YouTube, LMS หรือมือถือ",
-      en: "Produced in both 16:9 widescreen and 9:16 vertical — ready for YouTube, your LMS, or mobile.",
-    },
-    tags: [{ th: "16:9", en: "16:9" }, { th: "9:16", en: "9:16" }],
-  },
-  {
-    icon: "inbox",
-    tone: "amber",
-    title: { th: "คัดกรองใบสมัครอัตโนมัติ", en: "Automated resume screening" },
-    description: {
-      th: "อ่านอีเมลสมัครงาน แยกแผนก จัดเก็บไฟล์ และแจ้งเตือนทีมโดยไม่ต้องเปิดอ่านเอง",
-      en: "Reads application emails, sorts by department, files attachments, and alerts the team.",
-    },
-    tags: [{ th: "Gmail", en: "Gmail" }, { th: "Google Drive", en: "Google Drive" }],
-  },
-  {
-    icon: "rocket",
-    tone: "teal",
-    title: { th: "Onboarding ครบวงจร", en: "End-to-end onboarding" },
-    description: {
-      th: "ตั้งแต่ขออัตรากำลังจนถึงเตือนประเมินทดลองงานอัตโนมัติ",
-      en: "From manpower requests to automatic probation-review reminders.",
-    },
-    tags: [{ th: "Deploy 30 เวอร์ชัน", en: "30 deployments" }, { th: "4 บทบาท", en: "4 roles" }],
-  },
-  {
-    icon: "chart",
-    tone: "mint",
-    title: { th: "ประเมิน KPI ออนไลน์", en: "Online KPI evaluation" },
-    description: {
-      th: "เก็บคะแนนพร้อมสายอนุมัติ ล็อกผลเมื่ออนุมัติแล้ว ตรวจสอบย้อนหลังได้ทุกรายการ",
-      en: "Scoring with an approval chain, locked results, and a full audit trail.",
-    },
-    tags: [{ th: "Audit log", en: "Audit log" }, { th: "CSV / PDF", en: "CSV / PDF" }],
-  },
-  {
-    icon: "shield",
-    tone: "amber",
-    title: { th: "บันทึกงานภาคสนาม", en: "Field-work logging" },
-    description: {
-      th: "เช็คอิน ตรวจจุด บันทึกผู้มาติดต่อพร้อมรูปถ่าย แจ้งเตือนเข้า LINE ทันที",
-      en: "Check-ins, patrol points, visitor logs with photos, and instant LINE alerts.",
-    },
-    tags: [{ th: "GPS / รูปถ่าย", en: "GPS / photos" }, { th: "LINE Alert", en: "LINE alert" }],
-  },
-] as const;
-
 // ─── HR system case studies (anonymized: business type only, all facts verified) ───
 
 export type CaseStudy = {
   slug: string;
   icon: "inbox" | "rocket" | "chart" | "shield" | "bell" | "chat";
+  /** If this custom system is the same thing as a catalogue product, link to its page. */
+  productSlug?: ProductSlug;
   /** Very short label for the icon row on the HR Systems page. */
   short: { th: string; en: string };
   sector: { th: string; en: string };
@@ -810,6 +803,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "contract-registry",
     icon: "bell",
+    productSlug: "contract-watch",
     short: { th: "สัญญา/เอกสาร", en: "Contracts" },
     sector: { th: "ฝ่ายบุคคล องค์กรเอกชน", en: "HR team, private company" },
     title: { th: "ทะเบียนสัญญาและระบบเตือนเอกสารหมดอายุ", en: "Contract registry with expiry reminders" },
@@ -1140,20 +1134,34 @@ type L = { th: string; en: string };
 export type ProductIcon =
   | "repeat" | "clock" | "search" | "alert" | "calendar" | "checklist" | "chat" | "bell"
   | "database" | "mail" | "archive" | "chart" | "user" | "bolt" | "layers" | "grid"
-  | "escalate" | "inbox" | "filter" | "table" | "sheet";
+  | "escalate" | "inbox" | "filter" | "table" | "sheet" | "shield" | "receipt" | "chatcheck";
 
 export type FlowKind = "person" | "system" | "data";
 
 export type FlowStep = { kind: FlowKind; icon: ProductIcon; label: L };
 
+export type ProductSlug =
+  | "line-hr-assistant"
+  | "safety-officer-assistant"
+  | "comment-reply-assistant"
+  | "slip-ocr-alert"
+  | "contract-watch";
+
 export type Product = {
-  slug: "line-hr-assistant" | "contract-watch";
+  slug: ProductSlug;
   icon: ProductIcon;
   name: L;
   oneLiner: L;
+  /** Row of the catalogue table (who uses it / what it fixes / what they get). */
+  facts: { user: L; problem: L; result: L };
+  /** The 3-node concept diagram: who → the assistant → data / next person. */
+  triad: { nodes: readonly [FlowStep, FlowStep, FlowStep]; chips?: readonly L[] };
+  /** Per-page search snippet (unique title + description, with the real search phrases). */
+  seo: { title: L; description: L };
   hero: { title: L; sub: L; cta: L };
-  problem: { title: L; sub: L; items: { icon: ProductIcon; title: L }[] };
-  beforeAfter: { before: { title: L; icon: ProductIcon }; after: { title: L; icon: ProductIcon } };
+  /** Optional sections: only products with confirmed details have them. */
+  problem?: { title: L; sub: L; items: { icon: ProductIcon; title: L }[] };
+  beforeAfter?: { before: { title: L; icon: ProductIcon }; after: { title: L; icon: ProductIcon } };
   how: { title: L; sub: L; steps: { icon: ProductIcon; label: L }[] };
   flow: {
     title: L;
@@ -1161,13 +1169,13 @@ export type Product = {
     sideTitle: L;
     side: { trigger: L; step: FlowStep }[];
   };
-  highlights: { icon: ProductIcon; title: L; body: L }[];
-  benefitsTitle: L;
-  benefits: L[];
-  limitsTitle: L;
-  limits: L[];
+  highlights?: { icon: ProductIcon; title: L; body: L }[];
+  benefitsTitle?: L;
+  benefits?: L[];
+  limitsTitle?: L;
+  limits?: L[];
   closing: L;
-  /** Internal checklist from brief section 3.6. Never rendered on the site. */
+  /** Internal checklist of facts still to confirm from the real build. Never rendered on the site. */
   verifyBeforePublish?: string[];
 };
 
@@ -1175,12 +1183,18 @@ export const productCta: L = { th: "ขอทดลองใช้", en: "Reques
 
 export const productsCopy = {
   eyebrow: { th: "Products / สินค้า", en: "Products" },
-  title: { th: "สินค้าที่เปลี่ยนงานซ้ำๆ ของ HR ให้ระบบทำแทน", en: "Products that turn repetitive HR work into work the system does" },
+  title: { th: "5 บริการผู้ช่วย จัดการเอกสารและผู้คน", en: "5 assistants that handle documents and people" },
   body: {
     th: "เปลี่ยนงานซ้ำๆ ของฝ่ายบุคคลให้ระบบทำแทน เพื่อให้ HR มีเวลาไปทำงานที่ต้องใช้คน",
     en: "We turn the repetitive work of HR into work the system does, so HR has time for the work that needs people.",
   },
   more: { th: "ดูรายละเอียด", en: "See details" },
+  systemsTitle: { th: "ระบบที่ใช้งานจริง — สั่งทำตามขั้นตอนขององค์กร", en: "Systems in real use — built around each organisation's process" },
+  systemsBody: {
+    th: "นอกจากสินค้าด้านบน เรายังสร้างระบบ HR สั่งทำบน Google Workspace ที่ทีมมีอยู่แล้ว ทุกระบบใช้งานจริง ไม่ใช่ demo และไม่ระบุชื่อลูกค้าเพื่อความเป็นส่วนตัว",
+    en: "Beyond the products above, we build custom HR systems on the Google Workspace your team already has. Every system is in real use — not a demo — and client names are withheld for privacy.",
+  },
+  seeProduct: { th: "ดูสินค้า", en: "See the product" },
   back: { th: "← สินค้าทั้งหมด", en: "← All products" },
   legendTitle: { th: "สีในแผนภาพ", en: "Diagram colours" },
   legend: {
@@ -1198,6 +1212,32 @@ export const products: readonly Product[] = [
   {
     slug: "line-hr-assistant",
     icon: "chat",
+    facts: {
+      user: { th: "HR", en: "HR team" },
+      problem: { th: "คำถามซ้ำ", en: "Repeated questions" },
+      result: { th: "ลดเวลาตอบ", en: "Faster replies" },
+    },
+    triad: {
+      nodes: [
+        { kind: "person", icon: "user", label: { th: "ผู้สมัคร", en: "Applicant" } },
+        { kind: "system", icon: "chat", label: { th: "น้อง AI", en: "The assistant" } },
+        { kind: "data", icon: "database", label: { th: "ข้อมูลบริษัท", en: "Company data" } },
+      ],
+      chips: [
+        { th: "สวัสดิการ", en: "Benefits" },
+        { th: "การเดินทาง", en: "Commuting" },
+        { th: "เอกสาร", en: "Documents" },
+        { th: "วุฒิ", en: "Qualifications" },
+        { th: "เข้ากะ", en: "Shifts" },
+      ],
+    },
+    seo: {
+      title: { th: "น้องรับสมัคร AI — ผู้ช่วยตอบผู้สมัครงานบน LINE", en: "HR LINE Assistant — answer job applicants on LINE" },
+      description: {
+        th: "ผู้ช่วยบน LINE ตอบคำถามผู้สมัครงานทันที ด้วยข้อมูลจริงของบริษัท มีปุ่มลัดให้กดถามต่อ และบันทึกทุกคำถามให้ HR วิเคราะห์",
+        en: "A LINE assistant that answers job applicants instantly using your company's real data, with quick buttons and every question logged for HR.",
+      },
+    },
     name: { th: "น้องรับสมัคร AI", en: "HR LINE Assistant" },
     oneLiner: {
       th: "ผู้ช่วยบน LINE ที่ตอบคำถามผู้สมัครงานให้ทันที ด้วยข้อมูลจริงของบริษัท ตลอดเวลา",
@@ -1284,10 +1324,229 @@ export const products: readonly Product[] = [
     },
   },
 
+  // ───────────── Product — Safety Officer Assistant (from the catalogue deck) ─────────────
+  {
+    slug: "safety-officer-assistant",
+    icon: "shield",
+    name: { th: "น้อง จป. AI", en: "Safety Officer AI" },
+    oneLiner: {
+      th: "ผู้ช่วยบน LINE ที่ตอบกฎความปลอดภัยของโรงงานให้ผู้รับเหมา ตลอด 24 ชั่วโมง",
+      en: "A LINE assistant that answers contractors' factory safety-rule questions around the clock.",
+    },
+    facts: {
+      user: { th: "จป. (เจ้าหน้าที่ความปลอดภัย)", en: "Safety officer" },
+      problem: { th: "กฎความปลอดภัย", en: "Safety rules" },
+      result: { th: "ตอบ 24 ชม.", en: "Answers 24/7" },
+    },
+    triad: {
+      nodes: [
+        { kind: "person", icon: "user", label: { th: "ผู้รับเหมา", en: "Contractor" } },
+        { kind: "system", icon: "shield", label: { th: "น้อง จป. AI", en: "Safety Officer AI" } },
+        { kind: "data", icon: "sheet", label: { th: "กฎโรงงาน", en: "Factory rules" } },
+      ],
+      chips: [
+        { th: "Work Permit", en: "Work Permit" },
+        { th: "กฎระเบียบ", en: "Site rules" },
+        { th: "แลกบัตร", en: "Badge exchange" },
+      ],
+    },
+    seo: {
+      title: { th: "น้อง จป. AI — ผู้ช่วยตอบกฎความปลอดภัยโรงงาน 24 ชม.", en: "Safety Officer AI — factory safety rules answered 24/7" },
+      description: {
+        th: "ผู้รับเหมาถามกฎความปลอดภัยของโรงงานผ่าน LINE ได้ทุกเวลา น้อง จป. AI ตอบเรื่อง Work Permit กฎระเบียบ และการแลกบัตร",
+        en: "Contractors ask factory safety rules on LINE at any hour. The assistant answers about work permits, site rules and badge exchange.",
+      },
+    },
+    hero: {
+      title: { th: "ผู้ช่วยตอบกฎความปลอดภัย 24 ชม.", en: "Safety rules answered, around the clock" },
+      sub: {
+        th: "ผู้รับเหมาถามเรื่อง Work Permit กฎระเบียบ และการแลกบัตรผ่าน LINE ได้ทุกเวลา",
+        en: "Contractors ask about work permits, site rules and badge exchange on LINE at any hour.",
+      },
+      cta: productCta,
+    },
+    how: {
+      title: { th: "จากคำถาม ถึงคำตอบ ใน 3 ขั้น", en: "From question to answer in 3 steps" },
+      sub: { th: "ผู้รับเหมาถาม → น้อง จป. AI ตอบ → อ้างอิงกฎโรงงาน", en: "Contractor asks → the assistant answers → based on the factory rules" },
+      steps: [{ icon: "chat", label: { th: "ผู้รับเหมาถาม", en: "Contractor asks" } }, { icon: "shield", label: { th: "น้อง จป. AI ตอบ", en: "The assistant answers" } }, { icon: "sheet", label: { th: "อ้างอิงกฎโรงงาน", en: "Uses the factory rules" } }],
+    },
+    flow: {
+      title: { th: "ขั้นตอนทั้งหมด", en: "The full flow" },
+      main: [
+        { kind: "person", icon: "chat", label: { th: "ผู้รับเหมาถามใน LINE", en: "Contractor asks in LINE" } },
+        { kind: "system", icon: "shield", label: { th: "น้อง จป. AI ตอบ", en: "The assistant answers" } },
+        { kind: "data", icon: "sheet", label: { th: "อ้างอิงกฎโรงงาน", en: "Based on the factory rules" } },
+      ],
+      sideTitle: { th: "เส้นทางรอง", en: "Side paths" },
+      side: [],
+    },
+    closing: {
+      th: "ให้ผู้รับเหมาถามน้อง แล้วให้ จป. ไปทำงานที่ต้องใช้คน",
+      en: "Let contractors ask the assistant, and let the safety officer do the work that needs a person.",
+    },
+    // [TODO-VERIFY] only the catalogue deck describes this product. Confirm before adding more copy:
+    verifyBeforePublish: [
+      "Where do the factory rules come from, and who edits them?",
+      "What happens when the assistant cannot answer? (hand-over to the safety officer?)",
+      "Languages supported for contractors?",
+      "Evidence behind '24 hours' (always-on hosting, quotas).",
+    ],
+  },
+
+  // ───────────── Product — Comment Reply Assistant (from the catalogue deck) ─────────────
+  {
+    slug: "comment-reply-assistant",
+    icon: "chatcheck",
+    name: { th: "ระบบตอบคอมเมนต์", en: "Comment Reply Assistant" },
+    oneLiner: {
+      th: "ระบบที่ให้ AI ร่างคำตอบคอมเมนต์ แล้วให้คนอนุมัติก่อนโพสต์ทุกครั้ง",
+      en: "A system where AI drafts the reply to a comment and a person approves it before anything is posted.",
+    },
+    facts: {
+      user: { th: "แอดมินเพจ", en: "Page admin" },
+      problem: { th: "ตอบไม่ทัน", en: "Replies come too late" },
+      result: { th: "คุมก่อนโพสต์", en: "Control before posting" },
+    },
+    triad: {
+      nodes: [
+        { kind: "person", icon: "chat", label: { th: "ข้อความ / คอมเมนต์", en: "The comment" } },
+        { kind: "system", icon: "bolt", label: { th: "AI ร่างคำตอบ", en: "AI drafts the reply" } },
+        { kind: "person", icon: "user", label: { th: "คุณกดอนุมัติ", en: "You approve" } },
+      ],
+      chips: [{ th: "อนุมัติ", en: "Approve" }],
+    },
+    seo: {
+      title: { th: "ระบบตอบคอมเมนต์ — AI ร่างคำตอบ คนอนุมัติก่อนโพสต์", en: "Comment Reply Assistant — AI drafts, you approve before posting" },
+      description: {
+        th: "แอดมินเพจตอบคอมเมนต์ไม่ทัน? ให้ AI ร่างคำตอบ แล้วคุณตรวจและกดอนุมัติก่อนโพสต์ทุกครั้ง คุมคำตอบได้ก่อนขึ้นจริง",
+        en: "Can't keep up with page comments? AI drafts the reply and you review and approve it every time, so you control what goes live.",
+      },
+    },
+    hero: {
+      title: { th: "AI ร่างคำตอบ คุณกดอนุมัติ ปลอดภัยทุกโพสต์", en: "AI drafts the reply, you approve — safe on every post" },
+      sub: {
+        th: "แอดมินเพจตอบไม่ทัน? ให้ AI ร่างคำตอบ แล้วคุณตรวจและกดอนุมัติก่อนโพสต์",
+        en: "Can't keep up with comments? AI drafts the reply, and you review and approve it before it is posted.",
+      },
+      cta: productCta,
+    },
+    how: {
+      title: { th: "จากคอมเมนต์ ถึงคำตอบที่อนุมัติแล้ว ใน 3 ขั้น", en: "From comment to approved reply in 3 steps" },
+      sub: { th: "มีคอมเมนต์เข้ามา → AI ร่างคำตอบ → คนตรวจและกดอนุมัติ", en: "A comment arrives → AI drafts the reply → a person reviews and approves" },
+      steps: [{ icon: "chat", label: { th: "มีคอมเมนต์เข้ามา", en: "A comment arrives" } }, { icon: "bolt", label: { th: "AI ร่างคำตอบ", en: "AI drafts the reply" } }, { icon: "chatcheck", label: { th: "คนตรวจและกดอนุมัติ", en: "A person approves" } }],
+    },
+    flow: {
+      title: { th: "ขั้นตอนทั้งหมด", en: "The full flow" },
+      main: [
+        { kind: "person", icon: "chat", label: { th: "มีข้อความ / คอมเมนต์เข้ามา", en: "A comment arrives" } },
+        { kind: "system", icon: "bolt", label: { th: "AI ร่างคำตอบ", en: "AI drafts the reply" } },
+        { kind: "person", icon: "user", label: { th: "คนตรวจและกดอนุมัติ", en: "A person reviews and approves" } },
+      ],
+      sideTitle: { th: "เส้นทางรอง", en: "Side paths" },
+      side: [],
+    },
+    closing: {
+      th: "ให้ AI ร่าง แล้วให้คุณเป็นคนตัดสินใจก่อนทุกโพสต์",
+      en: "Let AI draft, and keep the final decision on every post with you.",
+    },
+    // [TODO-VERIFY] only the catalogue deck describes this product. Confirm before adding more copy:
+    verifyBeforePublish: [
+      "Which platform(s): Facebook page only, or others? (brief calls it 'FB Comment AI')",
+      "Where does the person approve: in chat, in a sheet, in a web page?",
+      "What happens to a comment nobody approves?",
+      "Can the reply style / brand voice be set?",
+    ],
+  },
+
+  // ───────────── Product — Slip OCR Alert (from the catalogue deck) ─────────────
+  {
+    slug: "slip-ocr-alert",
+    icon: "receipt",
+    name: { th: "Slip OCR Alert", en: "Slip OCR Alert" },
+    oneLiner: {
+      th: "ส่งสลิปเข้า LINE แล้วระบบอ่านข้อมูล เก็บไฟล์ แจ้งทีม และบันทึกลงตารางอัตโนมัติ",
+      en: "Send a slip to LINE and the system reads it, files it, alerts the team and logs it in a sheet automatically.",
+    },
+    facts: {
+      user: { th: "ฝ่ายการเงิน", en: "Finance team" },
+      problem: { th: "คีย์ข้อมูลมือ", en: "Manual data entry" },
+      result: { th: "ลงตารางอัตโนมัติ", en: "Logged to a sheet automatically" },
+    },
+    triad: {
+      nodes: [
+        { kind: "person", icon: "receipt", label: { th: "ส่งสลิป", en: "Send the slip" } },
+        { kind: "system", icon: "search", label: { th: "ระบบอ่านอัตโนมัติ", en: "Automatic reader" } },
+        { kind: "data", icon: "table", label: { th: "เก็บไฟล์ · แจ้งทีม · บันทึกตาราง", en: "File · alert the team · log in a sheet" } },
+      ],
+    },
+    seo: {
+      title: { th: "Slip OCR Alert — ส่งสลิปเข้า LINE ระบบอ่านและบันทึกอัตโนมัติ", en: "Slip OCR Alert — read and log payment slips from LINE automatically" },
+      description: {
+        th: "ส่งสลิปเข้า LINE แล้วระบบอ่านข้อมูล เก็บไฟล์ แจ้งทีม และบันทึกลงตารางอัตโนมัติ ฝ่ายการเงินไม่ต้องคีย์ข้อมูลมือ",
+        en: "Send a slip to LINE and the system reads it, files it, alerts the team and logs it in a sheet — no manual keying for finance.",
+      },
+    },
+    hero: {
+      title: { th: "ส่งสลิปเข้า LINE ระบบอ่านและเก็บบันทึกอัตโนมัติ", en: "Send a slip to LINE — the system reads and records it" },
+      sub: {
+        th: "ฝ่ายการเงินไม่ต้องคีย์ข้อมูลมืออีกต่อไป",
+        en: "Finance no longer has to key in the data by hand.",
+      },
+      cta: productCta,
+    },
+    how: {
+      title: { th: "จากสลิป ถึงตาราง ใน 3 ขั้น", en: "From slip to sheet in 3 steps" },
+      sub: { th: "ส่งสลิปเข้า LINE → ระบบอ่านอัตโนมัติ → เก็บไฟล์ แจ้งทีม บันทึกตาราง", en: "Send a slip to LINE → the system reads it → files it, alerts the team, logs it in a sheet" },
+      steps: [{ icon: "receipt", label: { th: "ส่งสลิปเข้า LINE", en: "Send the slip to LINE" } }, { icon: "search", label: { th: "ระบบอ่านอัตโนมัติ", en: "The system reads it" } }, { icon: "table", label: { th: "เก็บไฟล์ แจ้งทีม บันทึกตาราง", en: "File, alert, log" } }],
+    },
+    flow: {
+      title: { th: "ขั้นตอนทั้งหมด", en: "The full flow" },
+      main: [
+        { kind: "person", icon: "receipt", label: { th: "ส่งสลิปเข้า LINE", en: "Send the slip to LINE" } },
+        { kind: "system", icon: "search", label: { th: "ระบบอ่านอัตโนมัติ", en: "The system reads it" } },
+        { kind: "data", icon: "archive", label: { th: "เก็บไฟล์", en: "Files the slip" } },
+        { kind: "system", icon: "bell", label: { th: "แจ้งทีม", en: "Alerts the team" } },
+        { kind: "data", icon: "table", label: { th: "บันทึกลงตาราง", en: "Logs it in a sheet" } },
+      ],
+      sideTitle: { th: "เส้นทางรอง", en: "Side paths" },
+      side: [],
+    },
+    closing: {
+      th: "ให้ระบบอ่านสลิปแทน แล้วให้ทีมการเงินไปทำงานที่ต้องใช้คน",
+      en: "Let the system read the slips, so the finance team can do the work that needs people.",
+    },
+    // [TODO-VERIFY] only the catalogue deck describes this product. Confirm before adding more copy:
+    verifyBeforePublish: [
+      "Which banks / slip formats are read, and how are misreads handled?",
+      "Where are files stored (Drive?) and who is alerted (Chat? LINE group?)",
+      "Which fields are written to the sheet?",
+      "Accuracy claims: none until measured.",
+    ],
+  },
+
   // ───────────── Product 2 — Contract Watch ─────────────
   {
     slug: "contract-watch",
     icon: "bell",
+    facts: {
+      user: { th: "ฝ่ายจัดซื้อ", en: "Procurement" },
+      problem: { th: "ลืมต่อสัญญา", en: "Missed renewals" },
+      result: { th: "เตือนล่วงหน้า", en: "Early warnings" },
+    },
+    triad: {
+      nodes: [
+        { kind: "data", icon: "sheet", label: { th: "ทะเบียนสัญญา", en: "Contract register" } },
+        { kind: "system", icon: "bell", label: { th: "ตรวจทุกวัน เตือนล่วงหน้า", en: "Daily check, early warnings" } },
+        { kind: "person", icon: "user", label: { th: "ผู้รับผิดชอบ", en: "The owner" } },
+      ],
+    },
+    seo: {
+      title: { th: "Contract Watch — ระบบเตือนสัญญาและเอกสารหมดอายุล่วงหน้า", en: "Contract Watch — contract & document expiry reminders" },
+      description: {
+        th: "เฝ้าวันหมดอายุของสัญญาและเอกสารสำคัญทุกวัน เตือนล่วงหน้า 60/45/30/10 วัน เตือนซ้ำเมื่อเลยกำหนด และสรุปรายสัปดาห์ทางอีเมล",
+        en: "Checks contract and key-document expiry dates every day, warns 60/45/30/10 days ahead, repeats reminders when overdue and emails a weekly summary.",
+      },
+    },
     name: { th: "Contract Watch", en: "Contract Watch" },
     oneLiner: {
       th: "ระบบที่เฝ้าดูวันหมดอายุของสัญญาและเอกสารสำคัญให้ แล้วเตือนล่วงหน้าก่อนเกิดความเสียหาย",

@@ -1,4 +1,7 @@
-import { brand, type Locale } from "@/app/site-data";
+import { brand, pageSeo, type Locale } from "@/app/site-data";
+import { breadcrumbJsonLd } from "@/app/seo";
+import { JsonLd } from "@/components/shared/JsonLd";
+import { ProcessSteps } from "@/components/shared/ProcessSteps";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { CallToAction } from "@/components/shared/CallToAction";
 
@@ -23,6 +26,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
 
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd(locale, pageSeo[""].crumb[locale], [{ name: pageSeo.about.crumb[locale], path: "about" }])} />
       <PageIntro
         eyebrow={`About ${brand.name}`}
         title={locale === "th" ? "ให้คนเข้าใจง่ายขึ้น และให้ระบบทำงานแทน" : "Help people understand. Let systems do the rest."}
@@ -49,12 +53,13 @@ export function AboutPage({ locale }: { locale: Locale }) {
                 </svg>
               </div>
               <span className="audience-tag">0{i + 1}</span>
-              <h2>{title}</h2>
+              <h3>{title}</h3>
               <p>{body}</p>
             </article>
           ))}
         </div>
       </section>
+      <ProcessSteps locale={locale} />
       <CallToAction locale={locale} />
     </main>
   );

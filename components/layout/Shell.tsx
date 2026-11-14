@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { brand, channel, contact, copy, nav, type Locale } from "@/app/site-data";
+import { brand, channel, contact, copy, nav, products, type Locale } from "@/app/site-data";
 
 export function Shell({ locale, page, children }: { locale: Locale; page: string; children: React.ReactNode }) {
   const opposite = locale === "th" ? "en" : "th";
@@ -99,6 +99,12 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
       <footer className="site-footer">
         <div><span className="brand-mark">{brand.mark}</span><strong>{brand.name}</strong></div>
         <p>{brand.tagline[locale]}</p>
+        <nav className="footer-nav" aria-label={locale === "th" ? "แผนผังเว็บไซต์" : "Site map"}>
+          {products.map((product) => (
+            <Link key={product.slug} href={`${base}/products/${product.slug}`}>{product.name[locale]}</Link>
+          ))}
+          <Link href={`${base}/training-media`}>{nav[locale][2][0]}</Link>
+        </nav>
         <div className="footer-links">
           <a href={`mailto:${contact.email}`}>{contact.email}</a>
           <a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a>
