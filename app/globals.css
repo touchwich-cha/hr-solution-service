@@ -2417,7 +2417,7 @@ button, input, textarea, select { font: inherit; }
 /* Home video section */
 .video-feature {
   display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2.2fr) repeat(2, minmax(0, 1fr));
   gap: 24px;
   align-items: start;
   margin-bottom: clamp(28px, 4vw, 48px);
@@ -3659,3 +3659,49 @@ button, input, textarea, select { font: inherit; }
   .sys-icon-link { width: 92px; font-size: 13px; }
   .sys-icon-circle { width: 56px; height: 56px; }
 }
+
+
+/* Videos page: group jump chips + "show more" */
+.video-jump { display: flex; flex-wrap: wrap; gap: 10px; padding-block: 24px 4px; }
+.video-jump a {
+  padding: 9px 18px;
+  border: 1.5px solid var(--outline-variant);
+  border-radius: var(--radius-full);
+  background: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--primary);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.video-jump a:hover { border-color: var(--secondary); color: var(--secondary); }
+.video-jump a b { margin-left: 6px; color: var(--secondary); }
+
+.video-more { display: flex; justify-content: center; margin-top: 28px; }
+.video-more button {
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1.5px solid var(--secondary);
+  border-radius: var(--radius-full);
+  background: #fff;
+  color: var(--secondary);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.video-more button:hover { background: var(--secondary); color: #fff; }
+
+/* Portfolio: "more work" panel */
+.more-work {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  margin-top: clamp(32px, 4vw, 56px);
+  padding: clamp(28px, 4vw, 48px);
+  text-align: center;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-3xl);
+}
+.more-work h2 { margin: 0; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.3; color: var(--primary); }
+.more-work p { margin: 0; max-width: 56ch; color: var(--on-surface-variant); line-height: 1.8; }
+.more-work-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }

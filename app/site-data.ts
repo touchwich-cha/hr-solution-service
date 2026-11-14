@@ -93,7 +93,7 @@ export type VideoGroup = {
   videos: readonly VideoItem[];
 };
 
-/** Curated for the home page — first entry is the featured player. */
+/** Curated for the home page — first entry is the featured player, the rest are vertical clips. */
 export const videos: readonly VideoItem[] = [
   {
     id: "6WkrbKnv7SA",
@@ -114,30 +114,12 @@ export const videos: readonly VideoItem[] = [
     },
   },
   {
-    id: "RWzfivHF0cg",
-    aspect: "wide",
-    duration: "8:29",
+    id: "Ek5T5TiNLhg",
+    aspect: "tall",
+    duration: "9:16",
     title: {
-      th: "ผลิตอาหารได้ทุกวัน แต่อาจไม่ผ่านมาตรฐานเพราะเรื่องเครื่องจักร",
-      en: "Daily production still fails the standard — because of the machines",
-    },
-  },
-  {
-    id: "nmVLPBOSAMQ",
-    aspect: "wide",
-    duration: "8:27",
-    title: {
-      th: "GMP420 ข้อ 1.7 — ไขข้อสงสัยมาตรฐานโรงงานอาหาร",
-      en: "GMP420 1.7 — What the clause actually requires",
-    },
-  },
-  {
-    id: "_kHF1uBlQH0",
-    aspect: "wide",
-    duration: "4:39",
-    title: {
-      th: "โรงงานไฟสลัว เสี่ยงปิดกิจการ — แสงสว่างที่คนผลิตต้องรู้",
-      en: "Dim factory lighting — the cost of poor light",
+      th: "ความลาดเอียงของพื้น อาวุธลับที่ทำให้โรงงานปลอดเชื้อรา",
+      en: "Floor slope — the secret weapon against mould",
     },
   },
 ];
@@ -937,6 +919,16 @@ export const additionalTools: readonly AdditionalTool[] = [
 ];
 
 // ─── Portfolio groups (new curated Food Safety series first) ───
+
+/** Series shown on the Portfolio page, in display order. More work is linked from the channels. */
+export const portfolioFeatured = [
+  "factory-lighting",
+  "factory-hidden-flaw",
+  "gmp-compliance-audit",
+  "food-factory-location",
+  "floor-slope-design",
+  "gmp-pest-control",
+] as const;
 
 export const projectGroups = [
   {

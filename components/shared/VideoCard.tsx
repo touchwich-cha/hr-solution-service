@@ -3,7 +3,7 @@ import { channel, videos, type Locale } from "@/app/site-data";
 import { VideoTile } from "@/components/shared/VideoTile";
 
 export function VideoCard({ locale }: { locale: Locale }) {
-  const [featured, vertical, ...strip] = videos;
+  const [featured, ...vertical] = videos;
 
   return (
     <section className="video-section section-pad" style={{ paddingBlock: "clamp(64px, 8vw, 120px)" }}>
@@ -26,11 +26,7 @@ export function VideoCard({ locale }: { locale: Locale }) {
 
       <div className="video-feature">
         <VideoTile video={featured} locale={locale} variant="feature" priority />
-        <VideoTile video={vertical} locale={locale} />
-      </div>
-
-      <div className="video-strip">
-        {strip.map((video) => (
+        {vertical.map((video) => (
           <VideoTile key={video.id} video={video} locale={locale} />
         ))}
       </div>
