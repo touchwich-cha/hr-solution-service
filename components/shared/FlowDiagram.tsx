@@ -3,7 +3,7 @@ import { ProductIcon } from "@/components/shared/ProductIcon";
 
 const kinds: FlowKind[] = ["person", "system", "data"];
 
-function FlowLegend({ locale }: { locale: Locale }) {
+export function FlowLegend({ locale }: { locale: Locale }) {
   return (
     <ul className="pflow-legend" aria-label={productsCopy.legendTitle[locale]}>
       {kinds.map((kind) => (
@@ -29,8 +29,9 @@ function FlowNode({ step, locale, number }: { step: FlowStep; locale: Locale; nu
 /** Numbered main flow (left) + side paths (right). Colours: grey = people, purple = system, teal = data. */
 export function FlowDiagram({ product, locale }: { product: Product; locale: Locale }) {
   const { flow } = product;
+  const solo = flow.side.length === 0;
   return (
-    <div className="pflow">
+    <div className={`pflow${solo ? " pflow-solo" : ""}`}>
       <ol className="pflow-main">
         {flow.main.map((step, index) => (
           <li key={step.label.en}>
@@ -38,6 +39,9 @@ export function FlowDiagram({ product, locale }: { product: Product; locale: Loc
           </li>
         ))}
       </ol>
+      {solo ? (
+        <FlowLegend locale={locale} />
+      ) : (
       <aside className="pflow-side" aria-label={flow.sideTitle[locale]}>
         <h3>{flow.sideTitle[locale]}</h3>
         {flow.side.map((lane) => (
@@ -51,6 +55,7 @@ export function FlowDiagram({ product, locale }: { product: Product; locale: Loc
         ))}
         <FlowLegend locale={locale} />
       </aside>
+      )}
     </div>
   );
 }

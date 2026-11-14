@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   assistantSample,
   getProduct,
+  pageSeo,
   products,
   productsCopy,
   watchSample,
@@ -10,6 +11,9 @@ import {
 } from "@/app/site-data";
 import { ProductIcon } from "@/components/shared/ProductIcon";
 import { FlowDiagram } from "@/components/shared/FlowDiagram";
+import { HeroTriad } from "@/components/shared/HeroTriad";
+import { JsonLd } from "@/components/shared/JsonLd";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/app/seo";
 
 function SampleTag({ locale }: { locale: Locale }) {
   return <span className="sample-tag">{productsCopy.sample[locale]}</span>;
@@ -128,11 +132,23 @@ function WatchInsight({ locale }: { locale: Locale }) {
 
 export function ProductPage({ locale, product }: { locale: Locale; product: Product }) {
   const isAssistant = product.slug === "line-hr-assistant";
-  const other = products.find((item) => item.slug !== product.slug)!;
+  const isWatch = product.slug === "contract-watch";
+  const index = products.findIndex((item) => item.slug === product.slug);
+  const related = [1, 2].map((step) => products[(index + step) % products.length]);
   const ctaHref = `/${locale}/contact#quote`;
+  const factLabels = locale === "th"
+    ? { user: "ผู้ใช้หลัก", problem: "ปัญหาที่แก้", result: "ผลลัพธ์" }
+    : { user: "Main user", problem: "Problem solved", result: "Result" };
 
   return (
     <main className="product-page">
+      <JsonLd data={serviceJsonLd(locale, product)} />
+      <JsonLd
+        data={breadcrumbJsonLd(locale, pageSeo[""].crumb[locale], [
+          { name: pageSeo.products.crumb[locale], path: "products" },
+          { name: product.name[locale], path: `products/${product.slug}` },
+        ])}
+      />
       {/* ─── HERO ─── */}
       <section className="product-hero section-pad">
         <div className="product-hero-copy">
@@ -143,11 +159,24 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           <Link className="button" href={ctaHref}>{product.hero.cta[locale]}</Link>
         </div>
         <div className="product-hero-visual">
-          {isAssistant ? <AssistantHeroVisual locale={locale} /> : <WatchHeroVisual locale={locale} />}
+          {isAssistant ? <AssistantHeroVisual locale={locale} /> : isWatch ? <WatchHeroVisual locale={locale} /> : <HeroTriad product={product} locale={locale} />}
         </div>
       </section>
 
+      {/* ─── FACTS (from the catalogue table) ─── */}
+      <section className="product-section section-pad">
+        <dl className="facts-strip reveal">
+          {(["user", "problem", "result"] as const).map((key) => (
+            <div key={key}>
+              <dt>{factLabels[key]}</dt>
+              <dd>{product.facts[key][locale]}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       {/* ─── PROBLEM ─── */}
+      {product.problem && (
       <section className="product-section section-pad">
         <div className="product-heading reveal">
           <h2>{product.problem.title[locale]}</h2>
@@ -162,8 +191,10 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           ))}
         </div>
       </section>
+      )}
 
       {/* ─── BEFORE / AFTER ─── */}
+      {product.beforeAfter && (
       <section className="product-section section-pad">
         <div className="before-after reveal">
           <div className="ba-panel ba-before">
@@ -179,14 +210,15 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           </div>
         </div>
       </section>
+      )}
 
-      {/* ─── HOW IT WORKS (4 steps) ─── */}
+      {/* ─── HOW IT WORKS ─── */}
       <section className="product-section section-pad">
         <div className="product-heading reveal">
           <h2>{product.how.title[locale]}</h2>
           <p>{product.how.sub[locale]}</p>
         </div>
-        <ol className="steps-row">
+        <ol className={`steps-row steps-${product.how.steps.length}`}>
           {product.how.steps.map((step, index) => (
             <li key={step.label.en} className="step-card reveal" style={{ "--reveal-delay": `${index * 0.08}s` } as React.CSSProperties}>
               <span className="step-card-num">{index + 1}</span>
@@ -197,7 +229,8 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
         </ol>
       </section>
 
-      {/* ─── FLOW DIAGRAM ─── */}
+      {/* ─── FLOW DIAGRAM (only when it adds something beyond the "how" steps) ─── */}
+      {(product.flow.main.length > product.how.steps.length || product.flow.side.length > 0) && (
       <section className="product-section section-pad">
         <div className="product-heading reveal">
           <h2>{product.flow.title[locale]}</h2>
@@ -206,8 +239,10 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           <FlowDiagram product={product} locale={locale} />
         </div>
       </section>
+      )}
 
       {/* ─── HIGHLIGHTS ─── */}
+      {product.highlights && (
       <section className="product-section section-pad">
         <div className="highlight-grid">
           {product.highlights.map((item, index) => (
@@ -219,11 +254,13 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           ))}
         </div>
       </section>
+      )}
 
       {/* ─── PRODUCT-SPECIFIC VISUAL ─── */}
-      {isAssistant ? <AssistantInsight locale={locale} /> : <WatchInsight locale={locale} />}
+      {isAssistant ? <AssistantInsight locale={locale} /> : isWatch ? <WatchInsight locale={locale} /> : null}
 
       {/* ─── BENEFITS + LIMITS ─── */}
+      {product.benefits && product.benefitsTitle && product.limits && product.limitsTitle && (
       <section className="product-section section-pad">
         <div className="benefit-limit">
           <div className="bl-col reveal">
@@ -240,6 +277,7 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
           </div>
         </div>
       </section>
+      )}
 
       {/* ─── CLOSING CTA ─── */}
       <section className="cta section-pad reveal">
@@ -247,11 +285,14 @@ export function ProductPage({ locale, product }: { locale: Locale; product: Prod
         <Link className="button light" href={ctaHref}>{product.hero.cta[locale]} <span>↗</span></Link>
       </section>
 
-      <section className="product-section section-pad product-other">
-        <Link className="text-link" href={`/${locale}/products/${other.slug}`}>
-          {other.name[locale]} <span aria-hidden="true">→</span>
-        </Link>
-      </section>
+      <nav className="product-section section-pad product-other" aria-label={locale === "th" ? "สินค้าอื่น" : "More products"}>
+        {related.map((item) => (
+          <Link key={item.slug} className="text-link" href={`/${locale}/products/${item.slug}`}>
+            {item.name[locale]} <span aria-hidden="true">→</span>
+          </Link>
+        ))}
+        <Link className="text-link" href={`/${locale}/products`}>{productsCopy.back[locale]}</Link>
+      </nav>
     </main>
   );
 }

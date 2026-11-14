@@ -23,6 +23,9 @@ const paths: Record<ProductIconName, string> = {
   filter: "M22 3H2l8 9.46V19l4 2v-8.54L22 3z",
   table: "M3 3h18v18H3zM3 9h18M3 15h18M9 3v18",
   sheet: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6M8 13h8M8 17h8",
+  shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4",
+  receipt: "M4 2v20l3-2 3 2 3-2 3 2 3-2V2l-3 2-3-2-3 2-3-2-3 2zM8 8h8M8 12h8M8 16h4",
+  chatcheck: "M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2zM8 10l2.5 2.5L15 8",
 };
 
 export function ProductIcon({ name, size = 24 }: { name: ProductIconName; size?: number }) {

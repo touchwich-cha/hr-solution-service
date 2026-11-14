@@ -9,14 +9,33 @@
 
 | ที่อยู่ | หน้าที่ |
 |---|---|
-| `app/site-data.ts` | **เนื้อหาทั้งเว็บอยู่ไฟล์เดียว** — brand, nav, copy, servicePillars, caseStudies, projectGroups, videos/videoGroups/videoPublished, channel, contact |
-| `app/[locale]/[[...slug]]/page.tsx` | Router เดียวของทุกหน้า: `/{th\|en}/{slug}` (8 slugs) |
-| `components/pages/*` | คอมโพเนนต์ 8 หน้า (Home, Services, Portfolio, Videos, HrSystems, Process, About, Contact) |
-| `components/shared/*` | ProjectCard, CaseStudyCard, QuoteForm, VideoCard, VideoTile, ฯลฯ |
+| `app/site-data.ts` | **เนื้อหาทั้งเว็บอยู่ไฟล์เดียว** — brand, nav, `pageSeo`, products, caseStudies, projectGroups, videos/videoGroups/videoPublished, channel, contact |
+| `app/seo.ts` | ตัวช่วยสร้าง JSON-LD (BreadcrumbList, Service) และ URL เต็มของหน้า |
+| `app/[locale]/layout.tsx` | Root layout — `<html lang>` ตามภาษาของหน้า (th/en) |
+| `app/[locale]/[[...slug]]/page.tsx` | Router เดียวของทุกหน้า: `/{th\|en}/{products\|training-media\|about\|contact}` และ `/products/{slug}` (+ metadata/OG/canonical/hreflang ต่อหน้า) |
+| `components/pages/*` | Home, ProductsHub, Product, TrainingMedia, About (รวมขั้นตอนทำงาน), Contact |
+| `components/shared/*` | ProductCards, FlowDiagram, HeroTriad, SystemsSection/SystemCard, FeaturedSeries, VideoTile, QuoteForm, JsonLd ฯลฯ |
 | `app/globals.css` | Design system ทั้งหมด (design tokens + component styles) |
 | `scripts/prepare-images.mjs` | Pipeline คัด/ย่อ/บีบอัดรูปผลงานเป็น WebP |
 
 **เปลี่ยนชื่อแบรนด์:** แก้ที่ `brand` ใน `app/site-data.ts` จุดเดียว มีผลทั้งเว็บ (header, footer, SEO)
+
+## โครงหน้าและ SEO
+
+เมนูหลัก 5 รายการ: หน้าแรก · ระบบอัตโนมัติ (`/products`) · สื่ออบรม (`/training-media`) · เกี่ยวกับเรา (`/about`, มี `#process`) · ติดต่อ
+
+| หน้า | หน้าที่เดียวของหน้านี้ |
+|---|---|
+| `/` | คำสัญญา + ผู้ช่วย 5 บริการ + หลักฐาน + 1 คลิป |
+| `/products` | แคตตาล็อก 5 สินค้า + ระบบที่ใช้งานจริง 6 ระบบ (`#systems`) |
+| `/products/{slug}` | หน้าสินค้ารายตัว (5 หน้า) |
+| `/training-media` | ผลงานสื่อเด่น 6 ซีรีส์ + วิดีโอเด่น (`#videos`) + ลิงก์ช่อง |
+
+- URL เก่า (`/services`, `/hr-systems`, `/portfolio`, `/videos`, `/process`) ส่งต่อแบบถาวร (308) ไปหน้าใหม่ ตั้งไว้ใน `next.config.ts` — ลิงก์ภายในเว็บต้องชี้ URL ใหม่เสมอ
+- ทุกหน้ามี title/description ไม่ซ้ำกัน ตั้งที่ `pageSeo` (หน้าทั่วไป) และ `products[].seo` (หน้าสินค้า) — เขียนวลีที่คนค้นจริง ไม่ยัดคีย์เวิร์ด
+- ข้อมูลโครงสร้าง (JSON-LD): Organization + WebSite ทั้งเว็บ, BreadcrumbList ทุกหน้าที่ไม่ใช่หน้าแรก, Service หน้าสินค้า (ไม่ระบุราคา), VideoObject เฉพาะคลิปที่มีวันที่เผยแพร่ที่ยืนยันแล้ว
+- sitemap ใช้วันที่ `siteUpdated` (แก้เมื่อเนื้อหาเปลี่ยนจริง) พร้อม hreflang th/en
+- เพิ่มหน้าใหม่: เพิ่ม slug ใน `pages` ของ router, เพิ่มใน `pageSeo`, `nav` (ถ้าอยู่ในเมนู) และ `app/sitemap.ts`
 
 ## คำสั่งพัฒนา
 
@@ -84,11 +103,11 @@ Deploy เป็น **Web App** (Execute as: Me · Who has access: Anyone) แ�
 | ข้อมูล | ที่อยู่ |
 |---|---|
 | `channel` | ลิงก์ช่อง/เพลย์ลิสต์/TikTok + `videoCount` (ใช้ใน header, footer, JSON-LD `sameAs`) |
-| `videos` | 3 คลิปคัดสำหรับหน้าแรก (ตัวแรก = ตัวเล่นหลักแนวนอน, อีก 2 = แนวตั้ง) |
-| `videoGroups` | คลังเต็ม 49 คลิป (ตรวจ 2026-11-14) แบ่ง 3 หมวด: `gmp420` (17), `micro-learning` (27), `quiz` (5) — หน้า /videos แสดงหมวดละ 6 คลิปแรก กด "ดูเพิ่ม" เพื่อเปิดที่เหลือ |
+| `videos` | คลิปคัดสำหรับหน้าแรก (หน้าแรกแสดงตัวแรกตัวเดียว) |
+| `videoGroups` | คลังเต็ม 49 คลิป (ตรวจ 2026-11-14) แบ่ง 3 หมวด: `gmp420` (17), `micro-learning` (27), `quiz` (5) — หน้า /training-media โชว์เฉพาะวิดีโอเด่น ที่เหลือให้ดูที่ช่อง |
 | `videoPublished` | วันที่เผยแพร่จริงของทุกคลิป (ใช้ทำ `VideoObject` schema) — **ห้ามเดา ถ้าไม่มีข้อมูลให้เว้น** |
 
-- หน้า `/{th|en}/videos` เรนเดอร์จาก `videoGroups` + สร้าง `CollectionPage`/`VideoObject` JSON-LD อัตโนมัติ
+- หน้า `/{th|en}/training-media#videos` เลือกคลิปจาก `videoGroups` ตาม `featuredVideoIds` และสร้าง `VideoObject` JSON-LD เฉพาะคลิปที่มีวันที่ยืนยันแล้ว
 - `VideoTile` เป็น **click-to-play**: ยังไม่คลิก = โหลดแค่ thumbnail จาก `i.ytimg.com`, คลิกแล้วจึงใส่ iframe (`youtube-nocookie`) — หน้าเดียวมี 30+ คลิปก็ไม่หนัก
 - เพิ่มคลิปใหม่: เพิ่ม object ใน `videoGroups` (id/duration/title TH-EN) แล้วเพิ่มวันที่ใน `videoPublished` และอัปเดต `channel.videoCount` (ตัวเลขในข้อความอื่นดึงจากค่านี้อัตโนมัติ)
 - คลิป Private ห้ามใส่ (คนดูจะเห็นหน้าว่าง) ใส่เฉพาะคลิป Public/Unlisted
@@ -96,17 +115,17 @@ Deploy เป็น **Web App** (Execute as: Me · Who has access: Anyone) แ�
 
 ## สินค้า (หน้า /products)
 
-เนื้อหาสินค้า 2 ตัว (น้องรับสมัคร AI, Contract Watch) อยู่ใน `products` ที่ `app/site-data.ts` (ภาษาไทย/อังกฤษ) ต้นทางข้อความคือไฟล์ Product Brief — เขียนเฉพาะความสามารถที่ยืนยันแล้ว ห้ามใส่ราคา/ตัวเลขผลลัพธ์ที่ไม่มีหลักฐาน
+เนื้อหาสินค้า 5 ตัว (น้องรับสมัคร AI, น้อง จป. AI, ระบบตอบคอมเมนต์, Slip OCR Alert, Contract Watch) อยู่ใน `products` ที่ `app/site-data.ts` (ภาษาไทย/อังกฤษ) ต้นทางข้อความคือไฟล์ Product Brief — เขียนเฉพาะความสามารถที่ยืนยันแล้ว ห้ามใส่ราคา/ตัวเลขผลลัพธ์ที่ไม่มีหลักฐาน
 
 - Route: `/{th|en}/products` (หน้ารวม) และ `/{th|en}/products/{slug}` (หน้าสินค้า)
-- ข้อมูลที่ต้องตรวจจากโค้ดจริงก่อนเขียนลงหน้า Contract Watch เก็บไว้ใน `verifyBeforePublish` (ไม่แสดงบนเว็บ)
+- 2 ตัวแรกมีรายละเอียดครบจาก Brief ส่วน 3 ตัวที่เพิ่มจากแคตตาล็อก (PDF) มีเฉพาะข้อมูลในสไลด์ — สิ่งที่ยังต้องยืนยันจากของจริงเก็บไว้ใน `verifyBeforePublish` (ไม่แสดงบนเว็บ)
 - แผนภาพ flow ใช้สี: เทา = คน, ม่วง = ระบบทำเอง, เขียวอมฟ้า = ข้อมูล (`FlowDiagram`)
 - ข้อมูลตัวอย่างบนหน้า (แชต ตารางสัญญา อีเมลสรุป) เป็นข้อมูลสมมติ และมีป้ายกำกับ
 
 ## ผลงานสื่อและระบบงาน HR
 
-- หน้า /portfolio แสดงเฉพาะซีรีส์ใน `portfolioFeatured` (6 ชุด) ที่เหลือยังอยู่ใน `projectGroups` และรูปยังอยู่ใน `public/projects/` ถ้าจะนำกลับมาแสดง เพิ่ม slug ใน `portfolioFeatured`
-- หน้า /hr-systems แสดงเป็นการ์ดย่อ (หัวการ์ด + ติ๊ก 3 ข้อ + แท็ก) ข้อความเต็มอยู่ในปุ่ม "ดูรายละเอียด" ข้อมูลมาจาก `caseStudies` (ฟิลด์ `short` ใช้กับแถวไอคอนด้านบน)
+- หน้า /training-media แสดงเฉพาะซีรีส์ใน `portfolioFeatured` (6 ชุด) และวิดีโอใน `featuredVideoIds` (3 จอกว้าง + 3 แนวตั้ง) ที่เหลือยังอยู่ใน `projectGroups` และรูปยังอยู่ใน `public/projects/` ถ้าจะนำกลับมาแสดง เพิ่ม slug ใน `portfolioFeatured`
+- ส่วน #systems ในหน้า /products แสดงเป็นการ์ดย่อ (หัวการ์ด + ติ๊ก 3 ข้อ + แท็ก) ข้อความเต็มอยู่ในปุ่ม "ดูรายละเอียด" ข้อมูลมาจาก `caseStudies` (ฟิลด์ `short` ใช้กับแถวไอคอนด้านบน)
 
 ## QR Code LINE (หน้า Contact)
 

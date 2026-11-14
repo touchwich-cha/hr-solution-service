@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "@fontsource-variable/noto-sans-thai";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/montserrat";
-import "./globals.css";
-import { brand, siteUrl, contact, channel, servicePillars } from "@/app/site-data";
+import "../globals.css";
+import { brand, siteUrl, contact, channel, products } from "@/app/site-data";
 
 const siteDescription =
-  `สื่ออบรม GMP / Food Safety แบบ 3D กว่า 500 เฟรม พร้อมวิดีโอเผยแพร่จริง ${channel.videoCount} คลิปบน YouTube และระบบงาน HR อัตโนมัติบน Google Workspace — คัดกรองใบสมัคร Onboarding ประเมิน KPI บันทึกงานภาคสนาม และแจ้งเตือนเอกสาร ใช้งานจริงแล้ว 6 ระบบ`;
+  `ให้ระบบจัดการงานซ้ำซ้อน เพื่อให้คุณโฟกัสงานสำคัญ — ผู้ช่วยอัตโนมัติ ${products.length} บริการสำหรับ HR และงานเอกสาร (LINE, Google Workspace) พร้อมสื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอเผยแพร่จริง ${channel.videoCount} คลิป`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -19,12 +19,13 @@ const organizationJsonLd = {
   areaServed: "TH",
   logo: `${siteUrl}/og.jpg`,
   sameAs: [channel.youtube, channel.tiktok, channel.facebook],
-  makesOffer: servicePillars.map((pillar) => ({
+  knowsAbout: ["HR automation", "LINE chatbot", "Google Workspace automation", "GMP", "Food Safety training"],
+  makesOffer: products.map((product) => ({
     "@type": "Offer",
     itemOffered: {
       "@type": "Service",
-      name: pillar.title.en,
-      description: pillar.intro.en,
+      name: product.name.en,
+      description: product.oneLiner.en,
     },
   })),
 };
@@ -83,14 +84,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: brand.name,
+  url: siteUrl,
+  inLanguage: ["th", "en"],
+};
+
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
+  const { locale } = await params;
   return (
-    <html lang="th">
+    <html lang={locale === "en" ? "en" : "th"}>
       <head>
         <meta name="theme-color" content="#06302B" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body>{children}</body>
