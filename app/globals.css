@@ -3405,14 +3405,14 @@ button, input, textarea, select { font: inherit; }
 .bars .sample-tag { margin: 6px 0 0; }
 
 /* Timeline (product 2) */
-.timeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; position: relative; }
-.timeline::before { content: ""; position: absolute; left: 10%; right: 10%; top: 17px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, #5eead4, #fbbf24, #fb923c, #dc2626); }
-.timeline-step { position: relative; display: grid; justify-items: center; gap: 14px; text-align: center; font-weight: 600; color: var(--primary); }
-.timeline-dot { width: 38px; height: 38px; border-radius: 50%; border: 5px solid #fff; box-shadow: var(--shadow-md); z-index: 1; }
-.timeline-step.tone-early .timeline-dot { background: #14b8a6; }
-.timeline-step.tone-mid .timeline-dot { background: #f59e0b; }
-.timeline-step.tone-late .timeline-dot { background: #f97316; }
-.timeline-step.tone-over .timeline-dot { background: #dc2626; }
+.level-timeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; position: relative; }
+.level-timeline::before { content: ""; position: absolute; left: 10%; right: 10%; top: 17px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, #5eead4, #fbbf24, #fb923c, #dc2626); }
+.level-step { position: relative; display: grid; justify-items: center; gap: 14px; text-align: center; font-weight: 600; color: var(--primary); }
+.level-dot { width: 38px; height: 38px; border-radius: 50%; border: 5px solid #fff; box-shadow: var(--shadow-md); z-index: 1; }
+.level-step.tone-early .level-dot { background: #14b8a6; }
+.level-step.tone-mid .level-dot { background: #f59e0b; }
+.level-step.tone-late .level-dot { background: #f97316; }
+.level-step.tone-over .level-dot { background: #dc2626; }
 
 /* Weekly email mock (product 2) */
 .mock-email { max-width: 560px; }
@@ -3472,7 +3472,7 @@ button, input, textarea, select { font: inherit; }
   .product-cards { grid-template-columns: 1fr; }
   .bar-row { grid-template-columns: 1fr; gap: 6px; }
   .mock-email-rows li { grid-template-columns: 1fr; gap: 8px; }
-  .timeline { grid-template-columns: 1fr; gap: 18px; }
-  .timeline::before { left: 18px; right: auto; top: 8px; bottom: 8px; width: 4px; height: auto; background: linear-gradient(180deg, #5eead4, #fbbf24, #fb923c, #dc2626); }
-  .timeline-step { grid-template-columns: 38px 1fr; justify-items: start; text-align: left; align-items: center; }
+  .level-timeline { grid-template-columns: 1fr; gap: 18px; }
+  .level-timeline::before { left: 18px; right: auto; top: 8px; bottom: 8px; width: 4px; height: auto; background: linear-gradient(180deg, #5eead4, #fbbf24, #fb923c, #dc2626); }
+  .level-step { grid-template-columns: 38px 1fr; justify-items: start; text-align: left; align-items: center; }
 }
