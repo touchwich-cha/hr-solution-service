@@ -6,7 +6,7 @@ import "./globals.css";
 import { brand, siteUrl, contact, channel, servicePillars } from "@/app/site-data";
 
 const siteDescription =
-  "สื่ออบรม GMP / Food Safety แบบ 3D กว่า 500 เฟรม พร้อมวิดีโอเผยแพร่จริง 34 คลิปบน YouTube และระบบงาน HR อัตโนมัติบน Google Workspace — คัดกรองใบสมัคร Onboarding ประเมิน KPI บันทึกงานภาคสนาม และแจ้งเตือนเอกสาร ใช้งานจริงแล้ว 6 ระบบ";
+  `สื่ออบรม GMP / Food Safety แบบ 3D กว่า 500 เฟรม พร้อมวิดีโอเผยแพร่จริง ${channel.videoCount} คลิปบน YouTube และระบบงาน HR อัตโนมัติบน Google Workspace — คัดกรองใบสมัคร Onboarding ประเมิน KPI บันทึกงานภาคสนาม และแจ้งเตือนเอกสาร ใช้งานจริงแล้ว 6 ระบบ`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -18,7 +18,7 @@ const organizationJsonLd = {
   telephone: contact.phone,
   areaServed: "TH",
   logo: `${siteUrl}/og.jpg`,
-  sameAs: [channel.youtube, channel.tiktok],
+  sameAs: [channel.youtube, channel.tiktok, channel.facebook],
   makesOffer: servicePillars.map((pillar) => ({
     "@type": "Offer",
     itemOffered: {

@@ -97,6 +97,9 @@ export function VideosPage({ locale }: { locale: Locale }) {
             <a className="button light" href={channel.tiktok} target="_blank" rel="noopener noreferrer">
               TikTok ↗
             </a>
+            <a className="button light" href={channel.facebook} target="_blank" rel="noopener noreferrer">
+              Facebook ↗
+            </a>
           </div>
         </div>
         <dl className="channel-stats">

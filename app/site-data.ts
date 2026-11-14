@@ -29,11 +29,19 @@ export const channel = {
   handle: "@foodsafetythailand",
   youtube: "https://www.youtube.com/@foodsafetythailand",
   tiktok: "https://www.tiktok.com/@hrsolutionservice",
+  facebook: "https://www.facebook.com/profile.php?id=61596420215065",
   playlists: "https://www.youtube.com/@foodsafetythailand/playlists",
   gmp420Playlist: "https://www.youtube.com/playlist?list=PL4xb7oWk_9ZseVRyUhnjli0zrOOkj0JVw",
   quizPlaylist: "https://www.youtube.com/playlist?list=PLWp3qWsnq67k",
-  /** Verified 2026-10-28: 15 long-form + 19 shorts. */
-  videoCount: 34,
+  /** Verified 2026-11-14 on the public channel page: 17 long-form + 32 shorts = 49. */
+  videoCount: 49,
+} as const;
+
+// Hero background clip (Cloudinary, 960x540, ~10 s, no audio needed). The poster image is the
+// existing still, shown first and kept for visitors who prefer reduced motion.
+export const heroVideo = {
+  url: "https://res.cloudinary.com/dskzrlsqi/video/upload/v1794622680/u4c27svdnckyny4drfir.mp4",
+  poster: "/projects/factory-lighting/factory-lighting-01.webp",
 } as const;
 
 // ─── Navigation ───
@@ -41,11 +49,11 @@ export const channel = {
 export const nav = {
   th: [
     ["หน้าแรก", ""], ["บริการ", "services"], ["ผลงานสื่อ", "portfolio"], ["วิดีโอ", "videos"],
-    ["ระบบงาน HR", "hr-systems"], ["ขั้นตอน", "process"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
+    ["สินค้า", "products"], ["ระบบงาน HR", "hr-systems"], ["ขั้นตอน", "process"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
   ],
   en: [
     ["Home", ""], ["Services", "services"], ["Learning Media", "portfolio"], ["Videos", "videos"],
-    ["HR Systems", "hr-systems"], ["Process", "process"], ["About", "about"], ["Contact", "contact"],
+    ["Products", "products"], ["HR Systems", "hr-systems"], ["Process", "process"], ["About", "about"], ["Contact", "contact"],
   ],
 } as const;
 
@@ -54,17 +62,18 @@ export const nav = {
 // Every number here is checkable:
 //   512 = distinct successful frames in "Youtube_Foodsafety 16x9 - Image Log.csv"
 //         (551 logged rows · 548 success · 30 story titles · 2025-04 → 2026-10)
-//    34 = videos published on the Food Safety Thailand channel
+//    49 = videos published on the Food Safety Thailand channel (verified 2026-11-14)
 //     6 = HR systems running in real workplaces
 export const proofStats = [
   { value: 512, suffix: "", label: { th: "ภาพฉากสื่ออบรมที่ผลิตจริง", en: "training frames produced" } },
-  { value: 34, suffix: "", label: { th: "วิดีโอเผยแพร่บน YouTube", en: "videos published on YouTube" } },
+  { value: channel.videoCount, suffix: "", label: { th: "วิดีโอเผยแพร่บน YouTube", en: "videos published on YouTube" } },
   { value: 6, suffix: "", label: { th: "ระบบงาน HR ที่ใช้งานจริง", en: "HR systems in real use" } },
 ] as const;
 
-// ─── Video library (Food Safety Thailand — 34 published videos) ───
+// ─── Video library (Food Safety Thailand — 49 published videos) ───
 //
-// IDs, durations and grouping were read from the channel on 2026-10-28.
+// IDs, durations and grouping were read from the channel on 2026-11-14 (49 public videos;
+// two private shorts are deliberately excluded).
 // Views are intentionally NOT stored: they change daily, durations do not.
 // The home page shows `videos` (curated); /videos renders every `videoGroups` entry.
 
@@ -137,6 +146,8 @@ export const videos: readonly VideoItem[] = [
 // the site's timezone-neutral form). Used for VideoObject structured data and
 // for the "latest" ordering on /videos — never invent a date that is missing here.
 export const videoPublished: Readonly<Record<string, string>> = {
+  "Ycn8a4AeDCY": "2026-11-13",
+  "NaHRFiLrd5c": "2026-11-13",
   "xUx-B5UXwHc": "2026-10-28",
   "Fq6Pr2-6QbI": "2026-10-28",
   "orzPIGHbHzU": "2026-10-26",
@@ -276,6 +287,18 @@ export const videoGroups: readonly VideoGroup[] = [
         duration: "9:48",
         title: { th: "หลังบ้านสายการผลิตอาหาร ทำไมทุกขั้นตอนต้องมีการควบคุม", en: "Behind the production line — why every step needs control" },
       },
+      {
+        id: "Ycn8a4AeDCY",
+        aspect: "wide",
+        duration: "2:44",
+        title: { th: "มาตรฐานแรงงานไทย (มรท.) โรงงานต้องมีห้องน้ำกี่ห้อง", en: "Thai Labour Standard — how many toilets must a factory have?" },
+      },
+      {
+        id: "mAt1oZ4j1nQ",
+        aspect: "wide",
+        duration: "6:03",
+        title: { th: "ฉลากเขียนว่า “ไม่มีถั่ว” แต่ทำไมลูกค้าถึงแพ้จนเกือบเสียชีวิต?", en: "The label says “nut-free” — so why did a customer nearly die from an allergy?" },
+      },
     ],
   },
   {
@@ -389,6 +412,66 @@ export const videoGroups: readonly VideoGroup[] = [
         duration: "9:16",
         title: { th: "เห็ดเข็มทองดิบเจอเชื้อลิสทิเรีย 5 จาก 5 ตัวอย่าง", en: "Raw enoki mushrooms: Listeria in 5 of 5 samples" },
       },
+      {
+        id: "lXyhRA4Vhf0",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "3 พฤติกรรมเล็กๆ ที่พนักงานในไลน์ผลิตมักมองข้าม", en: "3 small habits production-line staff overlook" },
+      },
+      {
+        id: "-Nev6KYSdO8",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ไม่ล้างมือในโรงงาน อันตรายกว่าที่คิด", en: "Skipping handwashing in a factory — more dangerous than you think" },
+      },
+      {
+        id: "dvNYR6IKeGo",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "สุขลักษณะส่วนบุคคลที่พนักงานโรงงานมักละเลยจริงๆ 4 ข้อ", en: "The 4 personal-hygiene habits factory staff really neglect" },
+      },
+      {
+        id: "6-wcQ26_QBo",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "4 จุดสุขลักษณะส่วนบุคคลที่พนักงานโรงงานมักละเลย", en: "4 personal-hygiene points factory staff often neglect" },
+      },
+      {
+        id: "VQIdnKNZ1G4",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "GMP420 — แผลเปิดเล็กน้อยบนมือ กับกฎ GMP ข้อห้ามที่เข้มงวด", en: "GMP420 — a small open wound on the hand and the strict GMP rule" },
+      },
+      {
+        id: "WqKrPINeLAk",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "GMP420 ภัยเงียบในโรงงาน — เมื่อสินค้าถูกถั่วปนเปื้อน", en: "GMP420 — the silent risk of nut cross-contamination" },
+      },
+      {
+        id: "XevqQNHoukA",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "GMP420 จุดเริ่มต้นหายนะ — เมื่อหัวหน้าสั่งข้ามขั้นตอน", en: "GMP420 — where disaster starts: a supervisor orders a shortcut" },
+      },
+      {
+        id: "9ttqwk4HgqQ",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ทำไม “ปลาและถั่ว” สารอาหารสูง แต่คนแพ้เยอะที่สุด", en: "Why do fish and nuts, so nutritious, cause the most allergies?" },
+      },
+      {
+        id: "NDbnuG_Fzlk",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "อย. เปลี่ยนกฎฉลากอาหาร (มีผล 31 ต.ค. 69)", en: "Thai FDA food-label rule change (effective 31 Oct 2026)" },
+      },
+      {
+        id: "fHmVHP5o3Yw",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "เรียกคืนสินค้าไม่ได้ เพราะไม่มีบันทึก", en: "Can’t recall the product — because there are no records" },
+      },
     ],
   },
   {
@@ -413,6 +496,24 @@ export const videoGroups: readonly VideoGroup[] = [
         duration: "9:16",
         title: { th: "เรียนสนุกเหมือนพิชิตด่านเกม", en: "Learning that feels like clearing a game level" },
       },
+      {
+        id: "NaHRFiLrd5c",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ชุดโรงงาน ใส่ถูกหรือผิด? ควิซ 5 ข้อ", en: "Factory uniform — right or wrong? A 5-question quiz" },
+      },
+      {
+        id: "5QdtzV4P5as",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "ทายซิ ภาพนี้ผิดตรงไหน? ทายถูกกี่ข้อ", en: "Spot the mistake — how many did you get right?" },
+      },
+      {
+        id: "Hlvu9t5qPPA",
+        aspect: "tall",
+        duration: "9:16",
+        title: { th: "พนักงานคนนี้ล้างมือผิดตรงไหน? ทายถูกกี่ข้อ", en: "What is this worker doing wrong while washing hands?" },
+      },
     ],
   },
 ];
@@ -429,8 +530,8 @@ export const servicePillars = [
       en: "Trained GMP again and again — and it still doesn't stick?",
     },
     intro: {
-      th: "เราเปลี่ยนข้อกำหนดในกระดาษให้เป็นฉากภาพ 3D ที่เล่าเป็นเรื่อง ผลิตแล้วกว่า 500 เฟรม ครอบคลุม 10 โมดูล Food Safety พร้อมวิดีโอเผยแพร่จริง 34 คลิปบน YouTube",
-      en: "We turn paper regulations into story-driven 3D scenes — 500+ frames across 10 food-safety modules, with 34 videos published on YouTube.",
+      th: `เราเปลี่ยนข้อกำหนดในกระดาษให้เป็นฉากภาพ 3D ที่เล่าเป็นเรื่อง ผลิตแล้วกว่า 500 เฟรม ครอบคลุม 10 โมดูล Food Safety พร้อมวิดีโอเผยแพร่จริง ${channel.videoCount} คลิปบน YouTube`,
+      en: `We turn paper regulations into story-driven 3D scenes — 500+ frames across 10 food-safety modules, with ${channel.videoCount} videos published on YouTube.`,
     },
     items: [
       ["01", { th: "ชุดภาพเล่าเรื่อง GMP / Safety", en: "GMP / safety story scenes" }, {
@@ -1007,7 +1108,7 @@ export const copy = {
     viewWork: "ดูผลงานสื่อ",
     viewSystems: "ดูระบบงาน HR",
     selected: "ผลงานสื่อชุดล่าสุด",
-    selectedSub: "ซีรีส์ Food Safety แบบ 3D กว่า 500 เฟรมจากงานจริง และ 34 คลิปที่เผยแพร่บน YouTube — คัดมาให้ชมบางส่วน",
+    selectedSub: `ซีรีส์ Food Safety แบบ 3D กว่า 500 เฟรมจากงานจริง และ ${channel.videoCount} คลิปที่เผยแพร่บน YouTube — คัดมาให้ชมบางส่วน`,
     services: "สิ่งที่เราทำ",
   },
   en: {
@@ -1019,7 +1120,314 @@ export const copy = {
     viewWork: "View media work",
     viewSystems: "See HR systems",
     selected: "Latest media series",
-    selectedSub: "A 3D food-safety series — 500+ frames from real production, plus 34 videos published on YouTube. Curated highlights below.",
+    selectedSub: `A 3D food-safety series — 500+ frames from real production, plus ${channel.videoCount} videos published on YouTube. Curated highlights below.`,
     services: "What we do",
   },
 } as const;
+
+
+// ─── Products (source of truth: HR_Solution_Products_Brief.md) ───
+//
+// Rules carried over from the brief:
+//  • Only claim what is listed under "verified capabilities" for that product.
+//  • No prices, install times, "free", or outcome numbers without evidence.
+//  • No customer names / logos / system internals (node names, URLs, IDs, tokens).
+//  • Diagram colours: grey = people, purple = system acts by itself, teal = data.
+//  • Sample data shown on a page is fictional and is labelled as a sample.
+
+type L = { th: string; en: string };
+
+export type ProductIcon =
+  | "repeat" | "clock" | "search" | "alert" | "calendar" | "checklist" | "chat" | "bell"
+  | "database" | "mail" | "archive" | "chart" | "user" | "bolt" | "layers" | "grid"
+  | "escalate" | "inbox" | "filter" | "table" | "sheet";
+
+export type FlowKind = "person" | "system" | "data";
+
+export type FlowStep = { kind: FlowKind; icon: ProductIcon; label: L };
+
+export type Product = {
+  slug: "line-hr-assistant" | "contract-watch";
+  icon: ProductIcon;
+  name: L;
+  oneLiner: L;
+  hero: { title: L; sub: L; cta: L };
+  problem: { title: L; sub: L; items: { icon: ProductIcon; title: L }[] };
+  beforeAfter: { before: { title: L; icon: ProductIcon }; after: { title: L; icon: ProductIcon } };
+  how: { title: L; sub: L; steps: { icon: ProductIcon; label: L }[] };
+  flow: {
+    title: L;
+    main: FlowStep[];
+    sideTitle: L;
+    side: { trigger: L; step: FlowStep }[];
+  };
+  highlights: { icon: ProductIcon; title: L; body: L }[];
+  benefitsTitle: L;
+  benefits: L[];
+  limitsTitle: L;
+  limits: L[];
+  closing: L;
+  /** Internal checklist from brief section 3.6. Never rendered on the site. */
+  verifyBeforePublish?: string[];
+};
+
+export const productCta: L = { th: "ขอทดลองใช้", en: "Request a trial" };
+
+export const productsCopy = {
+  eyebrow: { th: "Products / สินค้า", en: "Products" },
+  title: { th: "สินค้าที่เปลี่ยนงานซ้ำๆ ของ HR ให้ระบบทำแทน", en: "Products that turn repetitive HR work into work the system does" },
+  body: {
+    th: "เปลี่ยนงานซ้ำๆ ของฝ่ายบุคคลให้ระบบทำแทน เพื่อให้ HR มีเวลาไปทำงานที่ต้องใช้คน",
+    en: "We turn the repetitive work of HR into work the system does, so HR has time for the work that needs people.",
+  },
+  more: { th: "ดูรายละเอียด", en: "See details" },
+  back: { th: "← สินค้าทั้งหมด", en: "← All products" },
+  legendTitle: { th: "สีในแผนภาพ", en: "Diagram colours" },
+  legend: {
+    person: { th: "คน", en: "People" },
+    system: { th: "ระบบทำเอง", en: "The system does it" },
+    data: { th: "ข้อมูล", en: "Data" },
+  },
+  sample: { th: "ตัวอย่างสมมติ ไม่ใช่ข้อมูลจริง", en: "Fictional sample — not real data" },
+  before: { th: "ก่อน", en: "Before" },
+  after: { th: "หลัง", en: "After" },
+} as const;
+
+export const products: readonly Product[] = [
+  // ───────────── Product 1 — HR LINE Assistant ─────────────
+  {
+    slug: "line-hr-assistant",
+    icon: "chat",
+    name: { th: "น้องรับสมัคร AI", en: "HR LINE Assistant" },
+    oneLiner: {
+      th: "ผู้ช่วยบน LINE ที่ตอบคำถามผู้สมัครงานให้ทันที ด้วยข้อมูลจริงของบริษัท ตลอดเวลา",
+      en: "A LINE assistant that answers job applicants instantly, at any hour, using your company's real information.",
+    },
+    hero: {
+      title: { th: "ผู้สมัครถามตอนไหน ก็ได้คำตอบทันที", en: "Applicants ask at any hour — and get an answer right away" },
+      sub: {
+        th: "น้องรับสมัคร AI ตอบคำถามผู้สมัครงานบน LINE ด้วยข้อมูลจริงของบริษัทคุณ",
+        en: "The HR LINE Assistant answers applicants' questions on LINE using your company's real information.",
+      },
+      cta: productCta,
+    },
+    problem: {
+      title: { th: "คำถามเดิม ตอบซ้ำทุกวัน", en: "The same questions, answered every day" },
+      sub: {
+        th: "สวัสดิการ การเดินทาง เอกสาร วุฒิ กะทำงาน HR ตอบเรื่องเดิมวันละหลายรอบ",
+        en: "Benefits, commuting, documents, qualifications, shifts — HR answers the same things several times a day.",
+      },
+      items: [
+        { icon: "repeat", title: { th: "คำถามซ้ำ", en: "Repeated questions" } },
+        { icon: "clock", title: { th: "ตอบไม่ทัน", en: "Replies come too late" } },
+        { icon: "search", title: { th: "ไม่รู้ว่าผู้สมัครสนใจอะไร", en: "No view of what applicants care about" } },
+      ],
+    },
+    beforeAfter: {
+      before: { title: { th: "HR ตอบทีละคน", en: "HR replies one by one" }, icon: "user" },
+      after: { title: { th: "น้องตอบทันที", en: "The assistant replies instantly" }, icon: "bolt" },
+    },
+    how: {
+      title: { th: "จากคำถาม ถึงคำตอบ ใน 4 ขั้น", en: "From question to answer in 4 steps" },
+      sub: {
+        th: "ผู้สมัครถาม → ระบบตรวจข้อความ → AI ตอบ → มีปุ่มให้ถามต่อ",
+        en: "Applicant asks → system checks the message → AI replies → quick buttons to ask more",
+      },
+      steps: [
+        { icon: "chat", label: { th: "ผู้สมัครถาม", en: "Applicant asks" } },
+        { icon: "filter", label: { th: "ระบบตรวจข้อความ", en: "System checks the message" } },
+        { icon: "bolt", label: { th: "AI ตอบ", en: "AI replies" } },
+        { icon: "grid", label: { th: "มีปุ่มให้ถามต่อ", en: "Buttons to ask more" } },
+      ],
+    },
+    flow: {
+      title: { th: "ขั้นตอนทั้งหมด 7 ขั้น", en: "The full flow, 7 steps" },
+      main: [
+        { kind: "person", icon: "chat", label: { th: "ผู้สมัครพิมพ์ถามใน LINE", en: "Applicant types a question in LINE" } },
+        { kind: "system", icon: "inbox", label: { th: "ระบบรับข้อความ", en: "System receives the message" } },
+        { kind: "system", icon: "filter", label: { th: "ตรวจประเภทข้อความ (ข้อความ / รูป / สติกเกอร์) แล้วแยกทางจัดการ", en: "Checks the message type (text / image / sticker) and routes it" } },
+        { kind: "data", icon: "database", label: { th: "AI ค้นคำตอบจากฐานข้อมูลคำถาม-คำตอบและสวัสดิการ", en: "AI looks up the answer in the Q&A and benefits data" } },
+        { kind: "system", icon: "chat", label: { th: "AI ตอบเป็นภาษาธรรมชาติ และจำบทสนทนาของผู้สมัครคนนั้น", en: "AI replies in natural language and remembers that applicant's conversation" } },
+        { kind: "system", icon: "grid", label: { th: "แนบปุ่มลัดให้กดถามต่อ", en: "Attaches quick buttons to keep asking" } },
+        { kind: "data", icon: "table", label: { th: "บันทึกทุกคำถามลงตาราง ให้ HR วิเคราะห์", en: "Logs every question in a table for HR to analyse" } },
+      ],
+      sideTitle: { th: "เส้นทางรอง", en: "Fallback path" },
+      side: [
+        {
+          trigger: { th: "ถ้าตอบไม่ได้", en: "If it cannot answer" },
+          step: { kind: "person", icon: "user", label: { th: "แจ้งผู้สมัครให้ติดต่อ HR ผ่านช่องทางที่กำหนด", en: "Tells the applicant to contact HR through the set channel" } },
+        },
+      ],
+    },
+    highlights: [
+      { icon: "database", title: { th: "ตอบจากข้อมูลจริงของบริษัท", en: "Answers from your real company data" }, body: { th: "ปรับคำตอบให้ตรงกับแต่ละองค์กรได้", en: "Answers can be tailored to each organisation." } },
+      { icon: "grid", title: { th: "ปุ่มลัดให้กดถามต่อ", en: "Quick buttons to keep asking" }, body: { th: "เรื่องที่ถามบ่อยอยู่ในปุ่มเดียว", en: "The most-asked topics sit one tap away." } },
+      { icon: "chart", title: { th: "เห็นว่าผู้สมัครอยากรู้อะไร", en: "See what applicants want to know" }, body: { th: "ทุกคำถามถูกบันทึกให้ HR ดู", en: "Every question is logged for HR to review." } },
+    ],
+    benefitsTitle: { th: "ประโยชน์ที่ได้", en: "What you gain" },
+    benefits: [
+      { th: "ผู้สมัครได้คำตอบทันที แม้นอกเวลาทำงาน", en: "Applicants get answers right away, even outside office hours." },
+      { th: "HR ไม่ต้องตอบคำถามซ้ำ มีเวลาคุยกับผู้สมัครที่ใช่", en: "HR stops answering repeats and has time to talk with the right candidates." },
+      { th: "เห็นว่าผู้สมัครกังวลเรื่องอะไรมากที่สุด เอาไปปรับประกาศรับสมัครและสวัสดิการได้", en: "See what worries applicants most, and use it to improve job posts and benefits." },
+      { th: "ปรับคำตอบให้ตรงกับแต่ละบริษัทได้ ไม่ใช่คำตอบสำเร็จรูป", en: "Answers are adjusted to each company, not off-the-shelf." },
+    ],
+    limitsTitle: { th: "ข้อจำกัดที่บอกตรงๆ", en: "Limits, stated plainly" },
+    limits: [
+      { th: "ตอบได้เท่าที่ข้อมูลในฐานข้อมูลมี ถ้าไม่มีข้อมูลจะส่งให้คนตอบ", en: "It answers only what is in the data. If the data has no answer, a person takes over." },
+      { th: "การส่งต่อให้ HR ตอนนี้เป็นการแจ้งให้ผู้สมัครติดต่อช่องทางที่กำหนด ไม่ใช่การโอนสายอัตโนมัติ", en: "Handing over to HR currently means telling the applicant which channel to contact — it is not an automatic transfer." },
+      { th: "ใช้กับ LINE Official Account ขององค์กร", en: "Works with the organisation's LINE Official Account." },
+      { th: "ใช้บริการ AI ภายนอกซึ่งมีค่าใช้งานตามปริมาณ", en: "Uses an external AI service that is billed by usage volume." },
+    ],
+    closing: {
+      th: "ให้ HR ไปคุยกับคนที่ใช่ แล้วให้น้องตอบเรื่องที่ถามซ้ำ",
+      en: "Let HR talk to the right people, and let the assistant answer the questions that keep repeating.",
+    },
+  },
+
+  // ───────────── Product 2 — Contract Watch ─────────────
+  {
+    slug: "contract-watch",
+    icon: "bell",
+    name: { th: "Contract Watch", en: "Contract Watch" },
+    oneLiner: {
+      th: "ระบบที่เฝ้าดูวันหมดอายุของสัญญาและเอกสารสำคัญให้ แล้วเตือนล่วงหน้าก่อนเกิดความเสียหาย",
+      en: "A system that watches the expiry dates of contracts and key documents and warns you ahead of time, before damage is done.",
+    },
+    hero: {
+      title: { th: "สัญญาใกล้หมด ระบบบอกก่อนเสมอ", en: "Contract about to expire? The system tells you first" },
+      sub: {
+        th: "Contract Watch เฝ้าวันหมดอายุของสัญญาและเอกสารสำคัญให้ทุกวัน",
+        en: "Contract Watch checks the expiry dates of your contracts and key documents every day.",
+      },
+      cta: productCta,
+    },
+    problem: {
+      title: { th: "ลืมต่อสัญญาครั้งเดียว เสียหายได้จริง", en: "Forget one renewal, and the damage is real" },
+      sub: {
+        th: "ค่าปรับ เสียโอกาส ข้อพิพาท มักเริ่มจากวันหมดอายุที่ไม่มีใครเห็น",
+        en: "Penalties, lost opportunities and disputes often start with an expiry date nobody saw.",
+      },
+      items: [
+        { icon: "calendar", title: { th: "ลืมต่อสัญญา", en: "Missed renewals" } },
+        { icon: "alert", title: { th: "ค่าปรับ", en: "Penalties" } },
+        { icon: "checklist", title: { th: "ตรวจมือไม่ทั่ว", en: "Manual checks miss items" } },
+      ],
+    },
+    beforeAfter: {
+      before: { title: { th: "เปิดตารางตรวจเอง", en: "Opening the sheet and checking by hand" }, icon: "sheet" },
+      after: { title: { th: "ระบบเตือนให้", en: "The system reminds you" }, icon: "bell" },
+    },
+    how: {
+      title: { th: "จากทะเบียน ถึงการต่อสัญญา", en: "From the register to the renewal" },
+      sub: {
+        th: "ตรวจทุกวัน → เตือนล่วงหน้าหลายระดับ → ผู้รับผิดชอบดำเนินการ",
+        en: "Checked every day → warned at several levels ahead → the owner takes action",
+      },
+      steps: [
+        { icon: "sheet", label: { th: "ทะเบียนสัญญา", en: "Contract register" } },
+        { icon: "clock", label: { th: "ตรวจทุกวัน", en: "Checked daily" } },
+        { icon: "bell", label: { th: "เตือนล่วงหน้า", en: "Early warnings" } },
+        { icon: "user", label: { th: "ผู้รับผิดชอบดำเนินการ", en: "Owner acts" } },
+      ],
+    },
+    flow: {
+      title: { th: "ลำดับหลักและเส้นทางรอง", en: "The main sequence and the side paths" },
+      main: [
+        { kind: "data", icon: "sheet", label: { th: "ทะเบียนสัญญา (ตารางใน Google Sheets)", en: "Contract register (a table in Google Sheets)" } },
+        { kind: "system", icon: "clock", label: { th: "ตรวจทุกวัน นับวันที่เหลือ", en: "Checks every day and counts the days left" } },
+        { kind: "system", icon: "bell", label: { th: "แจ้งเตือนล่วงหน้า 60 / 45 / 30 / 10 วัน", en: "Warns 60 / 45 / 30 / 10 days ahead" } },
+        { kind: "person", icon: "user", label: { th: "ผู้รับผิดชอบต่อสัญญาหรือปิดงาน", en: "The owner renews the contract or closes it" } },
+      ],
+      sideTitle: { th: "เส้นทางรอง 3 เส้น", en: "Three side paths" },
+      side: [
+        { trigger: { th: "เมื่อเลยกำหนด", en: "When overdue" }, step: { kind: "system", icon: "escalate", label: { th: "ส่งเตือนซ้ำเป็นรอบต่อเนื่อง (Escalation)", en: "Sends repeated reminders in rounds (escalation)" } } },
+        { trigger: { th: "เมื่อเสร็จสิ้น", en: "When completed" }, step: { kind: "data", icon: "archive", label: { th: "ย้ายเข้าคลังถาวรอัตโนมัติ (Auto-Archive)", en: "Moves it to the permanent archive automatically" } } },
+        { trigger: { th: "ทุกสัปดาห์", en: "Every week" }, step: { kind: "system", icon: "mail", label: { th: "ส่งอีเมลสรุปภาพรวม", en: "Sends a summary email" } } },
+      ],
+    },
+    highlights: [
+      { icon: "layers", title: { th: "เตือนล่วงหน้าหลายระดับ", en: "Warnings at several levels" }, body: { th: "ไม่รอจนใกล้วันสุดท้าย", en: "Not left until the last day." } },
+      { icon: "escalate", title: { th: "ไม่เตือนซ้ำจนรำคาญ แต่เลยกำหนดแล้วไม่ปล่อยผ่าน", en: "No nagging — but no ignoring overdue items" }, body: { th: "เตือนซ้ำเป็นรอบเมื่อเลยกำหนด", en: "Repeats the reminder in rounds once overdue." } },
+      { icon: "mail", title: { th: "สรุปรายสัปดาห์ทางอีเมล", en: "Weekly summary by email" }, body: { th: "ผู้บริหารเห็นภาพรวมในที่เดียว", en: "Management sees the overview in one place." } },
+    ],
+    benefitsTitle: { th: "ประโยชน์ที่ได้", en: "What you gain" },
+    benefits: [
+      { th: "ลดความเสี่ยงจากการลืมต่อสัญญา ค่าปรับ และข้อพิพาท", en: "Lower the risk of forgotten renewals, penalties and disputes." },
+      { th: "ไม่ต้องเปิดตารางตรวจเองทุกครั้ง", en: "No need to open the sheet and check by hand every time." },
+      { th: "ผู้บริหารเห็นภาพรวมสัญญาทุกสัปดาห์ในอีเมลเดียว", en: "Management sees every contract's status each week in a single email." },
+      { th: "ไม่ต้องซื้อซอฟต์แวร์ Automation เพิ่ม (ใช้บน Google Workspace ที่องค์กรมีอยู่)", en: "No extra automation software to buy — it runs on the Google Workspace the organisation already has." },
+    ],
+    limitsTitle: { th: "ข้อจำกัดที่บอกตรงๆ", en: "Limits, stated plainly" },
+    limits: [
+      { th: "ต้องมี Google Workspace อยู่แล้ว", en: "Requires an existing Google Workspace." },
+      { th: "Apps Script มีโควตาการทำงาน เช่น จำนวนอีเมลต่อวัน จึงต้องตรวจโควตาก่อนติดตั้งให้องค์กรที่มีสัญญาจำนวนมาก", en: "Apps Script has usage quotas, such as emails per day, so quotas are checked before setting up an organisation with many contracts." },
+      { th: "เตือนตามวันที่ที่กรอกในทะเบียน ถ้าข้อมูลวันที่ผิดหรือไม่ถูกอัปเดต การเตือนก็ผิดตาม", en: "It warns by the dates entered in the register. If a date is wrong or not updated, the warning will be wrong too." },
+      { th: "ไม่ได้อ่านหรือวิเคราะห์เนื้อหาสัญญา", en: "It does not read or analyse the content of contracts." },
+    ],
+    closing: {
+      th: "ให้ระบบจำวันหมดอายุ แล้วคุณโฟกัสงานที่สำคัญกว่า",
+      en: "Let the system remember the expiry dates, so you can focus on what matters more.",
+    },
+    // [TODO-VERIFY] brief §3.6 — confirm from the real code before adding any of this to page copy:
+    verifyBeforePublish: [
+      "Notification channel(s): email / Google Chat / LINE?",
+      "Who receives warnings, and who does escalation go to?",
+      "How is a contract renewed in the system: edit the date in the Sheet, or a button?",
+      "What decides that a contract is 'completed' (Auto-Archive condition)?",
+      "Is any Sheet ID / original company data hard-coded in the script?",
+      "Can the 60/45/30/10 levels be changed? Only then write 'adjustable levels'.",
+    ],
+  },
+];
+
+/** Page-specific sample content (all fictional, always shown with the "sample" label). */
+export const assistantSample = {
+  shortcuts: [
+    { th: "สวัสดิการ", en: "Benefits" },
+    { th: "การเดินทาง", en: "Commuting" },
+    { th: "เอกสารที่ใช้สมัคร", en: "Documents to apply" },
+    { th: "วุฒิการศึกษา", en: "Qualifications" },
+    { th: "ต้องเข้ากะไหม", en: "Shift work?" },
+  ] as readonly L[],
+  chat: {
+    question: { th: "ขอทราบเรื่องสวัสดิการหน่อยค่ะ", en: "Could you tell me about the benefits?" },
+    answer: { th: "ได้เลยค่ะ เลือกเรื่องที่สนใจจากปุ่มด้านล่างได้เลย", en: "Of course — pick a topic from the buttons below." },
+  },
+  /** Bar lengths are decorative (no numbers shown): they illustrate the idea of a topic chart. */
+  topicBars: [88, 72, 58, 44, 30] as readonly number[],
+  logTitle: { th: "บันทึกทุกคำถาม ให้ HR เห็นว่าผู้สมัครสนใจเรื่องอะไร", en: "Every question is logged, so HR sees what applicants care about" },
+};
+
+export const watchSample = {
+  levels: [
+    { th: "เหลือ 60 วัน", en: "60 days left", tone: "early" },
+    { th: "เหลือ 45 วัน", en: "45 days left", tone: "early" },
+    { th: "เหลือ 30 วัน", en: "30 days left", tone: "mid" },
+    { th: "เหลือ 10 วัน", en: "10 days left", tone: "late" },
+    { th: "เลยกำหนด", en: "Overdue", tone: "over" },
+  ] as readonly { th: string; en: string; tone: "early" | "mid" | "late" | "over" }[],
+  levelsTitle: { th: "เตือนล่วงหน้าหลายระดับ (ตัวอย่างระดับการเตือน)", en: "Warnings at several levels (example levels)" },
+  register: {
+    title: { th: "ทะเบียนสัญญา", en: "Contract register" },
+    cols: { name: { th: "สัญญา", en: "Contract" }, left: { th: "เหลือ (วัน)", en: "Days left" }, status: { th: "สถานะ", en: "Status" } },
+    rows: [
+      { name: { th: "สัญญาตัวอย่าง A", en: "Sample contract A" }, left: "58", status: { th: "เตือนระดับ 60", en: "Level 60" }, tone: "early" },
+      { name: { th: "สัญญาตัวอย่าง B", en: "Sample contract B" }, left: "29", status: { th: "เตือนระดับ 30", en: "Level 30" }, tone: "mid" },
+      { name: { th: "สัญญาตัวอย่าง C", en: "Sample contract C" }, left: "9", status: { th: "เตือนระดับ 10", en: "Level 10" }, tone: "late" },
+      { name: { th: "สัญญาตัวอย่าง D", en: "Sample contract D" }, left: "—", status: { th: "เลยกำหนด", en: "Overdue" }, tone: "over" },
+    ],
+  },
+  email: {
+    title: { th: "อีเมลสรุปรายสัปดาห์", en: "Weekly summary email" },
+    subject: { th: "สรุปสัญญารายสัปดาห์ (ตัวอย่าง)", en: "Weekly contract summary (sample)" },
+    rows: [
+      { label: { th: "ใกล้หมดอายุ", en: "Expiring soon" }, tone: "mid" },
+      { label: { th: "เลยกำหนด", en: "Overdue" }, tone: "over" },
+      { label: { th: "เสร็จสิ้น เก็บเข้าคลังแล้ว", en: "Completed and archived" }, tone: "done" },
+    ],
+  },
+} as const;
+
+export function getProduct(slug: string) {
+  return products.find((product) => product.slug === slug);
+}

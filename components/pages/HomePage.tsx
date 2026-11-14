@@ -3,12 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
-import { caseStudies, copy, projectGroups, proofStats, type Locale } from "@/app/site-data";
+import { caseStudies, copy, productsCopy, projectGroups, proofStats, type Locale } from "@/app/site-data";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 import { ServicesPreview } from "@/components/shared/ServicesPreview";
 import { CallToAction } from "@/components/shared/CallToAction";
 import { VideoCard } from "@/components/shared/VideoCard";
 import { FeatureGrid } from "@/components/shared/FeatureGrid";
+import { HeroVideo } from "@/components/shared/HeroVideo";
+import { ProductCards } from "@/components/shared/ProductCards";
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   // Start at the real value so SSR, crawlers, link-preview bots and no-JS
@@ -99,13 +101,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
         <div className="hero-stage">
           <div className="hero-visual">
-            <Image
-              src="/projects/factory-lighting/factory-lighting-01.webp"
-              alt={locale === "th" ? "ตัวอย่างสื่ออบรม Food Safety แบบ 3D" : "3D food-safety training media example"}
-              fill
-              sizes="(max-width: 900px) 100vw, 48vw"
-              priority
-            />
+            <HeroVideo locale={locale} />
             <span className="visual-label">Food Safety Thailand series / 2026</span>
             <div
               className="hero-visual-glow"
@@ -201,6 +197,15 @@ export function HomePage({ locale }: { locale: Locale }) {
 
       <VideoCard locale={locale} />
       <ServicesPreview locale={locale} />
+
+      {/* ─── PRODUCTS TEASER ─── */}
+      <section className="product-section section-pad">
+        <div className="product-heading reveal">
+          <p className="eyebrow">{productsCopy.eyebrow[locale]}</p>
+          <h2>{productsCopy.title[locale]}</h2>
+        </div>
+        <ProductCards locale={locale} />
+      </section>
       <ShowcaseSection locale={locale} />
       <CallToAction locale={locale} />
     </main>
