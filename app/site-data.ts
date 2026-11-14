@@ -667,6 +667,8 @@ export const featureHighlights = [
 export type CaseStudy = {
   slug: string;
   icon: "inbox" | "rocket" | "chart" | "shield" | "bell" | "chat";
+  /** Very short label for the icon row on the HR Systems page. */
+  short: { th: string; en: string };
   sector: { th: string; en: string };
   title: { th: string; en: string };
   pain: { th: string; en: string };
@@ -684,6 +686,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "resume-screening",
     icon: "inbox",
+    short: { th: "คัดใบสมัคร", en: "Resume screening" },
     sector: { th: "ฝ่ายสรรหาฯ กลุ่มธุรกิจอาหาร", en: "Recruitment team, food-industry group" },
     title: { th: "ระบบคัดกรองใบสมัครจากอีเมลอัตโนมัติ", en: "Automated resume-screening inbox" },
     pain: {
@@ -718,6 +721,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "onboardpro",
     icon: "rocket",
+    short: { th: "รับพนักงานใหม่", en: "Onboarding" },
     sector: { th: "ฝ่ายบุคคล องค์กรภาคการผลิต", en: "HR team, manufacturing organization" },
     title: { th: "OnboardPro — รับพนักงานใหม่และติดตามทดลองงาน", en: "OnboardPro — onboarding & probation tracking" },
     pain: {
@@ -754,6 +758,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "kpi-evaluation",
     icon: "chart",
+    short: { th: "ประเมิน KPI", en: "KPI reviews" },
     sector: { th: "ผู้ผลิตในภาคอุตสาหกรรม", en: "Industrial manufacturer" },
     title: { th: "ระบบประเมินผล KPI / Competency ออนไลน์", en: "KPI / competency evaluation web app" },
     pain: {
@@ -788,6 +793,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "field-logbook",
     icon: "shield",
+    short: { th: "งานภาคสนาม", en: "Field logbook" },
     sector: { th: "งานบริหารอาคารและรักษาความปลอดภัย", en: "Facility & security operations" },
     title: { th: "ระบบบันทึกงาน รปภ. และแม่บ้านผ่านมือถือ", en: "Mobile logbook for security & housekeeping" },
     pain: {
@@ -822,6 +828,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "contract-registry",
     icon: "bell",
+    short: { th: "สัญญา/เอกสาร", en: "Contracts" },
     sector: { th: "ฝ่ายบุคคล องค์กรเอกชน", en: "HR team, private company" },
     title: { th: "ทะเบียนสัญญาและระบบเตือนเอกสารหมดอายุ", en: "Contract registry with expiry reminders" },
     pain: {
@@ -856,6 +863,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "line-ai-assistant",
     icon: "chat",
+    short: { th: "แชตลูกค้า", en: "Customer chat" },
     sector: { th: "ธุรกิจค้าปลีกวัสดุตกแต่ง", en: "Decor-materials retail business" },
     title: { th: "LINE AI Chatbot ตอบลูกค้าและบันทึกใบเสนอราคา", en: "LINE AI chatbot for replies & quotations" },
     pain: {
