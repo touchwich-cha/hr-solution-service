@@ -95,11 +95,11 @@ function WatchInsight({ locale }: { locale: Locale }) {
         <div className="product-heading reveal">
           <h2>{levelsTitle[locale]}</h2>
         </div>
-        <ol className="timeline reveal">
+        <ol className="level-timeline reveal">
           {levels.map((level) => (
-            <li key={level.en} className={`timeline-step tone-${level.tone}`}>
-              <span className="timeline-dot" />
-              <span className="timeline-label">{level[locale]}</span>
+            <li key={level.en} className={`level-step tone-${level.tone}`}>
+              <span className="level-dot" />
+              <span className="level-label">{level[locale]}</span>
             </li>
           ))}
         </ol>
