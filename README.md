@@ -84,13 +84,29 @@ Deploy เป็น **Web App** (Execute as: Me · Who has access: Anyone) แ�
 | ข้อมูล | ที่อยู่ |
 |---|---|
 | `channel` | ลิงก์ช่อง/เพลย์ลิสต์/TikTok + `videoCount` (ใช้ใน header, footer, JSON-LD `sameAs`) |
-| `videos` | 5 คลิปคัดสำหรับหน้าแรก (ตัวแรก = ตัวเล่นหลัก) |
-| `videoGroups` | คลังเต็ม 34 คลิป แบ่ง 3 หมวด: `gmp420` (15), `micro-learning` (17), `quiz` (2) |
+| `videos` | 3 คลิปคัดสำหรับหน้าแรก (ตัวแรก = ตัวเล่นหลักแนวนอน, อีก 2 = แนวตั้ง) |
+| `videoGroups` | คลังเต็ม 49 คลิป (ตรวจ 2026-11-14) แบ่ง 3 หมวด: `gmp420` (17), `micro-learning` (27), `quiz` (5) — หน้า /videos แสดงหมวดละ 6 คลิปแรก กด "ดูเพิ่ม" เพื่อเปิดที่เหลือ |
 | `videoPublished` | วันที่เผยแพร่จริงของทุกคลิป (ใช้ทำ `VideoObject` schema) — **ห้ามเดา ถ้าไม่มีข้อมูลให้เว้น** |
 
 - หน้า `/{th|en}/videos` เรนเดอร์จาก `videoGroups` + สร้าง `CollectionPage`/`VideoObject` JSON-LD อัตโนมัติ
 - `VideoTile` เป็น **click-to-play**: ยังไม่คลิก = โหลดแค่ thumbnail จาก `i.ytimg.com`, คลิกแล้วจึงใส่ iframe (`youtube-nocookie`) — หน้าเดียวมี 30+ คลิปก็ไม่หนัก
-- เพิ่มคลิปใหม่: เพิ่ม object ใน `videoGroups` (id/duration/title TH-EN) แล้วเพิ่มวันที่ใน `videoPublished` และอัปเดต `channel.videoCount`
+- เพิ่มคลิปใหม่: เพิ่ม object ใน `videoGroups` (id/duration/title TH-EN) แล้วเพิ่มวันที่ใน `videoPublished` และอัปเดต `channel.videoCount` (ตัวเลขในข้อความอื่นดึงจากค่านี้อัตโนมัติ)
+- คลิป Private ห้ามใส่ (คนดูจะเห็นหน้าว่าง) ใส่เฉพาะคลิป Public/Unlisted
+- วิดีโอพื้นหลังหน้าแรก: `heroVideo` ใน `app/site-data.ts` (ลิงก์ Cloudinary + รูปปก) — ผู้ใช้ที่ตั้งค่าลดการเคลื่อนไหวหรือเปิดโหมดประหยัดข้อมูลจะเห็นรูปนิ่งแทน
+
+## สินค้า (หน้า /products)
+
+เนื้อหาสินค้า 2 ตัว (น้องรับสมัคร AI, Contract Watch) อยู่ใน `products` ที่ `app/site-data.ts` (ภาษาไทย/อังกฤษ) ต้นทางข้อความคือไฟล์ Product Brief — เขียนเฉพาะความสามารถที่ยืนยันแล้ว ห้ามใส่ราคา/ตัวเลขผลลัพธ์ที่ไม่มีหลักฐาน
+
+- Route: `/{th|en}/products` (หน้ารวม) และ `/{th|en}/products/{slug}` (หน้าสินค้า)
+- ข้อมูลที่ต้องตรวจจากโค้ดจริงก่อนเขียนลงหน้า Contract Watch เก็บไว้ใน `verifyBeforePublish` (ไม่แสดงบนเว็บ)
+- แผนภาพ flow ใช้สี: เทา = คน, ม่วง = ระบบทำเอง, เขียวอมฟ้า = ข้อมูล (`FlowDiagram`)
+- ข้อมูลตัวอย่างบนหน้า (แชต ตารางสัญญา อีเมลสรุป) เป็นข้อมูลสมมติ และมีป้ายกำกับ
+
+## ผลงานสื่อและระบบงาน HR
+
+- หน้า /portfolio แสดงเฉพาะซีรีส์ใน `portfolioFeatured` (6 ชุด) ที่เหลือยังอยู่ใน `projectGroups` และรูปยังอยู่ใน `public/projects/` ถ้าจะนำกลับมาแสดง เพิ่ม slug ใน `portfolioFeatured`
+- หน้า /hr-systems แสดงเป็นการ์ดย่อ (หัวการ์ด + ติ๊ก 3 ข้อ + แท็ก) ข้อความเต็มอยู่ในปุ่ม "ดูรายละเอียด" ข้อมูลมาจาก `caseStudies` (ฟิลด์ `short` ใช้กับแถวไอคอนด้านบน)
 
 ## QR Code LINE (หน้า Contact)
 

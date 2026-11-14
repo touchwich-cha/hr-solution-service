@@ -1,7 +1,7 @@
 import { channel, siteUrl, videoGroups, videoPublished, type Locale } from "@/app/site-data";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { CallToAction } from "@/components/shared/CallToAction";
-import { VideoTile } from "@/components/shared/VideoTile";
+import { VideoGroupGrid } from "@/components/shared/VideoGroupGrid";
 
 const allVideos = videoGroups.flatMap((group) => group.videos);
 
@@ -112,6 +112,14 @@ export function VideosPage({ locale }: { locale: Locale }) {
         </dl>
       </section>
 
+      <nav className="video-jump section-pad" aria-label={locale === "th" ? "ไปยังหมวดวิดีโอ" : "Jump to a video group"}>
+        {videoGroups.map((group) => (
+          <a key={group.slug} href={`#${group.slug}`}>
+            {group.title[locale]}<b>{group.videos.length}</b>
+          </a>
+        ))}
+      </nav>
+
       {videoGroups.map((group) => (
         <section key={group.slug} id={group.slug} className="video-group section-pad">
           <div className="section-heading reveal">
@@ -119,11 +127,7 @@ export function VideosPage({ locale }: { locale: Locale }) {
             <h2>{group.title[locale]}</h2>
             <p>{group.description[locale]}</p>
           </div>
-          <div className="video-grid">
-            {group.videos.map((video, index) => (
-              <VideoTile key={video.id} video={video} locale={locale} priority={index < 2} />
-            ))}
-          </div>
+          <VideoGroupGrid videos={group.videos} locale={locale} />
           {group.playlist && (
             <div className="video-group-foot">
               <a className="text-link" href={group.playlist} target="_blank" rel="noopener noreferrer">

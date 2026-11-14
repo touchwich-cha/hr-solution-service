@@ -93,7 +93,7 @@ export type VideoGroup = {
   videos: readonly VideoItem[];
 };
 
-/** Curated for the home page — first entry is the featured player. */
+/** Curated for the home page — first entry is the featured player, the rest are vertical clips. */
 export const videos: readonly VideoItem[] = [
   {
     id: "6WkrbKnv7SA",
@@ -114,30 +114,12 @@ export const videos: readonly VideoItem[] = [
     },
   },
   {
-    id: "RWzfivHF0cg",
-    aspect: "wide",
-    duration: "8:29",
+    id: "Ek5T5TiNLhg",
+    aspect: "tall",
+    duration: "9:16",
     title: {
-      th: "ผลิตอาหารได้ทุกวัน แต่อาจไม่ผ่านมาตรฐานเพราะเรื่องเครื่องจักร",
-      en: "Daily production still fails the standard — because of the machines",
-    },
-  },
-  {
-    id: "nmVLPBOSAMQ",
-    aspect: "wide",
-    duration: "8:27",
-    title: {
-      th: "GMP420 ข้อ 1.7 — ไขข้อสงสัยมาตรฐานโรงงานอาหาร",
-      en: "GMP420 1.7 — What the clause actually requires",
-    },
-  },
-  {
-    id: "_kHF1uBlQH0",
-    aspect: "wide",
-    duration: "4:39",
-    title: {
-      th: "โรงงานไฟสลัว เสี่ยงปิดกิจการ — แสงสว่างที่คนผลิตต้องรู้",
-      en: "Dim factory lighting — the cost of poor light",
+      th: "ความลาดเอียงของพื้น อาวุธลับที่ทำให้โรงงานปลอดเชื้อรา",
+      en: "Floor slope — the secret weapon against mould",
     },
   },
 ];
@@ -667,6 +649,8 @@ export const featureHighlights = [
 export type CaseStudy = {
   slug: string;
   icon: "inbox" | "rocket" | "chart" | "shield" | "bell" | "chat";
+  /** Very short label for the icon row on the HR Systems page. */
+  short: { th: string; en: string };
   sector: { th: string; en: string };
   title: { th: string; en: string };
   pain: { th: string; en: string };
@@ -684,6 +668,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "resume-screening",
     icon: "inbox",
+    short: { th: "คัดใบสมัคร", en: "Resume screening" },
     sector: { th: "ฝ่ายสรรหาฯ กลุ่มธุรกิจอาหาร", en: "Recruitment team, food-industry group" },
     title: { th: "ระบบคัดกรองใบสมัครจากอีเมลอัตโนมัติ", en: "Automated resume-screening inbox" },
     pain: {
@@ -718,6 +703,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "onboardpro",
     icon: "rocket",
+    short: { th: "รับพนักงานใหม่", en: "Onboarding" },
     sector: { th: "ฝ่ายบุคคล องค์กรภาคการผลิต", en: "HR team, manufacturing organization" },
     title: { th: "OnboardPro — รับพนักงานใหม่และติดตามทดลองงาน", en: "OnboardPro — onboarding & probation tracking" },
     pain: {
@@ -754,6 +740,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "kpi-evaluation",
     icon: "chart",
+    short: { th: "ประเมิน KPI", en: "KPI reviews" },
     sector: { th: "ผู้ผลิตในภาคอุตสาหกรรม", en: "Industrial manufacturer" },
     title: { th: "ระบบประเมินผล KPI / Competency ออนไลน์", en: "KPI / competency evaluation web app" },
     pain: {
@@ -788,6 +775,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "field-logbook",
     icon: "shield",
+    short: { th: "งานภาคสนาม", en: "Field logbook" },
     sector: { th: "งานบริหารอาคารและรักษาความปลอดภัย", en: "Facility & security operations" },
     title: { th: "ระบบบันทึกงาน รปภ. และแม่บ้านผ่านมือถือ", en: "Mobile logbook for security & housekeeping" },
     pain: {
@@ -822,6 +810,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "contract-registry",
     icon: "bell",
+    short: { th: "สัญญา/เอกสาร", en: "Contracts" },
     sector: { th: "ฝ่ายบุคคล องค์กรเอกชน", en: "HR team, private company" },
     title: { th: "ทะเบียนสัญญาและระบบเตือนเอกสารหมดอายุ", en: "Contract registry with expiry reminders" },
     pain: {
@@ -856,6 +845,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     slug: "line-ai-assistant",
     icon: "chat",
+    short: { th: "แชตลูกค้า", en: "Customer chat" },
     sector: { th: "ธุรกิจค้าปลีกวัสดุตกแต่ง", en: "Decor-materials retail business" },
     title: { th: "LINE AI Chatbot ตอบลูกค้าและบันทึกใบเสนอราคา", en: "LINE AI chatbot for replies & quotations" },
     pain: {
@@ -929,6 +919,16 @@ export const additionalTools: readonly AdditionalTool[] = [
 ];
 
 // ─── Portfolio groups (new curated Food Safety series first) ───
+
+/** Series shown on the Portfolio page, in display order. More work is linked from the channels. */
+export const portfolioFeatured = [
+  "factory-lighting",
+  "factory-hidden-flaw",
+  "gmp-compliance-audit",
+  "food-factory-location",
+  "floor-slope-design",
+  "gmp-pest-control",
+] as const;
 
 export const projectGroups = [
   {

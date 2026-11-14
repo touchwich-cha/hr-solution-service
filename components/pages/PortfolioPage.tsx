@@ -2,13 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { projectGroups, type Locale } from "@/app/site-data";
+import { channel, portfolioFeatured, projectGroups as allProjectGroups, type Locale } from "@/app/site-data";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { CallToAction } from "@/components/shared/CallToAction";
 
 function imagePath(slug: string, name: string) {
   return `/projects/${slug}/${name}`;
 }
+
+// Only the strongest series are shown here; the rest of the work is linked from the channels below.
+const projectGroups = portfolioFeatured
+  .map((slug) => allProjectGroups.find((project) => project.slug === slug))
+  .filter((project): project is (typeof allProjectGroups)[number] => Boolean(project));
 
 const totalImages = projectGroups.reduce((count, project) => count + project.images.length, 0);
 
@@ -44,8 +49,8 @@ export function PortfolioPage({ locale }: { locale: Locale }) {
         eyebrow="Learning media / 2026"
         title={locale === "th" ? "ผลงานสื่อที่เล่าเรื่องด้วยภาพ" : "Media work that makes ideas visible"}
         body={locale === "th"
-          ? `เปิดดูแต่ละชุดเพื่อสำรวจทั้งหมด ${totalImages} ภาพ — จากซีรีส์ Food Safety แบบ 3D ชุดใหม่ ไปจนถึงงานออกแบบระบบการเรียนรู้`
-          : `Open each series to explore all ${totalImages} visuals — from the new 3D food-safety series to learning-system design.`}
+          ? `คัดมาให้ชม ${projectGroups.length} ซีรีส์เด่น รวม ${totalImages} ภาพ จากงานสื่อ Food Safety แบบ 3D — ผลงานทั้งหมดดูต่อได้ที่ช่องของเรา`
+          : `${projectGroups.length} standout series, ${totalImages} visuals from our 3D food-safety media — the full body of work is on our channels.`}
       />
       <section className="portfolio-list section-pad">
         {projectGroups.map((project, index) => (
@@ -93,6 +98,19 @@ export function PortfolioPage({ locale }: { locale: Locale }) {
             </div>
           </details>
         ))}
+        <div className="more-work reveal">
+          <h2>{locale === "th" ? "ดูผลงานเพิ่มเติมได้ที่ช่องของเรา" : "See more of our work on our channels"}</h2>
+          <p>
+            {locale === "th"
+              ? "วิดีโอและผลงานชุดอื่นๆ อัปเดตต่อเนื่องบนช่องทางเหล่านี้"
+              : "More videos and series are published regularly on these channels."}
+          </p>
+          <div className="more-work-links">
+            <a className="button" href={channel.youtube} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+            <a className="button outline" href={channel.facebook} target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+            <a className="button outline" href={channel.tiktok} target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+          </div>
+        </div>
       </section>
       <CallToAction locale={locale} />
     </main>
