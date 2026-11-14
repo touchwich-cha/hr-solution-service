@@ -1,9 +1,12 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/app/site-data";
+import { products, siteUrl } from "@/app/site-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["th", "en"];
-  const pages = ["", "services", "portfolio", "videos", "hr-systems", "process", "about", "contact"];
+  const pages = [
+    "", "services", "portfolio", "videos", "products", "hr-systems", "process", "about", "contact",
+    ...products.map((product) => `products/${product.slug}`),
+  ];
   const lastModified = new Date();
 
   return locales.flatMap((locale) =>

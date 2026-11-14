@@ -7,6 +7,7 @@ import { brand, channel, contact, copy, nav, type Locale } from "@/app/site-data
 export function Shell({ locale, page, children }: { locale: Locale; page: string; children: React.ReactNode }) {
   const opposite = locale === "th" ? "en" : "th";
   const base = `/${locale}`;
+  const section = page.split("/")[0];
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {nav[locale].map(([label, href]) => (
-            <Link key={href || "home"} className={(page === href || (!page && !href)) ? "active" : ""} href={`${base}${href ? `/${href}` : ""}`}>{label}</Link>
+            <Link key={href || "home"} className={(section === href || (!section && !href)) ? "active" : ""} href={`${base}${href ? `/${href}` : ""}`}>{label}</Link>
           ))}
         </nav>
         <div className="header-actions">
@@ -83,7 +84,7 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
         <div className="mobile-menu">
           <nav className="mobile-nav" aria-label="Mobile navigation">
             {nav[locale].map(([label, href]) => (
-              <Link key={href || "home"} className={(page === href || (!page && !href)) ? "active" : ""} href={`${base}${href ? `/${href}` : ""}`} onClick={closeMenu}>{label}</Link>
+              <Link key={href || "home"} className={(section === href || (!section && !href)) ? "active" : ""} href={`${base}${href ? `/${href}` : ""}`} onClick={closeMenu}>{label}</Link>
             ))}
           </nav>
           <div className="mobile-menu-actions">
@@ -106,6 +107,9 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
           </a>
           <a href={channel.tiktok} target="_blank" rel="noopener noreferrer">
             TikTok ↗
+          </a>
+          <a href={channel.facebook} target="_blank" rel="noopener noreferrer">
+            Facebook ↗
           </a>
         </div>
       </footer>
