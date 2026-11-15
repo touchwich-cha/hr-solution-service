@@ -21,6 +21,13 @@ export function ProductGroups({ locale }: { locale: Locale }) {
                 <div className="pg-img">
                   <Image src={item.image} alt={item.name[locale]} fill sizes="(max-width: 720px) 90vw, (max-width: 1100px) 45vw, 30vw" />
                 </div>
+                {item.samples && (
+                  <div className="pg-thumbs">
+                    {item.samples.map((src) => (
+                      <div key={src} className="pg-thumb"><Image src={src} alt="" fill sizes="120px" /></div>
+                    ))}
+                  </div>
+                )}
                 <div className="pg-body">
                   <h4>{item.name[locale]}</h4>
                   <p>{item.summary[locale]}</p>

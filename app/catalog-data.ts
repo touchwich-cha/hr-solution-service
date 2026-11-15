@@ -9,6 +9,8 @@ export type CatalogItem = {
   name: L;
   summary: L;
   image: string;
+  /** Extra work samples shown as small thumbnails under the cover. */
+  samples?: readonly string[];
   /** Existing page on this site (path after /{locale}/), when there is one. */
   href?: string;
 };
@@ -41,14 +43,16 @@ export const catalogGroups: readonly CatalogGroup[] = [
         slug: "gmp-3d-video",
         name: { th: "วิดีโออบรม GMP / Food Safety แบบ 3D", en: "3D GMP / Food Safety training video" },
         summary: { th: "สตอรีบอร์ดถึงวิดีโอพร้อมเผยแพร่ ทั้งจอกว้าง 16:9 และแนวตั้ง 9:16", en: "Storyboard to publish-ready video, in 16:9 and 9:16." },
-        image: "/projects/factory-lighting/factory-lighting-01.webp",
+        image: "/catalog/gmp-3d-cover.webp",
+        samples: ["/projects/gmp-compliance-audit/gmp-compliance-audit-01.webp", "/projects/factory-hidden-flaw/factory-hidden-flaw-01.webp", "/projects/floor-slope-design/floor-slope-design-01.webp"],
         href: "training-media",
       },
       {
         slug: "software-video",
         name: { th: "วิดีโอสอนใช้งานระบบ / โปรแกรมบริษัท", en: "Software how-to video for your systems" },
         summary: { th: "จำลองหน้าจอ ซูม เคอร์เซอร์ และเสียงบรรยายไทย สำหรับสอนพนักงานใช้ระบบ", en: "Recreated screens, zoom, cursor and Thai voice-over to teach staff a system." },
-        image: "/catalog/software-video.webp",
+        image: "/catalog/software-video-cover.webp",
+        samples: ["/catalog/software-video-1.webp", "/catalog/software-video-2.webp", "/catalog/software-video-3.webp"],
       },
     ],
   },
@@ -61,19 +65,22 @@ export const catalogGroups: readonly CatalogGroup[] = [
         slug: "logical-test",
         name: { th: "Logical Test — แบบทดสอบกระบวนการคิด", en: "Logical Test — reasoning assessment" },
         summary: { th: "สุ่มข้อ จับเวลา ตรวจให้อัตโนมัติ ลงผลใน Google Sheets", en: "Randomised, timed, auto-scored, results in Google Sheets." },
-        image: "/catalog/logical-test.webp",
+        image: "/catalog/logical-test-cover.webp",
+        samples: ["/catalog/logical-test-1.webp", "/catalog/logical-test-2.webp", "/catalog/logical-test-3.webp"],
       },
       {
         slug: "disc-style",
         name: { th: "แบบทดสอบบุคลิกภาพแนว DISC", en: "DISC-style personality test" },
         summary: { th: "แบบสอบถามบุคลิกภาพแนว DISC พร้อมรายงานผลรายคน ใช้ประกอบการสรรหาและพัฒนาทีม", en: "A DISC-style questionnaire with an individual report, to support hiring and team development." },
-        image: "/catalog/disc-style.webp",
+        image: "/catalog/disc-style-cover.webp",
+        samples: ["/catalog/disc-style-1.webp", "/catalog/disc-style-2.webp", "/catalog/disc-style-3.webp"],
       },
       {
         slug: "training-exam",
         name: { th: "ข้อสอบหลังอบรม + เกียรติบัตร", en: "Post-training exam + certificate" },
         summary: { th: "ทำข้อสอบออนไลน์หลังอบรม ตรวจคะแนน และออกเกียรติบัตรให้ผู้ที่ผ่าน", en: "Online post-training exam, auto-scoring and certificates for those who pass." },
-        image: "/catalog/training-exam.webp",
+        image: "/catalog/training-exam-cover.webp",
+        samples: ["/catalog/training-exam-1.webp", "/catalog/training-exam-2.webp", "/catalog/training-exam-3.webp"],
       },
     ],
   },
@@ -86,20 +93,23 @@ export const catalogGroups: readonly CatalogGroup[] = [
         slug: "doc-alert",
         name: { th: "ระบบแจ้งเตือนเอกสาร / สัญญาหมดอายุ", en: "Document & contract expiry alerts" },
         summary: { th: "สัญญา บัตรประชาชน ใบขับขี่ ใบอนุญาต เตือนล่วงหน้าผ่านอีเมลหรือ LINE จาก Google Sheets", en: "Contracts, IDs, licences and permits flagged ahead by email or LINE, from Google Sheets." },
-        image: "/catalog/doc-alert.webp",
+        image: "/catalog/doc-alert-cover.webp",
+        samples: ["/catalog/doc-alert-1.webp", "/catalog/doc-alert-2.webp", "/catalog/doc-alert-3.webp"],
         href: "products/contract-watch",
       },
       {
         slug: "probation",
         name: { th: "ระบบเตือนทดลองงานครบ 45 / 90 วัน", en: "Probation reminders at day 45 / 90" },
         summary: { th: "คำนวณวันครบทดลองงาน แจ้งหัวหน้าและ HR ให้ประเมินทันเวลา", en: "Counts probation dates and prompts managers and HR in time to review." },
-        image: "/catalog/probation.webp",
+        image: "/catalog/probation-cover.webp",
+        samples: ["/catalog/probation-1.webp", "/catalog/probation-2.webp", "/catalog/probation-3.webp"],
       },
       {
         slug: "guard-system",
         name: { th: "ระบบบันทึกงาน รปภ. และแม่บ้านบนมือถือ", en: "Mobile logbook for security & cleaning crews" },
         summary: { th: "ลงเวลา ตรวจจุด บันทึกรูป และแจ้งเตือนเข้า LINE พร้อมรายงานรายเดือน", en: "Check-ins, patrol points, photos and LINE alerts with monthly reports." },
-        image: "/catalog/guard.webp",
+        image: "/catalog/guard-cover.webp",
+        samples: ["/catalog/guard-1.webp", "/catalog/guard-2.webp", "/catalog/guard-3.webp"],
       },
     ],
   },
@@ -112,7 +122,8 @@ export const catalogGroups: readonly CatalogGroup[] = [
         slug: "chatbot-faq",
         name: { th: "Chatbot FAQ บน LINE / Facebook", en: "FAQ chatbot on LINE / Facebook" },
         summary: { th: "ตอบจากข้อมูลของธุรกิจคุณ ค่า AI Model เป็นไปตามที่ตกลง", en: "Answers from your own business information. AI model cost is agreed separately." },
-        image: "/catalog/chatbot-faq.webp",
+        image: "/catalog/chatbot-faq-cover.webp",
+        samples: ["/catalog/chatbot-faq-1.webp", "/catalog/chatbot-faq-2.webp", "/catalog/chatbot-faq-3.webp"],
         href: "products/line-hr-assistant",
       },
     ],

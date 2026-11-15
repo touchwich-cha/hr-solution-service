@@ -6,6 +6,7 @@ import { products, productsCopy, proofStats, type Locale } from "@/app/site-data
 import { CallToAction } from "@/components/shared/CallToAction";
 import { VideoCard } from "@/components/shared/VideoCard";
 import { HeroVideo } from "@/components/shared/HeroVideo";
+import { ProductGroups } from "@/components/shared/ProductGroups";
 import { ProductCards } from "@/components/shared/ProductCards";
 import { ProductIcon } from "@/components/shared/ProductIcon";
 import type { ProductIcon as ProductIconName } from "@/app/site-data";
@@ -186,6 +187,9 @@ export function HomePage({ locale }: { locale: Locale }) {
           </Link>
         </div>
       </section>
+
+      {/* ─── CATALOGUE BY TYPE OF WORK ─── */}
+      <ProductGroups locale={locale} />
 
       {/* ─── WORKS WHERE YOU ALREADY WORK ─── */}
       <section className="product-section section-pad">
