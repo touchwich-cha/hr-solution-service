@@ -71,7 +71,7 @@ export const pageSeo = {
     crumb: { th: "หน้าแรก", en: "Home" },
   },
   products: {
-    title: { th: "สินค้าทั้งหมด 9 รายการ 3 แพ็กเกจ เริ่มต้น 399 บาท", en: "All 9 products in 3 tiers, from THB 399" },
+    title: { th: "สินค้าทั้งหมด 9 รายการ 3 แพ็กเกจ เริ่มต้น 300 บาท", en: "All 9 products in 3 tiers, from THB 300" },
     description: {
       th: "สื่ออบรมและวิดีโอ แบบทดสอบและประเมินผล ระบบงาน HR และเอกสารอัตโนมัติ และแชตบอท LINE ทุกรายการมีแพ็กเกจ Basic / Standard / Premium ตรงกับประกาศบน Fastwork",
       en: "Training media and video, tests and assessments, HR and document automation, and LINE chatbots — each with Basic / Standard / Premium tiers matching our Fastwork listings.",

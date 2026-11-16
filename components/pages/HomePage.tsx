@@ -102,8 +102,8 @@ export function HomePage({ locale }: { locale: Locale }) {
           </h1>
           <p className="lede">
             {th
-              ? "9 สินค้า 4 กลุ่มงาน ตั้งแต่วิดีโออบรม GMP 3D แบบทดสอบ Logical / DISC ระบบแจ้งเตือนเอกสาร ไปจนถึงแชตบอท LINE ทุกสินค้ามี 3 แพ็กเกจ เริ่มต้น 399 บาท และตรงกับประกาศบน Fastwork"
-              : "9 products in 4 groups — from 3D GMP videos and Logical / DISC tests to document alerts and LINE chatbots. Every product has 3 tiers from THB 399 and matches our Fastwork listings."}
+              ? "9 สินค้า 4 กลุ่มงาน ตั้งแต่วิดีโออบรม GMP 3D แบบทดสอบ Logical / DISC ระบบแจ้งเตือนเอกสาร ไปจนถึงแชตบอท LINE ทุกสินค้ามี 3 แพ็กเกจ เริ่มต้น 300 บาท และตรงกับประกาศบน Fastwork"
+              : "9 products in 4 groups — from 3D GMP videos and Logical / DISC tests to document alerts and LINE chatbots. Every product has 3 tiers from THB 300 and matches our Fastwork listings."}
           </p>
           <div className="hero-actions">
             <Link className="button" href={`/${locale}/products`}>
