@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { products, siteUpdated, siteUrl } from "@/app/site-data";
+import { siteUpdated, siteUrl } from "@/app/site-data";
+import { fwProducts } from "@/app/catalog-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["th", "en"] as const;
-  const pages = ["", "products", "training-media", "about", "contact", ...products.map((product) => `products/${product.slug}`)];
+  const pages = ["", "products", "training-media", "about", "contact", ...fwProducts.map((product) => `products/${product.slug}`)];
   const lastModified = new Date(siteUpdated);
   const urlFor = (locale: string, page: string) => `${siteUrl}/${locale}${page ? `/${page}` : ""}`;
 

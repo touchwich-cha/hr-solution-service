@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
-import { products, productsCopy, proofStats, type Locale } from "@/app/site-data";
+import { proofStats, type Locale } from "@/app/site-data";
+import { catalogCopy, fwProducts, fromPrice, formatPrice } from "@/app/catalog-data";
+import { FastworkNote } from "@/components/shared/FastworkNote";
 import { CallToAction } from "@/components/shared/CallToAction";
 import { VideoCard } from "@/components/shared/VideoCard";
 import { HeroVideo } from "@/components/shared/HeroVideo";
 import { ProductGroups } from "@/components/shared/ProductGroups";
-import { ProductCards } from "@/components/shared/ProductCards";
 import { ProductIcon } from "@/components/shared/ProductIcon";
 import type { ProductIcon as ProductIconName } from "@/app/site-data";
 
@@ -90,7 +91,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <div className="hero-copy">
           <span className="hero-badge">
             <span className="hero-badge-dot" />
-            {th ? "ระบบผู้ช่วยอัตโนมัติ + สื่ออบรม Food Safety" : "Automation assistants + Food Safety training media"}
+            {th ? "สื่ออบรม แบบทดสอบ HR และระบบอัตโนมัติ — สั่งทำตามโจทย์" : "Training media, HR assessments and automation — built to order"}
           </span>
           <h1>
             {th ? (
@@ -101,12 +102,12 @@ export function HomePage({ locale }: { locale: Locale }) {
           </h1>
           <p className="lede">
             {th
-              ? "ผู้ช่วยอัตโนมัติสำหรับงาน HR และงานเอกสาร ทำงานผ่าน LINE และ Google Workspace ที่คุณคุ้นเคย พร้อมสื่ออบรม GMP แบบ 3D สำหรับโรงงานอาหาร"
-              : "Automation assistants for HR and paperwork that work through the LINE and Google Workspace you already use — plus 3D GMP training media for food factories."}
+              ? "9 สินค้า 4 กลุ่มงาน ตั้งแต่วิดีโออบรม GMP 3D แบบทดสอบ Logical / DISC ระบบแจ้งเตือนเอกสาร ไปจนถึงแชตบอท LINE ทุกสินค้ามี 3 แพ็กเกจ เริ่มต้น 399 บาท และตรงกับประกาศบน Fastwork"
+              : "9 products in 4 groups — from 3D GMP videos and Logical / DISC tests to document alerts and LINE chatbots. Every product has 3 tiers from THB 399 and matches our Fastwork listings."}
           </p>
           <div className="hero-actions">
             <Link className="button" href={`/${locale}/products`}>
-              {th ? `ดูผู้ช่วย ${products.length} บริการ` : `See the ${products.length} assistants`}
+              {th ? `ดูสินค้าทั้ง ${fwProducts.length} รายการ` : `See all ${fwProducts.length} products`}
               {arrow}
             </Link>
             <Link className="button outline" href={`/${locale}/contact#quote`}>
@@ -128,7 +129,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
           <div className="hero-float hero-float-a">
             <span className="hero-float-icon"><ProductIcon name="bolt" size={16} /></span>
-            <span><b>{products.length}</b>{th ? "บริการผู้ช่วย" : "assistants"}</span>
+            <span><b>{fwProducts.length}</b>{th ? "สินค้า 3 แพ็กเกจ" : "products, 3 tiers each"}</span>
           </div>
           <div className="hero-float hero-float-b">
             <span className="hero-float-icon"><ProductIcon name="sheet" size={16} /></span>
@@ -173,23 +174,16 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* ─── PRODUCTS ─── */}
+      {/* ─── PRODUCTS: 9 products in 4 groups (same as Fastwork) ─── */}
       <section className="product-section section-pad">
         <div className="product-heading reveal">
-          <p className="eyebrow">{productsCopy.eyebrow[locale]}</p>
-          <h2>{productsCopy.title[locale]}</h2>
+          <p className="eyebrow">{catalogCopy.eyebrow[locale]}</p>
+          <h2>{catalogCopy.title[locale]}</h2>
+          <p>{th ? `เริ่มต้น ฿${formatPrice(Math.min(...fwProducts.map(fromPrice)))} · เลือกแพ็กเกจ Basic / Standard / Premium ได้ในแต่ละสินค้า` : `From THB ${formatPrice(Math.min(...fwProducts.map(fromPrice)))} · pick Basic / Standard / Premium on each product`}</p>
         </div>
-        <ProductCards locale={locale} />
-        <div className="center-button">
-          <Link className="button outline" href={`/${locale}/products`}>
-            {th ? "ดูรายละเอียดทุกบริการ" : "See every assistant in detail"}
-            {arrow}
-          </Link>
-        </div>
+        <ProductGroups locale={locale} />
       </section>
-
-      {/* ─── CATALOGUE BY TYPE OF WORK ─── */}
-      <ProductGroups locale={locale} />
+      <FastworkNote locale={locale} />
 
       {/* ─── WORKS WHERE YOU ALREADY WORK ─── */}
       <section className="product-section section-pad">

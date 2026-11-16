@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getProduct, productsCopy, type CaseStudy, type Locale } from "@/app/site-data";
+import type { CaseStudy, Locale } from "@/app/site-data";
+import { catalogCopy, getFwProduct } from "@/app/catalog-data";
 
 const icons: Record<CaseStudy["icon"], string> = {
   inbox:
@@ -66,7 +67,7 @@ export function SystemCard({ study, locale, index }: { study: CaseStudy; locale:
         </div>
         {study.productSlug && (
           <Link className="text-link sys-product-link" href={`/${locale}/products/${study.productSlug}`}>
-            {productsCopy.seeProduct[locale]}: {getProduct(study.productSlug)?.name[locale]} →
+            {catalogCopy.see[locale]}: {getFwProduct(study.productSlug)?.name[locale]} →
           </Link>
         )}
         <details className="sys-more">

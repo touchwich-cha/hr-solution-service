@@ -3,10 +3,11 @@ import "@fontsource-variable/noto-sans-thai";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/montserrat";
 import "../globals.css";
-import { brand, siteUrl, contact, channel, products } from "@/app/site-data";
+import { brand, siteUrl, contact, channel } from "@/app/site-data";
+import { fwProducts } from "@/app/catalog-data";
 
 const siteDescription =
-  `ให้ระบบจัดการงานซ้ำซ้อน เพื่อให้คุณโฟกัสงานสำคัญ — ผู้ช่วยอัตโนมัติ ${products.length} บริการสำหรับ HR และงานเอกสาร (LINE, Google Workspace) พร้อมสื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอเผยแพร่จริง ${channel.videoCount} คลิป`;
+  `ให้ระบบจัดการงานซ้ำซ้อน เพื่อให้คุณโฟกัสงานสำคัญ — ${fwProducts.length} สินค้า 3 แพ็กเกจ — วิดีโออบรม แบบทดสอบ HR ระบบแจ้งเตือนเอกสาร และแชตบอท LINE พร้อมสื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอเผยแพร่จริง ${channel.videoCount} คลิป`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -20,7 +21,7 @@ const organizationJsonLd = {
   logo: `${siteUrl}/og.jpg`,
   sameAs: [channel.youtube, channel.tiktok, channel.facebook],
   knowsAbout: ["HR automation", "LINE chatbot", "Google Workspace automation", "GMP", "Food Safety training"],
-  makesOffer: products.map((product) => ({
+  makesOffer: fwProducts.map((product) => ({
     "@type": "Offer",
     itemOffered: {
       "@type": "Service",

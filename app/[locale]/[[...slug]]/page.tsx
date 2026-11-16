@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { Shell } from "@/components/layout/Shell";
 import { HomePage } from "@/components/pages/HomePage";
 import { ProductsHubPage } from "@/components/pages/ProductsHubPage";
-import { ProductPage } from "@/components/pages/ProductPage";
+import { FwProductPage } from "@/components/pages/FwProductPage";
 import { TrainingMediaPage } from "@/components/pages/TrainingMediaPage";
 import { AboutPage } from "@/components/pages/AboutPage";
 import { ContactPage } from "@/components/pages/ContactPage";
-import { brand, getProduct, pageSeo, siteUrl, type Locale } from "@/app/site-data";
+import { brand, pageSeo, siteUrl, type Locale } from "@/app/site-data";
+import { getFwProduct } from "@/app/catalog-data";
 
 // Top-level pages. Product pages live under /products/{slug}. Old URLs are redirected in next.config.ts.
 const pages = ["", "products", "training-media", "about", "contact"] as const;
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale, slug = [] } = await params;
   const language: Locale = locale === "en" ? "en" : "th";
   const page = slug.join("/");
-  const product = slug[0] === "products" && slug.length === 2 ? getProduct(slug[1]) : undefined;
+  const product = slug[0] === "products" && slug.length === 2 ? getFwProduct(slug[1]) : undefined;
   const seo = product ? product.seo : pageSeo[page as PageKey];
   const path = page ? `/${page}` : "";
   const title = seo?.title[language] ?? brand.name;
@@ -54,12 +55,12 @@ export default async function LocalizedPage({ params }: { params: Promise<{ loca
   if (rawLocale !== "th" && rawLocale !== "en") notFound();
   const locale = rawLocale as Locale;
   const page = slug.join("/");
-  const product = slug[0] === "products" && slug.length === 2 ? getProduct(slug[1]) : undefined;
+  const product = slug[0] === "products" && slug.length === 2 ? getFwProduct(slug[1]) : undefined;
   const isKnownPage = slug.length <= 1 && pages.includes(page as PageKey);
   if (!isKnownPage && !product) notFound();
 
   const content =
-    product ? <ProductPage locale={locale} product={product} /> :
+    product ? <FwProductPage locale={locale} product={product} /> :
     page === "products" ? <ProductsHubPage locale={locale} /> :
     page === "training-media" ? <TrainingMediaPage locale={locale} /> :
     page === "about" ? <AboutPage locale={locale} /> :

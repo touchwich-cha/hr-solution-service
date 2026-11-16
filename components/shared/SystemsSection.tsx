@@ -1,4 +1,5 @@
-import { caseStudies, productsCopy, type Locale } from "@/app/site-data";
+import { caseStudies, type Locale } from "@/app/site-data";
+import { catalogCopy } from "@/app/catalog-data";
 import { AdditionalTools } from "@/components/shared/AdditionalTools";
 import { SystemCard, SystemIcon } from "@/components/shared/SystemCard";
 
@@ -9,8 +10,8 @@ export function SystemsSection({ locale }: { locale: Locale }) {
     <section id="systems" className="sys-section">
       <div className="section-pad sys-grid-section">
         <div className="product-heading reveal">
-          <h2>{productsCopy.systemsTitle[locale]}</h2>
-          <p>{productsCopy.systemsBody[locale]}</p>
+          <h2>{catalogCopy.systemsTitle[locale]}</h2>
+          <p>{catalogCopy.systemsBody[locale]}</p>
         </div>
         <nav className="sys-icons" aria-label={th ? "ไปยังระบบ" : "Jump to a system"}>
           {caseStudies.map((study) => (

@@ -1,4 +1,5 @@
-import { brand, contact, productsCopy, siteUrl, type Locale, type Product } from "@/app/site-data";
+import { brand, contact, siteUrl, type Locale } from "@/app/site-data";
+import { catalogCopy, fromPrice, type FwProduct } from "@/app/catalog-data";
 
 /** Absolute URL of a page in a locale ("" = home). */
 export function pageUrl(locale: Locale, path = "") {
@@ -19,8 +20,8 @@ export function breadcrumbJsonLd(locale: Locale, homeLabel: string, trail: { nam
   };
 }
 
-/** A product page is described as a Service (no price is stated anywhere on the site). */
-export function serviceJsonLd(locale: Locale, product: Product) {
+/** A product page is a Service with one Offer per tier (the same prices as the Fastwork listing). */
+export function serviceJsonLd(locale: Locale, product: FwProduct) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -29,7 +30,14 @@ export function serviceJsonLd(locale: Locale, product: Product) {
     url: pageUrl(locale, `products/${product.slug}`),
     inLanguage: locale,
     areaServed: "TH",
-    serviceType: productsCopy.eyebrow[locale],
+    serviceType: catalogCopy.eyebrow[locale],
     provider: { "@type": "Organization", name: brand.name, url: siteUrl, email: contact.email },
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "THB",
+      lowPrice: fromPrice(product),
+      highPrice: Math.max(...product.tiers.map((tier) => tier.price)),
+      offerCount: product.tiers.length,
+    },
   };
 }
