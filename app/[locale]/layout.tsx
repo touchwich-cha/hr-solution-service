@@ -6,45 +6,60 @@ import "../redesign.css";
 const displayFont = Anuphan({ subsets: ["thai", "latin"], weight: ["500", "600", "700"], variable: "--nf-display", display: "swap" });
 const bodyFont = IBM_Plex_Sans_Thai({ subsets: ["thai", "latin"], weight: ["400", "500", "600"], variable: "--nf-body", display: "swap" });
 const monoFont = JetBrains_Mono({ subsets: ["latin"], weight: ["500", "700"], variable: "--nf-mono", display: "swap" });
-import { brand, siteUrl, contact, channel } from "@/app/site-data";
-import { fwProducts } from "@/app/catalog-data";
+import { brand, siteUrl, contact, channel, pageSeo } from "@/app/site-data";
+import { fastwork, fwProducts } from "@/app/catalog-data";
 
-const siteDescription =
-  `ให้ระบบจัดการงานซ้ำซ้อน เพื่อให้คุณโฟกัสงานสำคัญ — ${fwProducts.length} สินค้า 3 แพ็กเกจ — วิดีโออบรม แบบทดสอบ HR ระบบแจ้งเตือนเอกสาร และแชตบอท LINE พร้อมสื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอเผยแพร่จริง ${channel.videoCount} คลิป`;
+const siteDescription = pageSeo[""].description.th;
 
+// One business entity for Google: a professional service (no street address — remote service across Thailand).
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ProfessionalService",
+  "@id": `${siteUrl}/#business`,
   name: brand.name,
   url: siteUrl,
   description: siteDescription,
   email: contact.email,
   telephone: contact.phone,
-  areaServed: "TH",
-  logo: `${siteUrl}/og.jpg`,
-  sameAs: [channel.youtube, channel.tiktok, channel.facebook],
-  knowsAbout: ["HR automation", "LINE chatbot", "Google Workspace automation", "GMP", "Food Safety training"],
+  areaServed: { "@type": "Country", name: "Thailand" },
+  logo: `${siteUrl}/logo-mark.png`,
+  image: `${siteUrl}/og.jpg`,
+  priceRange: "฿250–฿15,990",
+  availableLanguage: ["th", "en"],
+  contactPoint: [{
+    "@type": "ContactPoint",
+    contactType: "sales",
+    email: contact.email,
+    telephone: contact.phone,
+    availableLanguage: ["Thai", "English"],
+    areaServed: "TH",
+  }],
+  sameAs: [channel.youtube, channel.tiktok, channel.facebook, fastwork.profileUrl],
+  knowsAbout: [
+    "HR automation", "Google Apps Script", "n8n", "LINE chatbot", "GMP", "Food Safety training",
+    "ISO 9001", "ISO 14001", "ISO 45001", "3D training video", "Employee assessment",
+  ],
   makesOffer: fwProducts.map((product) => ({
     "@type": "Offer",
-    itemOffered: {
-      "@type": "Service",
-      name: product.name.en,
-      description: product.oneLiner.en,
-    },
+    url: `${siteUrl}/th/products/${product.slug}`,
+    priceCurrency: "THB",
+    price: Math.min(...product.tiers.map((tier) => tier.price)),
+    itemOffered: { "@type": "Service", name: product.name.th, description: product.oneLiner.th },
   })),
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${brand.name} — สื่ออบรมและระบบงาน HR`,
+    default: `${pageSeo[""].title.th} | ${brand.name}`,
     template: `%s | ${brand.name}`,
   },
   description: siteDescription,
   keywords: [
     "สื่ออบรม", "GMP", "Food Safety", "E-Learning", "ระบบ HR", "HR automation",
     "ระบบประเมินผล KPI", "Onboarding", "Google Apps Script", brand.name,
-    "training media", "HR systems", "hr solution",
+    "training media", "HR systems", "hr solution", "รับทำสื่ออบรม", "วิดีโออบรม 3D",
+    "แบบทดสอบ Logical", "DISC", "แชตบอท LINE", "ระบบแจ้งเตือนทดลองงาน", "n8n",
   ],
   authors: [{ name: brand.name }],
   creator: brand.name,
@@ -55,8 +70,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: `${brand.name} — สื่ออบรมและระบบงาน HR`,
-    description: "สื่ออบรมที่คนอยากดู ระบบงาน HR ที่ทำงานแทนคุณ — ผลงานจริง ระบบใช้งานจริง",
+    title: `${brand.name} — งาน HR ส่วนใหญ่ยังทำด้วยมือ นั่นคือทางเลือก`,
+    description: siteDescription,
     url: siteUrl,
     siteName: brand.name,
     locale: "th_TH",
@@ -66,14 +81,14 @@ export const metadata: Metadata = {
         url: `${siteUrl}/og.jpg`,
         width: 1200,
         height: 630,
-        alt: `${brand.name} — Food Safety training media`,
+        alt: `${brand.name} — สื่ออบรม 3D แบบทดสอบ HR และระบบอัตโนมัติ`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${brand.name} — สื่ออบรมและระบบงาน HR`,
-    description: "สื่ออบรมที่คนอยากดู ระบบงาน HR ที่ทำงานแทนคุณ — ผลงานจริง ระบบใช้งานจริง",
+    title: `${brand.name} — งาน HR ส่วนใหญ่ยังทำด้วยมือ นั่นคือทางเลือก`,
+    description: siteDescription,
   },
   robots: {
     index: true,

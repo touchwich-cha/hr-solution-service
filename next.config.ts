@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 // move the old addresses to the new ones. Keep in sync with the pages in app/[locale]/[[...slug]].
 const mergedPages: { from: string; to: string }[] = [
   { from: "services", to: "products" },
-  { from: "hr-systems", to: "products#systems" },
+  { from: "hr-systems", to: "products#lab" },
   { from: "portfolio", to: "training-media" },
   { from: "videos", to: "training-media#videos" },
   { from: "process", to: "about#process" },

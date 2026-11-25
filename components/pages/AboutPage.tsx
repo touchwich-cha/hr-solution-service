@@ -114,7 +114,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="rd-sec" style={{ paddingTop: 20 }}>
+      <section className="rd-sec" id="process" style={{ paddingTop: 20 }}>
         <Approach locale={locale} />
       </section>
 

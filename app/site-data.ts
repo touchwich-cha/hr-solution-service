@@ -11,7 +11,12 @@ export const brand = {
   },
 } as const;
 
-export const siteUrl = "https://hr-solution-service.vercel.app";
+/**
+ * Public address of the site. Set NEXT_PUBLIC_SITE_URL in Vercel (Production) when the own domain
+ * is live, e.g. https://www.example.co.th — canonical links, sitemap, robots and structured data
+ * all follow it. See DOMAIN.md.
+ */
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://hr-solution-service.vercel.app").replace(/\/+$/, "");
 
 export const contact = {
   email: "touchwich.cha@gmail.com",
@@ -58,47 +63,47 @@ export const nav = {
 } as const;
 
 /** Last real content update (used by the sitemap — never "now"). */
-export const siteUpdated = "2026-11-16";
+export const siteUpdated = "2026-11-25";
 
 /** Search snippet + breadcrumb label for each static page. Every page has its own title and description. */
 export const pageSeo = {
   "": {
-    title: { th: "สื่ออบรม แบบทดสอบ HR และระบบอัตโนมัติ สั่งทำตามโจทย์", en: "Training media, HR assessments and automation built to order" },
+    title: { th: "รับทำสื่ออบรม 3D แบบทดสอบ HR และระบบอัตโนมัติ สำหรับโรงงาน", en: "3D training media, HR assessments and automation for factories" },
     description: {
-      th: "9 สินค้า 4 กลุ่มงาน — วิดีโออบรม GMP 3D, แบบทดสอบ Logical / DISC, ข้อสอบ + เกียรติบัตร, แจ้งเตือนเอกสารและทดลองงาน, ระบบ รปภ. และแชตบอท LINE ทุกสินค้ามี 3 แพ็กเกจ ตรงกับประกาศบน Fastwork",
-      en: "9 products in 4 groups — 3D GMP videos, Logical / DISC tests, exams + certificates, document and probation alerts, security-crew logbook and LINE chatbot. Every product has 3 tiers matching our Fastwork listings.",
+      th: "ผู้บริหาร HR โรงงาน 15 ปีที่สร้างระบบเองได้ รับทำวิดีโออบรม GMP / Food Safety 3D คลิปสอนใช้งานโปรแกรม แบบทดสอบ Logical / DISC และระบบแจ้งเตือนบน Google Workspace และ LINE เริ่มต้นหลักร้อยบาท ขอใบเสนอราคาได้",
+      en: "A factory HR manager of 15 years who builds the systems: 3D GMP / Food Safety training video, software how-to videos, Logical / DISC tests and reminders on Google Workspace and LINE. Ask for a quote.",
     },
     crumb: { th: "หน้าแรก", en: "Home" },
   },
   products: {
-    title: { th: "สินค้าทั้งหมด 9 รายการ 3 แพ็กเกจ เริ่มต้น 300 บาท", en: "All 9 products in 3 tiers, from THB 300" },
+    title: { th: "สินค้าและราคา: สื่ออบรม แบบทดสอบ HR ระบบแจ้งเตือน แชตบอท LINE", en: "Products & prices: training media, HR tests, reminders, LINE chatbots" },
     description: {
-      th: "สื่ออบรมและวิดีโอ แบบทดสอบและประเมินผล ระบบงาน HR และเอกสารอัตโนมัติ และแชตบอท LINE ทุกรายการมีแพ็กเกจ Basic / Standard / Premium ตรงกับประกาศบน Fastwork",
-      en: "Training media and video, tests and assessments, HR and document automation, and LINE chatbots — each with Basic / Standard / Premium tiers matching our Fastwork listings.",
+      th: "ราคาและแพ็กเกจ Basic / Standard / Premium ของวิดีโออบรม 3D วิดีโอสอนใช้งานระบบ แบบทดสอบ Logical และ DISC ระบบแจ้งเตือนทดลองงานและเอกสาร ระบบ รปภ. และแชตบอท LINE ตรงกับประกาศบน Fastwork",
+      en: "Basic / Standard / Premium tiers and prices for 3D training video, software how-to video, Logical and DISC tests, probation and document reminders, security logbook and LINE chatbots — the same as on Fastwork.",
     },
     crumb: { th: "สินค้า", en: "Products" },
   },
   "training-media": {
-    title: { th: "สื่ออบรม GMP / Food Safety แบบ 3D และวิดีโอ", en: "3D GMP / Food Safety training media and videos" },
+    title: { th: "ผลงานสื่ออบรม GMP / Food Safety แบบ 3D และคลิปสอนใช้งานโปรแกรม", en: "3D GMP / Food Safety training media and how-to videos" },
     description: {
-      th: `ผลงานสื่ออบรมแอนิเมชัน 3D สำหรับโรงงานอาหาร ซีรีส์ GMP420 คลิปสั้นสำหรับมือถือ และเกมส์ทายภาพ เผยแพร่จริงบน YouTube ${channel.videoCount} คลิป`,
-      en: `3D-animated training media for food factories: the GMP420 series, mobile-sized clips and picture quizzes — ${channel.videoCount} videos published on YouTube.`,
+      th: `ผลงานวิดีโออบรม 3D สำหรับโรงงานอาหาร ทั้ง 16:9 สำหรับห้องอบรม และ 9:16 สำหรับมือถือ พร้อมคลิปสอนใช้งานระบบทีละขั้น เผยแพร่จริงบน YouTube ${channel.videoCount} คลิป`,
+      en: `3D training videos for food factories — 16:9 for the training room and 9:16 for mobile — plus step-by-step how-to videos. ${channel.videoCount} videos published on YouTube.`,
     },
     crumb: { th: "สื่ออบรม", en: "Training media" },
   },
   about: {
-    title: { th: "เกี่ยวกับเรา และวิธีทำงาน 5 ขั้นตอน", en: "About us and our 5-step process" },
+    title: { th: "เกี่ยวกับเรา: ผู้บริหาร HR โรงงาน 15 ปีที่สร้างระบบอัตโนมัติเอง", en: "About: a factory HR manager of 15 years who builds automation" },
     description: {
-      th: "เราออกแบบสื่อที่คนจดจำได้และสร้างระบบที่ลดงานซ้ำซ้อน ทำงานเป็น 5 ขั้นตอนเดียวกันทั้งงานสื่อและงานระบบ ตั้งแต่คุยโจทย์จนถึงส่งมอบ",
-      en: "We design media people remember and build systems that cut repetitive work — one 5-step process for both, from the first conversation to delivery.",
+      th: "17 ปีในโรงงานผลิต บรรจุภัณฑ์และอาหาร วิทยากร GMP และ ISO 9001/14001/45001 สร้างระบบ HR ใช้จริงกว่า 15 ระบบ พร้อมหัวข้อบรรยายและอบรมในองค์กร",
+      en: "17 years in packaging and food manufacturing, GMP and ISO 9001/14001/45001 trainer, 15+ HR systems built and in use — plus keynote and workshop topics.",
     },
     crumb: { th: "เกี่ยวกับเรา", en: "About" },
   },
   contact: {
-    title: { th: "ติดต่อ ขอทดลองใช้ หรือรับใบเสนอราคา", en: "Contact us — request a trial or a quote" },
+    title: { th: "ติดต่อขอใบเสนอราคา ทาง LINE อีเมล หรือโทรศัพท์", en: "Contact us for a quote — LINE, email or phone" },
     description: {
-      th: "เล่าโจทย์ของคุณ แล้วเราจะแนะนำระบบหรือสื่ออบรมที่เหมาะ ติดต่อผ่านฟอร์ม อีเมล หรือโทรศัพท์",
-      en: "Tell us your brief and we'll recommend the right system or training media. Reach us by form, email or phone.",
+      th: "เล่าโจทย์งานสื่ออบรมหรือระบบ HR ของคุณ รับใบเสนอราคาภายใน 24 ชั่วโมง ติดต่อผ่านฟอร์ม LINE อีเมล โทรศัพท์ หรือจ้างผ่าน Fastwork",
+      en: "Tell us about your training media or HR system brief and get a quote within 24 hours — by form, LINE, email, phone or through Fastwork.",
     },
     crumb: { th: "ติดต่อ", en: "Contact" },
   },
@@ -182,6 +187,13 @@ export const featuredVideoIds = {
 // the site's timezone-neutral form). Used for VideoObject structured data and
 // for the "latest" ordering on /videos — never invent a date that is missing here.
 export const videoPublished: Readonly<Record<string, string>> = {
+  // added 2026-11-25 from each watch page (publishDate, Bangkok date)
+  "wXO3-wPOyhk": "2026-11-18",
+  "qfpygdPSu9I": "2026-11-24",
+  "OV1kzqDZPa4": "2026-11-23",
+  "qm7BSPrEZNo": "2026-11-24",
+  "qDbCb-otK5U": "2026-11-23",
+  "mAt1oZ4j1nQ": "2026-11-04",
   "Ycn8a4AeDCY": "2026-11-13",
   "NaHRFiLrd5c": "2026-11-13",
   "xUx-B5UXwHc": "2026-10-28",

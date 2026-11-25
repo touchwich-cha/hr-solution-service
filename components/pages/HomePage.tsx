@@ -1,9 +1,10 @@
 import Link from "next/link";
-import type { Locale } from "@/app/site-data";
+import { siteUrl, videoPublished, type Locale } from "@/app/site-data";
 import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
 import {
-  homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, type ServiceItem,
+  homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, homeWork, type ServiceItem,
 } from "@/app/home-data";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { Approach, HeroCube, Lab, Stats, WorkCases } from "@/components/home/HomeClient";
 import { CtaBlock } from "@/components/rd/Blocks";
 
@@ -31,8 +32,31 @@ function ServiceLine({ item, locale }: { item: ServiceItem; locale: Locale }) {
 
 export function HomePage({ locale }: { locale: Locale }) {
   const v = homeAbout.venn;
+  // VideoObject for the showcased clips — only those with a verified publish date.
+  const workVideos = homeWork.cases.flatMap((c) => c.videos.map((video) => ({ ...video, body: c.body })));
+  const videoJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: workVideos
+      .filter((video) => videoPublished[video.id])
+      .map((video, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "VideoObject",
+          name: video.label[locale],
+          description: video.body[locale],
+          thumbnailUrl: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
+          uploadDate: videoPublished[video.id],
+          embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
+          url: `https://youtu.be/${video.id}`,
+          publisher: { "@type": "Organization", name: "HR Solution Service", url: siteUrl },
+        },
+      })),
+  };
   return (
     <main>
+      <JsonLd data={videoJsonLd} />
       {/* ---------- hero ---------- */}
       <header className="rd-hero" id="top">
         <div className="rd-wrap rd-hero-grid">
