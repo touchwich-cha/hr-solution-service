@@ -1,13 +1,14 @@
 # HANDOFF — เว็บไซต์ HR Solution Service
 
 > ไฟล์นี้ให้ AI / คนที่มารับงานต่ออ่านก่อนเริ่มทุกครั้ง แล้วค่อยอ่าน `AGENTS.md`
-> อัปเดตล่าสุด: **25 พ.ย. 2569** (redesign 2026 ขึ้น production แล้ว)
+> อัปเดตล่าสุด: **25 พ.ย. 2569** (redesign 2026 ขึ้น production แล้ว · ผูก domain hr-solution-service.com แล้ว)
 > จบงานแต่ละครั้ง: แก้ส่วน "สถานะ" และ "งานค้าง" ในไฟล์นี้ แล้วใส่วันที่
 
 ## 1. ภาพรวม
 | หัวข้อ | ค่า |
 |---|---|
-| เว็บจริง | https://hr-solution-service.vercel.app (`/th`, `/en`) |
+| เว็บจริง | **https://www.hr-solution-service.com** (`/th`, `/en`) · เดิม hr-solution-service.vercel.app |
+| Domain | `hr-solution-service.com` ซื้อที่ Hostinger 25/11/2569 (1 ปี หมดอายุ 26/11/2570 ต่อ 519 บาท/ปี) · DNS: A `@` → 216.198.79.1, CNAME `www` → df62016f88294517.vercel-dns-017.com · apex → www (308) · `NEXT_PUBLIC_SITE_URL=https://www.hr-solution-service.com` (Production) |
 | โค้ด | โฟลเดอร์นี้ · GitHub `touchwich-cha/hr-solution-service` · branch หลัก `main` |
 | Deploy | push `main` → Vercel production อัตโนมัติ · push branch อื่น → Preview (ต้องล็อกอิน Vercel ถึงเปิดได้) |
 | Vercel | https://vercel.com/touchwichcha-1508s-projects/hr-solution-service |
@@ -25,7 +26,7 @@
 - ตรวจแล้ว: lint / tsc / build ผ่าน, ทุกหน้าตอบ 200 บน production, มือถือ 375px ไม่มีเลื่อนแนวนอน
 
 ## 3. งานค้าง (เรียงตามความสำคัญ)
-1. **Domain** — เจ้าของจะซื้อเอง แล้วทำตาม `DOMAIN.md` (ไม่ต้องแก้โค้ด) จากนั้นส่ง sitemap ใน Google Search Console
+1. **Domain** — ✅ ผูกแล้ว 25/11/2569 · เจ้าของต้องกดยืนยันอีเมลจาก Hostinger ภายใน 9/12/2569 · Google Search Console + sitemap (ดูประวัติด้านล่าง)
 2. **สินค้า "ข้อสอบอบรม + เกียรติบัตร" (`training-exam`, เริ่ม ฿300)** — ไม่มีประกาศบน Fastwork แต่ยังแสดงบนเว็บ · รอเจ้าของตัดสินใจ เก็บ / ซ่อน
 3. **คู่มือการใช้งาน (฿499) และไฟล์ HR สำเร็จรูป (฿250)** — ตอนนี้เป็นการ์ดลิงก์ไป Fastwork (`homeServices` ใน `app/home-data.ts`) ยังไม่มีหน้าสินค้าของตัวเอง · ภาพมีใน `05_Business/.../products/manual/out/` · ไฟล์ HR อ่านแพ็กเกจจาก Fastwork ได้แค่ 2 ตัว (250 / 599) ต้องเช็คก่อน
 4. **คู่มือ Premium** บน Fastwork = 2,900 แต่บันทึกเก่าบอกเจ้าของตั้ง 2,990 → ถามเจ้าของ
@@ -76,3 +77,4 @@ npx next start -p 3417   # ดูผลหลัง build ที่ http://local
 | 25/11/2569 | หน้าย่อยทั้งหมดสไตล์ใหม่ | `1f1e1c4` |
 | 25/11/2569 | SEO + เตรียม domain + og.jpg | `e75b273` |
 | 25/11/2569 | Merge ขึ้น production | `cbe102f` |
+| 25/11/2569 | ผูก domain hr-solution-service.com + ตั้ง NEXT_PUBLIC_SITE_URL | (ตั้งค่าใน Hostinger/Vercel) |
