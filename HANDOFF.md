@@ -26,7 +26,9 @@
 - ตรวจแล้ว: lint / tsc / build ผ่าน, ทุกหน้าตอบ 200 บน production, มือถือ 375px ไม่มีเลื่อนแนวนอน
 
 ## 3. งานค้าง (เรียงตามความสำคัญ)
-1. **Domain** — ✅ ผูกแล้ว 25/11/2569 · เจ้าของต้องกดยืนยันอีเมลจาก Hostinger ภายใน 9/12/2569 · Google Search Console + sitemap (ดูประวัติด้านล่าง)
+1. **Domain** — ✅ ผูกแล้ว 25/11/2569 · ⚠️ เจ้าของต้องกดยืนยันอีเมลจาก Hostinger ภายใน **9/12/2569** ไม่งั้นโดเมนถูกระงับ
+   - Google Search Console: property แบบ Domain `hr-solution-service.com` ยืนยันด้วย TXT ใน DNS Hostinger แล้ว (บัญชี Google ของเจ้าของ) · ส่ง sitemap แล้ว Google อ่านได้ 28 หน้า · **ห้ามลบ TXT google-site-verification**
+   - ยังไม่ได้: ขอ indexing รายหน้า (ยืนยันผลไม่ได้), Bing Webmaster Tools (import จาก GSC), เปลี่ยนลิงก์เว็บใน YouTube/Facebook/TikTok/LINE OA/E-Book เป็นโดเมนใหม่
 2. **สินค้า "ข้อสอบอบรม + เกียรติบัตร" (`training-exam`, เริ่ม ฿300)** — ไม่มีประกาศบน Fastwork แต่ยังแสดงบนเว็บ · รอเจ้าของตัดสินใจ เก็บ / ซ่อน
 3. **คู่มือการใช้งาน (฿499) และไฟล์ HR สำเร็จรูป (฿250)** — ตอนนี้เป็นการ์ดลิงก์ไป Fastwork (`homeServices` ใน `app/home-data.ts`) ยังไม่มีหน้าสินค้าของตัวเอง · ภาพมีใน `05_Business/.../products/manual/out/` · ไฟล์ HR อ่านแพ็กเกจจาก Fastwork ได้แค่ 2 ตัว (250 / 599) ต้องเช็คก่อน
 4. **คู่มือ Premium** บน Fastwork = 2,900 แต่บันทึกเก่าบอกเจ้าของตั้ง 2,990 → ถามเจ้าของ
@@ -77,4 +79,5 @@ npx next start -p 3417   # ดูผลหลัง build ที่ http://local
 | 25/11/2569 | หน้าย่อยทั้งหมดสไตล์ใหม่ | `1f1e1c4` |
 | 25/11/2569 | SEO + เตรียม domain + og.jpg | `e75b273` |
 | 25/11/2569 | Merge ขึ้น production | `cbe102f` |
-| 25/11/2569 | ผูก domain hr-solution-service.com + ตั้ง NEXT_PUBLIC_SITE_URL | (ตั้งค่าใน Hostinger/Vercel) |
+| 25/11/2569 | ผูก domain hr-solution-service.com + ตั้ง NEXT_PUBLIC_SITE_URL · .vercel.app และ apex redirect 308 → www | (ตั้งค่าใน Hostinger/Vercel) |
+| 25/11/2569 | Google Search Console ยืนยันโดเมน + ส่ง sitemap (28 หน้า) | – |
