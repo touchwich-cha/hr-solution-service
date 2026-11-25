@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { contact, type Locale } from "@/app/site-data";
-import { fastwork, formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
+import type { Locale } from "@/app/site-data";
+import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
 import {
-  homeAbout, homeCta, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, type ServiceItem,
+  homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, type ServiceItem,
 } from "@/app/home-data";
 import { Approach, HeroCube, Lab, Stats, WorkCases } from "@/components/home/HomeClient";
+import { CtaBlock } from "@/components/rd/Blocks";
 
 function ServiceLine({ item, locale }: { item: ServiceItem; locale: Locale }) {
   const from = homeServices.from[locale];
@@ -161,27 +162,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* ---------- cta ---------- */}
-      <section className="rd-cta" id="contact">
-        <div className="rd-wrap">
-          <h2 className="rd-rv">{homeCta.title[0][locale]}<br />{homeCta.title[1][locale]}<br /><span className="rd-acc">{homeCta.title[2][locale]}</span></h2>
-          <div className="rd-q rd-rv">
-            <div>
-              <h3>{homeCta.boxTitle[locale]}</h3>
-              <p>{homeCta.boxBody[locale]}</p>
-              <div className="row">
-                <a className="rd-btn rd-btn-acc" href={`mailto:${contact.email}`}>✉ {contact.email}</a>
-                <a className="rd-btn rd-btn-line" href={fastwork.profileUrl} target="_blank" rel="noopener noreferrer">{homeCta.fastwork[locale]} ↗</a>
-              </div>
-            </div>
-            <div className="rd-qr">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={contact.lineQr} alt={locale === "th" ? "QR Code เพิ่มเพื่อน LINE" : "LINE QR code"} width={150} height={150} />
-              <div className="rd-mono">{homeCta.scanLine[locale]}</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CtaBlock locale={locale} />
     </main>
   );
 }

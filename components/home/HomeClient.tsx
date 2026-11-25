@@ -109,6 +109,44 @@ export function WorkCases({ locale }: { locale: Locale }) {
   );
 }
 
+/* ---------- generic video grid (training media page) ---------- */
+type GridVideo = { id: string; aspect: "wide" | "tall"; duration?: string; title: { th: string; en: string } };
+
+export function VideoGrid({ locale, videos }: { locale: Locale; videos: readonly GridVideo[] }) {
+  const [playing, setPlaying] = useState<Playing>(null);
+  const play = locale === "th" ? "เล่นวิดีโอ" : "Play video";
+  useEffect(() => {
+    if (!playing) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setPlaying(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [playing]);
+  return (
+    <>
+      <div className="rd-vgrid">
+        {videos.map((v) => (
+          <figure key={v.id} className={`rd-vitem${v.aspect === "tall" ? " tall" : ""}`}>
+            <button type="button" className="rd-media" aria-label={`${play}: ${v.title[locale]}`} onClick={() => setPlaying({ id: v.id, vertical: v.aspect === "tall" })}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+              <span className="rd-circ" aria-hidden="true">↗</span>
+            </button>
+            <figcaption><span className="rd-mono">{v.aspect === "tall" ? "9:16" : "16:9"}{v.duration ? ` · ${v.duration}` : ""}</span>{v.title[locale]}</figcaption>
+          </figure>
+        ))}
+      </div>
+      {playing && (
+        <div className="rd-modal" role="dialog" aria-modal="true" aria-label={play} onClick={(e) => { if (e.target === e.currentTarget) setPlaying(null); }}>
+          <button type="button" className="x" aria-label={locale === "th" ? "ปิด" : "Close"} onClick={() => setPlaying(null)}>×</button>
+          <div className={`box${playing.vertical ? " v" : ""}`}>
+            <iframe src={`https://www.youtube-nocookie.com/embed/${playing.id}?autoplay=1&rel=0`} title={play} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 /* ---------- approach: sticky counter ---------- */
 export function Approach({ locale }: { locale: Locale }) {
   const [active, setActive] = useState(0);

@@ -119,7 +119,7 @@ export function Shell({ locale, page, children }: { locale: Locale; page: string
         </div>
       </nav>
 
-      <div className={page ? "rd-legacy" : undefined}>{children}</div>
+      {children}
 
       <footer className="rd-footer">
         <div className="rd-wrap">
