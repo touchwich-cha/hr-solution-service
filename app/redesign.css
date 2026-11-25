@@ -6,11 +6,11 @@
    ============================================ */
 
 html:root {
-  /* fonts (set by next/font in app/[locale]/layout.tsx) */
-  --font-display: var(--nf-display), "Anuphan", system-ui, sans-serif;
-  --font-body: var(--nf-body), "IBM Plex Sans Thai", system-ui, sans-serif;
-  --font-thai: var(--nf-body), "IBM Plex Sans Thai", system-ui, sans-serif;
-  --font-mono: var(--nf-mono), ui-monospace, monospace;
+  /* fonts (self-hosted via fontsource, imported in app/[locale]/layout.tsx) */
+  --font-display: "Anuphan Variable", "Anuphan", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Thai", system-ui, sans-serif;
+  --font-thai: "IBM Plex Sans Thai", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* new palette */
   --rd-bg: #0b0c0e;

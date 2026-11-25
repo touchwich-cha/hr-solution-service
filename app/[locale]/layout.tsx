@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Anuphan, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
+// Fonts are self-hosted (fontsource) so the build never depends on fetching Google Fonts.
+import "@fontsource-variable/anuphan";
+import "@fontsource/ibm-plex-sans-thai/400.css";
+import "@fontsource/ibm-plex-sans-thai/500.css";
+import "@fontsource/ibm-plex-sans-thai/600.css";
+import "@fontsource-variable/jetbrains-mono";
 import "../globals.css";
 import "../redesign.css";
-
-const displayFont = Anuphan({ subsets: ["thai", "latin"], weight: ["500", "600", "700"], variable: "--nf-display", display: "swap" });
-const bodyFont = IBM_Plex_Sans_Thai({ subsets: ["thai", "latin"], weight: ["400", "500", "600"], variable: "--nf-body", display: "swap" });
-const monoFont = JetBrains_Mono({ subsets: ["latin"], weight: ["500", "700"], variable: "--nf-mono", display: "swap" });
 import { brand, siteUrl, contact, channel, pageSeo } from "@/app/site-data";
 import { fastwork, fwProducts } from "@/app/catalog-data";
 
@@ -117,7 +118,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   const { locale } = await params;
   return (
-    <html lang={locale === "en" ? "en" : "th"} className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable}`}>
+    <html lang={locale === "en" ? "en" : "th"}>
       <head>
         <meta name="theme-color" content="#0b0c0e" />
         <script
