@@ -4,6 +4,8 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+> **อ่าน `HANDOFF.md` ก่อนเริ่มงานทุกครั้ง** — สถานะล่าสุด งานค้าง กติกาจากเจ้าของ (ห้ามใช้รูปเจ้าของ / ห้ามใช้ตัวเลขลดการลาออก) และแผนที่โค้ดของ redesign 2026 · จบงานให้อัปเดต `HANDOFF.md` ทุกครั้ง · ย้าย domain ดู `DOMAIN.md`
+
 ---
 
 # มาตรฐานการทำงาน (Working Standards)
