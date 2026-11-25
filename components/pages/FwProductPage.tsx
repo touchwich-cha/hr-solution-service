@@ -33,8 +33,8 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
           </p>
           <div className="hero-actions">
             <a className="button" href="#tiers">{th ? "ดูแพ็กเกจ" : "See tiers"} ↓</a>
-            {fastwork.profileUrl && (
-              <a className="button outline" href={fastwork.profileUrl} target="_blank" rel="noopener noreferrer">{catalogCopy.orderFastwork[locale]} ↗</a>
+            {(product.fastworkUrl || fastwork.profileUrl) && (
+              <a className="button outline" href={product.fastworkUrl || fastwork.profileUrl} target="_blank" rel="noopener noreferrer">{catalogCopy.orderFastwork[locale]} ↗</a>
             )}
             <Link className="button outline" href={`/${locale}/contact#quote`}>{th ? "ขอใบเสนอราคา" : "Request a quote"}</Link>
           </div>

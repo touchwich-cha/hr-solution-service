@@ -40,13 +40,15 @@ export type FwProduct = {
   samples: readonly string[];
   related: readonly string[];
   seo: { title: L; description: L };
+  /** This product's own Fastwork listing (same tiers and prices). */
+  fastworkUrl?: string;
 };
 
 export type CatalogGroup = { id: GroupId; icon: ProductIcon; title: L; sub: L };
 
 export const fastwork = {
   /** Paste the seller's public Fastwork profile URL here to turn on the "Order on Fastwork" buttons. */
-  profileUrl: "" as string,
+  profileUrl: "https://fastwork.co/user/hrsolutionservice" as string,
   fee: { th: "ชำระและรับงานผ่านระบบกลางของ Fastwork", en: "Pay and receive work through Fastwork's escrow" },
 };
 
@@ -122,6 +124,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 1. 3D GMP video ─────────────
   {
     slug: "gmp-3d-video",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/teaching-material-design-92902880",
     group: "training",
     icon: "layers",
     name: T("วิดีโออบรม GMP / Food Safety แบบ 3D", "3D GMP / Food Safety training video"),
@@ -129,7 +132,7 @@ export const fwProducts: readonly FwProduct[] = [
     forWho: T("โรงงานอาหาร ฝ่ายคุณภาพ / จป. / HR ที่ต้องอบรมพนักงานซ้ำทุกปี", "Food factories — QA, safety officers and HR who retrain staff every year."),
     popular: 1,
     tiers: [
-      { name: T("ไม่เกิน 10 นาที", "Up to 10 min"), price: 990, days: 5, revisions: 3, includesPrevious: false, items: [
+      { name: T("ไม่เกิน 10 นาที", "Up to 10 min"), price: 490, days: 5, revisions: 3, includesPrevious: false, items: [
         ["วิดีโอ 16:9 ความยาวไม่เกิน 10 นาที", "16:9 video up to 10 minutes"], ["สคริปต์ + สตอรีบอร์ด", "Script + storyboard"],
         ["ประมาณ 20–30 ฉาก 3D", "About 20–30 3D scenes"], ["เสียงบรรยายไทย + ซับไตเติล", "Thai voice-over + subtitles"], ["ไฟล์ MP4", "MP4 file"] ] },
       { name: T("ไม่เกิน 20 นาที", "Up to 20 min"), price: 1990, days: 10, revisions: 5, includesPrevious: true, items: [
@@ -143,12 +146,13 @@ export const fwProducts: readonly FwProduct[] = [
     related: ["training-exam", "software-video"],
     seo: {
       title: T("ทำวิดีโออบรม GMP / Food Safety แบบ 3D สำหรับโรงงานอาหาร", "3D GMP / Food Safety training video for food factories"),
-      description: T("วิดีโออบรม GMP แบบ 3D 3 แพ็กเกจ ไม่เกิน 10 / 20 / 40 นาที เริ่มต้น 990 บาท พร้อมสคริปต์ เสียงบรรยายไทย ซับไตเติล และคลิปแนวตั้ง", "3D GMP training video in 3 tiers — up to 10 / 20 / 40 minutes, from THB 990, with script, Thai voice-over, subtitles and vertical clips."),
+      description: T("วิดีโออบรม GMP แบบ 3D 3 แพ็กเกจ ไม่เกิน 10 / 20 / 40 นาที เริ่มต้น 490 บาท พร้อมสคริปต์ เสียงบรรยายไทย ซับไตเติล และคลิปแนวตั้ง", "3D GMP training video in 3 tiers — up to 10 / 20 / 40 minutes, from THB 490, with script, Thai voice-over, subtitles and vertical clips."),
     },
   },
   // ───────────── 2. Software how-to video ─────────────
   {
     slug: "software-video",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/teaching-material-design-16951669",
     group: "training",
     icon: "table",
     name: T("วิดีโอสอนใช้งานระบบ / โปรแกรมบริษัท", "Software how-to video for your systems"),
@@ -175,6 +179,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 3. Logical Test ─────────────
   {
     slug: "logical-test",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/ai-tool-and-saas-45015782",
     group: "assessment",
     icon: "filter",
     name: T("Logical Test — แบบทดสอบกระบวนการคิด", "Logical Test — reasoning assessment"),
@@ -202,6 +207,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 4. DISC-style ─────────────
   {
     slug: "disc-style",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/hr-consulting-69714443",
     group: "assessment",
     icon: "user",
     name: T("แบบทดสอบบุคลิกภาพแนว DISC", "DISC-style personality test"),
@@ -255,6 +261,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 6. Document alerts ─────────────
   {
     slug: "doc-alert",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/ai-automation-20148469",
     group: "hr-automation",
     icon: "calendar",
     name: T("ระบบแจ้งเตือนเอกสาร / สัญญาหมดอายุ", "Document & contract expiry alerts"),
@@ -281,6 +288,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 7. Probation ─────────────
   {
     slug: "probation",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/chatbot-33967471",
     group: "hr-automation",
     icon: "clock",
     name: T("ระบบเตือนครบกำหนดทดลองงาน 45 / 90 วัน", "Probation reminders at day 45 / 90"),
@@ -288,7 +296,7 @@ export const fwProducts: readonly FwProduct[] = [
     forWho: T("HR ที่ดูแลพนักงานใหม่หลายคน และไม่อยากพลาดวันตัดสินผลทดลองงาน", "HR teams managing many new hires who can't afford to miss a probation decision date."),
     popular: 1,
     tiers: [
-      { name: T("แจ้งเตือน", "Reminders"), price: 690, days: 3, revisions: 2, includesPrevious: false, items: [
+      { name: T("แจ้งเตือน", "Reminders"), price: 1500, days: 3, revisions: 2, includesPrevious: false, items: [
         ["Google Sheets พนักงานทดลองงาน", "Probation tracker in Google Sheets"], ["นับวันอัตโนมัติ", "Automatic day counting"], ["เตือน HR + หัวหน้า ตั้งรอบได้ เช่น 45 / 90 วัน", "Reminders to HR + manager, configurable (e.g. 45 / 90 days)"], ["ส่งทางอีเมลหรือ LINE", "By email or LINE"] ] },
       { name: T("+ แบบประเมิน", "+ Evaluation form"), price: 3990, days: 7, revisions: 3, includesPrevious: true, items: [
         ["ส่งแบบประเมินให้หัวหน้าอัตโนมัติ", "Evaluation form sent to the manager automatically"], ["เตือนซ้ำจนกว่าจะประเมิน", "Repeat reminders until it is done"], ["บันทึกคะแนน", "Scores recorded"], ["HR กดรับทราบผล", "HR acknowledges the result"] ] },
@@ -301,12 +309,13 @@ export const fwProducts: readonly FwProduct[] = [
     related: ["doc-alert", "disc-style"],
     seo: {
       title: T("ระบบแจ้งเตือนครบกำหนดทดลองงาน 45/90 วัน พร้อมแบบประเมินหัวหน้า", "Probation 45/90-day reminders with manager evaluation forms"),
-      description: T("ระบบนับวันทดลองงานและเตือน HR กับหัวหน้า 3 แพ็กเกจ เริ่มต้น 690 บาท ส่งแบบประเมินอัตโนมัติ และ Web App รับพนักงานใหม่", "Probation date tracking with HR and manager reminders in 3 tiers from THB 690 — automatic evaluation forms and an onboarding web app."),
+      description: T("ระบบนับวันทดลองงานและเตือน HR กับหัวหน้า 3 แพ็กเกจ เริ่มต้น 1,500 บาท ส่งแบบประเมินอัตโนมัติ และ Web App รับพนักงานใหม่", "Probation date tracking with HR and manager reminders in 3 tiers from THB 1,500 — automatic evaluation forms and an onboarding web app."),
     },
   },
   // ───────────── 8. Guard / cleaner logbook ─────────────
   {
     slug: "guard-system",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/mobile-application-28320226",
     group: "hr-automation",
     icon: "shield",
     name: T("ระบบบันทึกงาน รปภ. และแม่บ้านบนมือถือ", "Mobile logbook for security & cleaning crews"),
@@ -334,6 +343,7 @@ export const fwProducts: readonly FwProduct[] = [
   // ───────────── 9. Chatbot FAQ ─────────────
   {
     slug: "chatbot-faq",
+    fastworkUrl: "https://fastwork.co/user/hrsolutionservice/chatbot-45433275",
     group: "chatbot",
     icon: "chat",
     name: T("Chatbot FAQ บน LINE OA", "FAQ chatbot on LINE OA"),

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/noto-sans-thai";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/montserrat";
+import { Anuphan, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import "../globals.css";
+import "../redesign.css";
+
+const displayFont = Anuphan({ subsets: ["thai", "latin"], weight: ["500", "600", "700"], variable: "--nf-display", display: "swap" });
+const bodyFont = IBM_Plex_Sans_Thai({ subsets: ["thai", "latin"], weight: ["400", "500", "600"], variable: "--nf-body", display: "swap" });
+const monoFont = JetBrains_Mono({ subsets: ["latin"], weight: ["500", "700"], variable: "--nf-mono", display: "swap" });
 import { brand, siteUrl, contact, channel } from "@/app/site-data";
 import { fwProducts } from "@/app/catalog-data";
 
@@ -99,9 +102,9 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   const { locale } = await params;
   return (
-    <html lang={locale === "en" ? "en" : "th"}>
+    <html lang={locale === "en" ? "en" : "th"} className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable}`}>
       <head>
-        <meta name="theme-color" content="#06302B" />
+        <meta name="theme-color" content="#0b0c0e" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
