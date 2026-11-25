@@ -54,11 +54,11 @@ export const heroVideo = {
 export const nav = {
   th: [
     ["หน้าแรก", ""], ["สินค้า", "products"], ["สื่ออบรม", "training-media"],
-    ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
+    ["บทความ", "articles"], ["เกี่ยวกับเรา", "about"], ["ติดต่อ", "contact"],
   ],
   en: [
     ["Home", ""], ["Products", "products"], ["Training media", "training-media"],
-    ["About", "about"], ["Contact", "contact"],
+    ["Articles (Thai)", "articles"], ["About", "about"], ["Contact", "contact"],
   ],
 } as const;
 
@@ -98,6 +98,14 @@ export const pageSeo = {
       en: "17 years in packaging and food manufacturing, GMP and ISO 9001/14001/45001 trainer, 15+ HR systems built and in use — plus keynote and workshop topics.",
     },
     crumb: { th: "เกี่ยวกับเรา", en: "About" },
+  },
+  articles: {
+    title: { th: "บทความ: GMP ประกาศ สธ. 420 ระบบ HR และการอบรมพนักงาน", en: "Articles: GMP rules, HR systems and staff training (in Thai)" },
+    description: {
+      th: "บทความความรู้สำหรับโรงงานและฝ่าย HR สรุป GMP ประกาศ สธ. ฉบับที่ 420 พร้อมอ้างอิงข้อ ตัวชี้วัด HR และการสร้างระบบ HR ด้วย Google Workspace จากประสบการณ์ HR โรงงาน 15 ปี",
+      en: "Knowledge articles for factories and HR teams in Thai: GMP notice 420 with clause references, HR metrics and building HR systems on Google Workspace.",
+    },
+    crumb: { th: "บทความ", en: "Articles" },
   },
   contact: {
     title: { th: "ติดต่อขอใบเสนอราคา ทาง LINE อีเมล หรือโทรศัพท์", en: "Contact us for a quote — LINE, email or phone" },

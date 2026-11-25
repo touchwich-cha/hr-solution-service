@@ -7,6 +7,7 @@ import {
 import { JsonLd } from "@/components/shared/JsonLd";
 import { Approach, HeroCube, Lab, Stats, WorkCases } from "@/components/home/HomeClient";
 import { CtaBlock } from "@/components/rd/Blocks";
+import { articles, thaiDate } from "@/app/articles-data";
 
 function ServiceLine({ item, locale }: { item: ServiceItem; locale: Locale }) {
   const from = homeServices.from[locale];
@@ -165,6 +166,31 @@ export function HomePage({ locale }: { locale: Locale }) {
             <text x="340" y="130" className="m">SYSTEM</text><text x="340" y="152">{v.system[0][locale]}</text><text x="340" y="170" className="s">{v.system[1][locale]}</text>
             <text x="215" y="370" className="m">EXECUTION</text><text x="215" y="392">{v.exec[0][locale]}</text><text x="215" y="410" className="s">{v.exec[1][locale]}</text>
           </svg>
+        </div>
+      </section>
+
+      {/* ---------- articles ---------- */}
+      <section className="rd-sec" id="articles" style={{ paddingTop: 40 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{locale === "th" ? "บทความ" : "Articles (Thai)"}</div>
+              <h2 className="rd-big">{locale === "th" ? "ความรู้ที่ใช้ได้จริง" : "Practical know-how"}<br /><span className="rd-acc">{locale === "th" ? "จากหน้างานและ HR" : "from the floor and HR"}</span></h2>
+            </div>
+            <Link className="rd-btn rd-btn-line" href={`/${locale}/articles`}>{locale === "th" ? "บทความทั้งหมด" : "All articles"} →</Link>
+          </div>
+          <div className="rd-alist">
+            {articles.slice(0, 3).map((article, i) => (
+              <Link key={article.slug} href={`/${locale}/articles/${article.slug}`} className="rd-acard rd-rv" lang="th">
+                <span className="rd-mono rd-acc">{String(i + 1).padStart(2, "0")} · {article.kind}</span>
+                <h3>{article.title}</h3>
+                <span className="rd-acard-foot">
+                  <span className="rd-mono">{thaiDate(article.date)}</span>
+                  <span className="rd-circ sm" aria-hidden="true">↗</span>
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
