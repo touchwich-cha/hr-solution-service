@@ -1,208 +1,192 @@
-"use client";
-
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
-import { proofStats, type Locale } from "@/app/site-data";
-import { catalogCopy, fwProducts, fromPrice, formatPrice } from "@/app/catalog-data";
-import { FastworkNote } from "@/components/shared/FastworkNote";
-import { CallToAction } from "@/components/shared/CallToAction";
-import { VideoCard } from "@/components/shared/VideoCard";
-import { HeroVideo } from "@/components/shared/HeroVideo";
-import { ProductGroups } from "@/components/shared/ProductGroups";
-import { ProductIcon } from "@/components/shared/ProductIcon";
-import type { ProductIcon as ProductIconName } from "@/app/site-data";
+import { siteUrl, videoPublished, type Locale } from "@/app/site-data";
+import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
+import {
+  homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, homeWork, type ServiceItem,
+} from "@/app/home-data";
+import { JsonLd } from "@/components/shared/JsonLd";
+import { Approach, HeroCube, Lab, Stats, WorkCases } from "@/components/home/HomeClient";
+import { CtaBlock } from "@/components/rd/Blocks";
 
-function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
-  // Start at the real value so SSR, crawlers, link-preview bots and no-JS
-  // visitors always see the true number instead of 0. The count-up runs only
-  // as a progressive enhancement once the element scrolls into view.
-  const [display, setDisplay] = useState(value);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    // Respect reduced-motion: keep the real number, skip the animation.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          observer.disconnect();
-          let current = 0;
-          const step = Math.ceil(value / 30);
-          setDisplay(0);
-          const timer = setInterval(() => {
-            current += step;
-            if (current >= value) {
-              current = value;
-              clearInterval(timer);
-            }
-            setDisplay(current);
-          }, 40);
-        }
-      },
-      { threshold: 0.3 }
+function ServiceLine({ item, locale }: { item: ServiceItem; locale: Locale }) {
+  const from = homeServices.from[locale];
+  if ("slug" in item) {
+    const product = getFwProduct(item.slug);
+    if (!product) return null;
+    return (
+      <li>
+        <Link href={`/${locale}/products/${product.slug}`}>
+          {product.name[locale]}<small>{from} ฿{formatPrice(fromPrice(product))}</small>
+        </Link>
+      </li>
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value]);
-
+  }
   return (
-    <span ref={ref}>
-      {display}{suffix}
-    </span>
+    <li>
+      <a href={item.url} target="_blank" rel="noopener noreferrer">
+        {item.label[locale]} ↗<small>{from} ฿{formatPrice(item.from)}</small>
+      </a>
+    </li>
   );
 }
 
-
-const arrow = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
-
 export function HomePage({ locale }: { locale: Locale }) {
-  const th = locale === "th";
-  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const problems: { icon: ProductIconName; label: string }[] = th
-    ? [
-        { icon: "clock", label: "งานล้นมือ" },
-        { icon: "repeat", label: "คีย์ข้อมูลซ้ำๆ" },
-        { icon: "calendar", label: "ลืมกำหนดเวลาสำคัญ" },
-      ]
-    : [
-        { icon: "clock", label: "Overloaded days" },
-        { icon: "repeat", label: "Re-keying data" },
-        { icon: "calendar", label: "Missed deadlines" },
-      ];
-
+  const v = homeAbout.venn;
+  // VideoObject for the showcased clips — only those with a verified publish date.
+  const workVideos = homeWork.cases.flatMap((c) => c.videos.map((video) => ({ ...video, body: c.body })));
+  const videoJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: workVideos
+      .filter((video) => videoPublished[video.id])
+      .map((video, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "VideoObject",
+          name: video.label[locale],
+          description: video.body[locale],
+          thumbnailUrl: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
+          uploadDate: videoPublished[video.id],
+          embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
+          url: `https://youtu.be/${video.id}`,
+          publisher: { "@type": "Organization", name: "HR Solution Service", url: siteUrl },
+        },
+      })),
+  };
   return (
     <main>
-      {/* ─── HERO ─── */}
-      <section className="hero section-pad">
-        <div className="hero-copy">
-          <span className="hero-badge">
-            <span className="hero-badge-dot" />
-            {th ? "สื่ออบรม แบบทดสอบ HR และระบบอัตโนมัติ — สั่งทำตามโจทย์" : "Training media, HR assessments and automation — built to order"}
-          </span>
-          <h1>
-            {th ? (
-              <>ให้ระบบจัดการงานซ้ำซ้อน <span className="gradient-text">เพื่อให้คุณโฟกัสงานสำคัญ</span></>
-            ) : (
-              <>Let the system handle repetitive work, <span className="gradient-text">so you can focus on what matters</span></>
-            )}
-          </h1>
-          <p className="lede">
-            {th
-              ? "9 สินค้า 4 กลุ่มงาน ตั้งแต่วิดีโออบรม GMP 3D แบบทดสอบ Logical / DISC ระบบแจ้งเตือนเอกสาร ไปจนถึงแชตบอท LINE ทุกสินค้ามี 3 แพ็กเกจ เริ่มต้น 300 บาท และตรงกับประกาศบน Fastwork"
-              : "9 products in 4 groups — from 3D GMP videos and Logical / DISC tests to document alerts and LINE chatbots. Every product has 3 tiers from THB 300 and matches our Fastwork listings."}
-          </p>
-          <div className="hero-actions">
-            <Link className="button" href={`/${locale}/products`}>
-              {th ? `ดูสินค้าทั้ง ${fwProducts.length} รายการ` : `See all ${fwProducts.length} products`}
-              {arrow}
-            </Link>
-            <Link className="button outline" href={`/${locale}/contact#quote`}>
-              {th ? "ขอทดลองใช้" : "Request a trial"}
-              {arrow}
-            </Link>
+      <JsonLd data={videoJsonLd} />
+      {/* ---------- hero ---------- */}
+      <header className="rd-hero" id="top">
+        <div className="rd-wrap rd-hero-grid">
+          <div>
+            <div className="rd-badges">
+              <span className="rd-pill rd-badge-cert">{homeHero.badge}</span>
+              <span className="rd-pill rd-mono rd-badge-mono">{homeHero.studio[locale]}</span>
+            </div>
+            <h1>
+              {homeHero.lines.map((line, i) => (
+                <span className="rd-line" key={line.en}><span className={i === 2 ? "rd-acc" : undefined}>{line[locale]}</span></span>
+              ))}
+            </h1>
+            <p className="rd-sub">{homeHero.sub[locale]}</p>
+            <p className="rd-sub2">{homeHero.sub2[locale]}</p>
+            <div className="rd-ctas">
+              <a className="rd-btn rd-btn-acc" href="#work">{homeHero.ctaWork[locale]}</a>
+              <a className="rd-btn rd-btn-line" href="#services">{homeHero.ctaServices[locale]}</a>
+            </div>
           </div>
+          <HeroCube locale={locale} />
         </div>
-        <div className="hero-stage">
-          <div className="hero-visual">
-            <HeroVideo locale={locale} />
-            <span className="visual-label">Food Safety Thailand series / 2026</span>
-            <div
-              className="hero-visual-glow"
-              style={mousePos ? {
-                background: `radial-gradient(600px circle at ${mousePos.x - window.innerWidth * 0.55}px ${mousePos.y - 100}px, rgba(45,212,191,0.1), transparent 50%)`,
-              } : undefined}
-            />
-          </div>
-          <div className="hero-float hero-float-a">
-            <span className="hero-float-icon"><ProductIcon name="bolt" size={16} /></span>
-            <span><b>{fwProducts.length}</b>{th ? "สินค้า 3 แพ็กเกจ" : "products, 3 tiers each"}</span>
-          </div>
-          <div className="hero-float hero-float-b">
-            <span className="hero-float-icon"><ProductIcon name="sheet" size={16} /></span>
-            <span><b>512</b>{th ? "เฟรมสื่ออบรมผลิตจริง" : "training frames produced"}</span>
-          </div>
-          <div className="hero-float hero-float-c">
-            <span className="hero-float-icon"><ProductIcon name="shield" size={16} /></span>
-            <span><b>6</b>{th ? "ระบบ HR ใช้งานจริง" : "HR systems live"}</span>
-          </div>
-        </div>
-      </section>
+        <div className="rd-scroll-hint rd-mono" aria-hidden="true"><i />{homeHero.scroll[locale]}</div>
+      </header>
 
-      {/* ─── PROOF STRIP ─── */}
-      <div className="proof-strip">
-        {proofStats.map((stat) => (
-          <span key={stat.label.en}>
-            <b><AnimatedNumber value={stat.value} suffix={stat.suffix} /></b>
-            {stat.label[locale]}
-          </span>
-        ))}
+      <div className="rd-marq" aria-hidden="true">
+        <div className="rd-marq-in">
+          {[...homeMarquee, ...homeMarquee].map((m, i) => <span key={i}>{m[locale]}</span>)}
+        </div>
       </div>
 
-      {/* ─── PROBLEM → SYSTEM ─── */}
-      <section className="product-section section-pad">
-        <div className="product-heading reveal">
-          <h2>{th ? "งานซ้ำซ้อน 3 แบบ ที่ระบบรับช่วงแทนคุณ" : "Three kinds of repetitive work the system takes over"}</h2>
-        </div>
-        <div className="p2s reveal">
-          <ul className="p2s-problems">
-            {problems.map((problem) => (
-              <li key={problem.label}>
-                <span className="p2s-icon"><ProductIcon name={problem.icon} size={28} /></span>
-                {problem.label}
-              </li>
+      {/* ---------- work ---------- */}
+      <section className="rd-sec" id="work">
+        <div className="rd-wrap"><WorkCases locale={locale} /></div>
+      </section>
+
+      {/* ---------- services ---------- */}
+      <section className="rd-sec" id="services" style={{ paddingTop: 40 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{homeServices.eyebrow[locale]}</div>
+              <h2 className="rd-big">{homeServices.title[0][locale]}<br /><span className="rd-acc">{homeServices.title[1][locale]}</span></h2>
+            </div>
+            <p>{homeServices.body[locale]}</p>
+          </div>
+          <div className="rd-svc rd-rv">
+            {homeServices.columns.map((col, i) => (
+              <div className="rd-svc-col" key={col.title.en}>
+                <div className="rd-svc-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</div>
+                <h3>{col.title[locale]}</h3>
+                <ul>{col.items.map((item, j) => <ServiceLine key={j} item={item} locale={locale} />)}</ul>
+                <Link className="rd-btn rd-btn-line" href={`/${locale}/contact#quote`}>{homeServices.quote[locale]} ↗</Link>
+              </div>
             ))}
-          </ul>
-          <span className="p2s-arrow" aria-hidden="true">→</span>
-          <div className="p2s-system">
-            <span className="p2s-system-icon"><ProductIcon name="bolt" size={40} /></span>
-            <strong>{th ? "ระบบผู้ช่วยอัตโนมัติ" : "Automation assistants"}</strong>
           </div>
         </div>
       </section>
 
-      {/* ─── PRODUCTS: 9 products in 4 groups (same as Fastwork) ─── */}
-      <section className="product-section section-pad">
-        <div className="product-heading reveal">
-          <p className="eyebrow">{catalogCopy.eyebrow[locale]}</p>
-          <h2>{catalogCopy.title[locale]}</h2>
-          <p>{th ? `เริ่มต้น ฿${formatPrice(Math.min(...fwProducts.map(fromPrice)))} · เลือกแพ็กเกจ Basic / Standard / Premium ได้ในแต่ละสินค้า` : `From THB ${formatPrice(Math.min(...fwProducts.map(fromPrice)))} · pick Basic / Standard / Premium on each product`}</p>
-        </div>
-        <ProductGroups locale={locale} />
+      {/* ---------- approach ---------- */}
+      <section className="rd-sec" id="approach" style={{ paddingTop: 40 }}>
+        <Approach locale={locale} />
       </section>
-      <FastworkNote locale={locale} />
 
-      {/* ─── WORKS WHERE YOU ALREADY WORK ─── */}
-      <section className="product-section section-pad">
-        <div className="product-heading reveal">
-          <h2>{th ? "ทำงานผ่าน LINE และ Google Workspace ที่คุณคุ้นเคย" : "Works through the LINE and Google Workspace you already know"}</h2>
-        </div>
-        <div className="works-on reveal">
-          <div className="works-node"><span className="works-circle"><ProductIcon name="chat" size={34} /></span><strong>LINE</strong></div>
-          <span className="works-link" aria-hidden="true">⇄</span>
-          <div className="works-node works-center"><span className="works-circle"><ProductIcon name="user" size={34} /></span><strong>{th ? "ผู้ใช้งาน" : "You"}</strong></div>
-          <span className="works-link" aria-hidden="true">⇄</span>
-          <div className="works-node"><span className="works-circle"><ProductIcon name="sheet" size={34} /></span><strong>Google Workspace</strong><small>Drive · Sheets · Chat</small></div>
+      {/* ---------- stats ---------- */}
+      <section className="rd-sec" style={{ padding: "40px 0 130px" }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{homeStats.eyebrow[locale]}</div>
+              <h2 className="rd-big">{homeStats.title[0][locale]}<br /><span className="rd-acc">{homeStats.title[1][locale]}</span></h2>
+            </div>
+          </div>
+          <Stats locale={locale} />
         </div>
       </section>
 
-      {/* ─── TRAINING MEDIA TEASER ─── */}
-      <VideoCard locale={locale} />
+      {/* ---------- lab ---------- */}
+      <section className="rd-sec" id="lab" style={{ paddingTop: 20 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{homeLab.eyebrow[locale]}</div>
+              <h2 className="rd-big">{homeLab.title[0][locale]}<br /><span className="rd-acc">{homeLab.title[1][locale]}</span></h2>
+            </div>
+            <p>{homeLab.body[locale]}</p>
+          </div>
+          <Lab locale={locale} />
+        </div>
+      </section>
 
-      <CallToAction locale={locale} />
+      {/* ---------- about ---------- */}
+      <section className="rd-sec" id="about">
+        <div className="rd-wrap rd-about">
+          <div className="rd-rv">
+            <div className="rd-eyebrow rd-mono">{homeAbout.eyebrow[locale]}</div>
+            <h2 className="rd-big">{homeAbout.title[0][locale]}<br />{homeAbout.title[1][locale]}<br /><span className="rd-acc">{homeAbout.title[2][locale]}</span></h2>
+            <p>{homeAbout.p1[locale]}</p>
+            <p>{homeAbout.p2[locale]}</p>
+            <div className="rd-creds">{homeAbout.creds.map((c) => <span key={c.en} className="rd-pill rd-mono">{c[locale]}</span>)}</div>
+          </div>
+          <svg className="rd-venn rd-rv" viewBox="0 0 520 480" role="img" aria-label={v.aria[locale]}>
+            <circle cx="190" cy="180" r="130" /><circle cx="330" cy="180" r="130" /><circle cx="260" cy="300" r="130" />
+            <path className="core" d="M260 132 A130 130 0 0 1 320 245 A130 130 0 0 1 200 245 A130 130 0 0 1 260 132Z" />
+            <text x="110" y="130" className="m">HUMAN</text><text x="110" y="152">{v.human[0][locale]}</text><text x="110" y="170" className="s">{v.human[1][locale]}</text>
+            <text x="340" y="130" className="m">SYSTEM</text><text x="340" y="152">{v.system[0][locale]}</text><text x="340" y="170" className="s">{v.system[1][locale]}</text>
+            <text x="215" y="370" className="m">EXECUTION</text><text x="215" y="392">{v.exec[0][locale]}</text><text x="215" y="410" className="s">{v.exec[1][locale]}</text>
+          </svg>
+        </div>
+      </section>
+
+      {/* ---------- faq ---------- */}
+      <section className="rd-sec" id="faq" style={{ paddingTop: 40 }}>
+        <div className="rd-wrap rd-faq">
+          <div className="rd-rv">
+            <div className="rd-eyebrow rd-mono">{homeFaq.eyebrow[locale]}</div>
+            <h2 className="rd-big">{homeFaq.title[0][locale]}<br /><span className="rd-acc">{homeFaq.title[1][locale]}</span></h2>
+          </div>
+          <div className="rd-rv">
+            {homeFaq.items.map(([q, a]) => (
+              <details key={q.en}>
+                <summary>{q[locale]}<i aria-hidden="true">+</i></summary>
+                <p>{a[locale]}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CtaBlock locale={locale} />
     </main>
   );
 }

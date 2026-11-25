@@ -11,11 +11,10 @@ import {
   type VideoItem,
 } from "@/app/site-data";
 import { breadcrumbJsonLd } from "@/app/seo";
-import { PageIntro } from "@/components/shared/PageIntro";
-import { CallToAction } from "@/components/shared/CallToAction";
-import { FeaturedSeries } from "@/components/shared/FeaturedSeries";
-import { VideoTile } from "@/components/shared/VideoTile";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { FeaturedSeries } from "@/components/shared/FeaturedSeries";
+import { CtaBlock, RdIntro } from "@/components/rd/Blocks";
+import { VideoGrid, WorkCases } from "@/components/home/HomeClient";
 
 const allVideos = videoGroups.flatMap((group) => group.videos);
 const pick = (ids: readonly string[]) =>
@@ -31,9 +30,7 @@ function isoDuration(value?: string) {
 export function TrainingMediaPage({ locale }: { locale: Locale }) {
   const th = locale === "th";
   const media = servicePillars[0];
-  const wide = pick(featuredVideoIds.wide);
-  const tall = pick(featuredVideoIds.tall);
-  const shown = [...wide, ...tall];
+  const shown = [...pick(featuredVideoIds.wide), ...pick(featuredVideoIds.tall)];
 
   // VideoObject needs a real upload date — only clips with a verified date are marked up.
   const videoJsonLd = {
@@ -62,71 +59,78 @@ export function TrainingMediaPage({ locale }: { locale: Locale }) {
     <main>
       <JsonLd data={breadcrumbJsonLd(locale, pageSeo[""].crumb[locale], [{ name: pageSeo["training-media"].crumb[locale], path: "training-media" }])} />
       <JsonLd data={videoJsonLd} />
-      <PageIntro
-        eyebrow="Training media"
-        title={pageSeo["training-media"].title[locale]}
-        body={media.intro[locale]}
-      />
+      <RdIntro
+        locale={locale}
+        eyebrow={th ? "สื่ออบรม · Training media" : "Training media"}
+        title={{ th: "กฎที่จำไม่ได้", en: "Rules nobody remembers" }}
+        accent={{ th: "ทำให้เห็นภาพ", en: "become scenes they do" }}
+        body={media.intro}
+      >
+        <a className="rd-btn rd-btn-acc" href="#videos">{th ? "ดูวิดีโอผลงาน" : "Watch the videos"} ↓</a>
+        <Link className="rd-btn rd-btn-line" href={`/${locale}/products/gmp-3d-video`}>{th ? "ดูแพ็กเกจและราคา" : "Tiers & prices"} →</Link>
+      </RdIntro>
 
-      {/* ─── WHAT WE MAKE ─── */}
-      <section className="product-section section-pad">
-        <div className="product-heading reveal">
-          <h2>{th ? "สิ่งที่เราผลิต" : "What we make"}</h2>
-        </div>
-        <div className="make-grid">
-          {media.items.map(([number, title, body]) => (
-            <article key={number} className="make-card reveal">
-              <span className="make-num">{number}</span>
-              <h3>{title[locale]}</h3>
-              <p>{body[locale]}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── FEATURED SERIES ─── */}
-      <section className="product-section section-pad">
-        <div className="product-heading reveal">
-          <h2>{th ? "ผลงานเด่น 6 ซีรีส์" : "6 standout series"}</h2>
-          <p>
-            {th
-              ? "เปิดดูแต่ละซีรีส์เพื่อดูภาพทั้งหมด ผลงานชุดอื่นดูต่อได้ที่ช่องของเรา"
-              : "Open a series to see every visual. More of our work is on our channels."}
-          </p>
-        </div>
-      </section>
-      <FeaturedSeries locale={locale} />
-
-      {/* ─── VIDEOS ─── */}
-      <section id="videos" className="product-section section-pad">
-        <div className="product-heading reveal">
-          <h2>{th ? "วิดีโอเด่น" : "Featured videos"}</h2>
-          <p>
-            {th
-              ? `คัดมาจาก ${channel.videoCount} คลิปบนช่อง ${channel.name} — จอกว้างสำหรับห้องอบรม และแนวตั้งสำหรับมือถือ`
-              : `Picked from ${channel.videoCount} videos on the ${channel.name} channel — widescreen for the training room, vertical for mobile.`}
-          </p>
-        </div>
-        <div className="video-grid">
-          {wide.map((video, index) => <VideoTile key={video.id} video={video} locale={locale} priority={index === 0} />)}
-        </div>
-        <div className="video-grid video-grid-tall">
-          {tall.map((video) => <VideoTile key={video.id} video={video} locale={locale} />)}
-        </div>
-        <div className="more-work reveal">
-          <h2>{th ? `ดูครบทั้ง ${channel.videoCount} คลิปได้ที่ช่องของเรา` : `Watch all ${channel.videoCount} videos on our channels`}</h2>
-          <div className="more-work-links">
-            <a className="button" href={channel.youtube} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
-            <a className="button outline" href={channel.facebook} target="_blank" rel="noopener noreferrer">Facebook ↗</a>
-            <a className="button outline" href={channel.tiktok} target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+      <section className="rd-sec" style={{ paddingTop: 40 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{th ? "สิ่งที่เราผลิต" : "What we make"}</div>
+              <h2 className="rd-big">{th ? "จากกระดาษ" : "From paper"} <span className="rd-acc">{th ? "สู่ฉาก 3D" : "to 3D scenes"}</span></h2>
+            </div>
           </div>
-          <Link className="text-link" href={`/${locale}/products`}>
-            {th ? "ดูระบบผู้ช่วยอัตโนมัติของเรา →" : "See our automation assistants →"}
-          </Link>
+          <div className="rd-svc rd-svc-4 rd-rv">
+            {media.items.map(([number, title, body]) => (
+              <div className="rd-svc-col" key={number}>
+                <div className="rd-svc-n" aria-hidden="true">{number}</div>
+                <h3>{title[locale]}</h3>
+                <p className="rd-muted">{body[locale]}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <CallToAction locale={locale} />
+      <section className="rd-sec" style={{ paddingTop: 20 }}>
+        <div className="rd-wrap"><WorkCases locale={locale} /></div>
+      </section>
+
+      <section id="videos" className="rd-sec" style={{ paddingTop: 20 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{th ? "วิดีโอเด่น" : "Featured videos"}</div>
+              <h2 className="rd-big">{th ? "จอกว้างและ" : "Widescreen &"} <span className="rd-acc">{th ? "แนวตั้ง" : "vertical"}</span></h2>
+            </div>
+            <p>
+              {th
+                ? `คัดมาจาก ${channel.videoCount} คลิปบนช่อง ${channel.name} — 16:9 สำหรับห้องอบรม และ 9:16 สำหรับมือถือ`
+                : `Picked from ${channel.videoCount} videos on the ${channel.name} channel — 16:9 for the training room, 9:16 for mobile.`}
+            </p>
+          </div>
+          <VideoGrid locale={locale} videos={shown} />
+          <div className="rd-channels rd-rv">
+            <span className="rd-mono">{th ? `ดูครบทั้ง ${channel.videoCount} คลิป` : `All ${channel.videoCount} videos`}</span>
+            <a className="rd-btn rd-btn-acc" href={channel.youtube} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+            <a className="rd-btn rd-btn-line" href={channel.facebook} target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+            <a className="rd-btn rd-btn-line" href={channel.tiktok} target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="rd-sec rd-series" style={{ paddingTop: 20 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{th ? "ซีรีส์ภาพ 3D" : "3D image series"}</div>
+              <h2 className="rd-big">{th ? "ผลงานเด่น" : "Standout"} <span className="rd-acc">{th ? "6 ซีรีส์" : "series"}</span></h2>
+            </div>
+            <p>{th ? "เปิดดูแต่ละซีรีส์เพื่อดูภาพทั้งหมด" : "Open a series to see every visual."}</p>
+          </div>
+        </div>
+        <FeaturedSeries locale={locale} />
+      </section>
+
+      <CtaBlock locale={locale} />
     </main>
   );
 }

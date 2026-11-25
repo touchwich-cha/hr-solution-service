@@ -4,16 +4,16 @@ import { pageSeo, type Locale } from "@/app/site-data";
 import { catalogCopy, catalogGroups, fastwork, formatPrice, fromPrice, getFwProduct, type FwProduct } from "@/app/catalog-data";
 import { breadcrumbJsonLd, serviceJsonLd } from "@/app/seo";
 import { JsonLd } from "@/components/shared/JsonLd";
-import { FastworkNote } from "@/components/shared/FastworkNote";
-import { CallToAction } from "@/components/shared/CallToAction";
+import { CtaBlock, FastworkBand } from "@/components/rd/Blocks";
 
 /** One product page: cover, who it is for, the 3 tiers (same as Fastwork), samples, exclusions, related products. */
 export function FwProductPage({ locale, product }: { locale: Locale; product: FwProduct }) {
   const th = locale === "th";
   const group = catalogGroups.find((item) => item.id === product.group);
   const related = product.related.map((slug) => getFwProduct(slug)).filter((item): item is FwProduct => Boolean(item));
+  const orderUrl = product.fastworkUrl || fastwork.profileUrl;
   return (
-    <main className="product-page fwp">
+    <main>
       <JsonLd data={serviceJsonLd(locale, product)} />
       <JsonLd
         data={breadcrumbJsonLd(locale, pageSeo[""].crumb[locale], [
@@ -21,75 +21,100 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
           { name: product.name[locale], path: `products/${product.slug}` },
         ])}
       />
-      <section className="fwp-hero section-pad">
-        <div className="fwp-copy">
-          <Link className="product-back" href={`/${locale}/products`}>{catalogCopy.back[locale]}</Link>
-          {group && <p className="eyebrow">{group.title[locale]}</p>}
-          <h1>{product.name[locale]}</h1>
-          <p className="lede">{product.oneLiner[locale]}</p>
-          <p className="fwp-who"><b>{catalogCopy.forWho[locale]}:</b> {product.forWho[locale]}</p>
-          <p className="fwp-from">
-            {catalogCopy.from[locale]} <b>{catalogCopy.baht[locale]}{formatPrice(fromPrice(product))}</b>
-          </p>
-          <div className="hero-actions">
-            <a className="button" href="#tiers">{th ? "ดูแพ็กเกจ" : "See tiers"} ↓</a>
-            {fastwork.profileUrl && (
-              <a className="button outline" href={fastwork.profileUrl} target="_blank" rel="noopener noreferrer">{catalogCopy.orderFastwork[locale]} ↗</a>
-            )}
-            <Link className="button outline" href={`/${locale}/contact#quote`}>{th ? "ขอใบเสนอราคา" : "Request a quote"}</Link>
+      <header className="rd-intro rd-intro-split">
+        <div className="rd-wrap rd-pd-hero">
+          <div>
+            <Link className="rd-back rd-mono" href={`/${locale}/products`}>{catalogCopy.back[locale]}</Link>
+            {group && <div className="rd-eyebrow rd-mono">{group.title[locale]}</div>}
+            <h1 className="rd-pd-title">{product.name[locale]}</h1>
+            <p className="rd-intro-body">{product.oneLiner[locale]}</p>
+            <p className="rd-pd-who"><b className="rd-mono rd-acc">{catalogCopy.forWho[locale]}</b>{product.forWho[locale]}</p>
+            <div className="rd-pd-from">
+              <span className="rd-mono">{catalogCopy.from[locale]}</span>
+              <strong>฿{formatPrice(fromPrice(product))}</strong>
+            </div>
+            <div className="rd-ctas">
+              <a className="rd-btn rd-btn-acc" href="#tiers">{th ? "ดูแพ็กเกจ" : "See tiers"} ↓</a>
+              {orderUrl && <a className="rd-btn rd-btn-line" href={orderUrl} target="_blank" rel="noopener noreferrer">{catalogCopy.orderFastwork[locale]} ↗</a>}
+              <Link className="rd-btn rd-btn-line" href={`/${locale}/contact#quote`}>{th ? "ขอใบเสนอราคา" : "Request a quote"}</Link>
+            </div>
+          </div>
+          <div className="rd-pd-cover">
+            <Image src={product.cover} alt={product.name[locale]} fill priority sizes="(max-width: 1000px) 92vw, 560px" />
           </div>
         </div>
-        <div className="fwp-cover">
-          <Image src={product.cover} alt={product.name[locale]} fill priority sizes="(max-width: 900px) 92vw, 48vw" />
+      </header>
+
+      <section id="tiers" className="rd-sec">
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{th ? "แพ็กเกจ" : "Tiers"}</div>
+              <h2 className="rd-big">{catalogCopy.tiersTitle[locale]}</h2>
+            </div>
+          </div>
+          <div className="rd-tiers">
+            {product.tiers.map((tier, index) => (
+              <article key={tier.name.en} className={`rd-tier rd-rv${index === product.popular ? " pop" : ""}`}>
+                <div className="rd-tier-top">
+                  <span className="rd-mono">{["Basic", "Standard", "Premium"][index]}</span>
+                  {index === product.popular && <span className="rd-tier-badge rd-mono">{catalogCopy.usual[locale]}</span>}
+                </div>
+                <h3>{tier.name[locale]}</h3>
+                <p className="rd-tier-price">฿{formatPrice(tier.price)}</p>
+                <p className="rd-tier-meta rd-mono">{tier.days} {catalogCopy.days[locale]} · {tier.revisions} {catalogCopy.revisions[locale]}</p>
+                <ul>
+                  {tier.includesPrevious && <li className="plus">{catalogCopy.plus[locale]}</li>}
+                  {tier.items.map((line) => <li key={line[0]}>{line[th ? 0 : 1]}</li>)}
+                </ul>
+                <Link className={`rd-btn ${index === product.popular ? "rd-btn-acc" : "rd-btn-line"}`} href={`/${locale}/contact#quote`}>{catalogCopy.ask[locale]}</Link>
+              </article>
+            ))}
+          </div>
+          <p className="rd-note">{catalogCopy.scopeNote[locale]}</p>
+          <div className="rd-pd-info rd-rv">
+            <div><h3 className="rd-mono rd-acc">{catalogCopy.excludes[locale]}</h3><p>{product.excludes[locale]}</p></div>
+            {product.note && <div><h3 className="rd-mono rd-acc">{th ? "ข้อควรทราบ" : "Good to know"}</h3><p>{product.note[locale]}</p></div>}
+          </div>
         </div>
       </section>
 
-      <section id="tiers" className="product-section section-pad">
-        <div className="product-heading reveal"><h2>{catalogCopy.tiersTitle[locale]}</h2></div>
-        <div className="fwp-tiers">
-          {product.tiers.map((tier, index) => (
-            <article key={tier.name.en} className={`fwp-tier reveal${index === product.popular ? " popular" : ""}`}>
-              {index === product.popular && <span className="fwp-badge">{catalogCopy.usual[locale]}</span>}
-              <h3>{tier.name[locale]}</h3>
-              <p className="fwp-price">{catalogCopy.baht[locale]}{formatPrice(tier.price)}</p>
-              <p className="fwp-meta">{tier.days} {catalogCopy.days[locale]} · {tier.revisions} {catalogCopy.revisions[locale]}</p>
-              <ul>
-                {tier.includesPrevious && <li className="plus">{catalogCopy.plus[locale]}</li>}
-                {tier.items.map((line) => <li key={line[0]}>{line[th ? 0 : 1]}</li>)}
-              </ul>
-              <Link className="button outline" href={`/${locale}/contact#quote`}>{catalogCopy.ask[locale]}</Link>
-            </article>
-          ))}
-        </div>
-        <p className="fwp-scope">{catalogCopy.scopeNote[locale]}</p>
-        <div className="fwp-info">
-          <div><h3>{catalogCopy.excludes[locale]}</h3><p>{product.excludes[locale]}</p></div>
-          {product.note && <div><h3>{th ? "ข้อควรทราบ" : "Good to know"}</h3><p>{product.note[locale]}</p></div>}
+      <section className="rd-sec" style={{ paddingTop: 20 }}>
+        <div className="rd-wrap">
+          <div className="rd-head rd-rv">
+            <div>
+              <div className="rd-eyebrow rd-mono">{th ? "ตัวอย่าง" : "Samples"}</div>
+              <h2 className="rd-big">{catalogCopy.samples[locale]}</h2>
+            </div>
+            <p>{catalogCopy.sample[locale]}</p>
+          </div>
+          <div className="rd-samples">
+            {product.samples.map((src) => (
+              <div key={src} className="rd-sample rd-rv"><Image src={src} alt={product.name[locale]} fill sizes="(max-width: 720px) 92vw, 400px" /></div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="product-section section-pad">
-        <div className="product-heading reveal"><h2>{catalogCopy.samples[locale]}</h2></div>
-        <div className="fwp-samples">
-          {product.samples.map((src) => (
-            <div key={src} className="fwp-sample"><Image src={src} alt={product.name[locale]} fill sizes="(max-width: 720px) 92vw, 30vw" /></div>
-          ))}
-        </div>
-        <p className="pg-note">{catalogCopy.sample[locale]}</p>
-      </section>
+      <FastworkBand locale={locale} />
 
-      <FastworkNote locale={locale} />
-
-      <nav className="product-section section-pad product-other" aria-label={catalogCopy.related[locale]}>
-        <h2>{catalogCopy.related[locale]}</h2>
-        <div className="fwp-related">
-          {related.map((item) => (
-            <Link key={item.slug} className="text-link" href={`/${locale}/products/${item.slug}`}>{item.name[locale]} →</Link>
-          ))}
-          <Link className="text-link" href={`/${locale}/products`}>{catalogCopy.back[locale]}</Link>
+      <nav className="rd-sec" aria-label={catalogCopy.related[locale]}>
+        <div className="rd-wrap">
+          <div className="rd-eyebrow rd-mono">{catalogCopy.related[locale]}</div>
+          <div className="rd-related">
+            {related.map((item) => (
+              <Link key={item.slug} href={`/${locale}/products/${item.slug}`}>
+                <span>{item.name[locale]}</span>
+                <small className="rd-mono">{catalogCopy.from[locale]} ฿{formatPrice(fromPrice(item))}</small>
+                <span className="rd-circ sm" aria-hidden="true">↗</span>
+              </Link>
+            ))}
+            <Link href={`/${locale}/products`}><span>{catalogCopy.back[locale].replace(/^←\s*/, "")}</span><span className="rd-circ sm" aria-hidden="true">←</span></Link>
+          </div>
         </div>
       </nav>
-      <CallToAction locale={locale} />
+
+      <CtaBlock locale={locale} />
     </main>
   );
 }
