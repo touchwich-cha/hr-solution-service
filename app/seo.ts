@@ -32,12 +32,20 @@ export function serviceJsonLd(locale: Locale, product: FwProduct) {
     areaServed: "TH",
     serviceType: catalogCopy.eyebrow[locale],
     provider: { "@type": "Organization", name: brand.name, url: siteUrl, email: contact.email },
-    offers: {
-      "@type": "AggregateOffer",
-      priceCurrency: "THB",
-      lowPrice: fromPrice(product),
-      highPrice: Math.max(...product.tiers.map((tier) => tier.price)),
-      offerCount: product.tiers.length,
-    },
+    offers: product.quote
+      ? {
+          "@type": "Offer",
+          priceCurrency: "THB",
+          price: product.quote.from,
+          priceSpecification: { "@type": "UnitPriceSpecification", price: product.quote.from, priceCurrency: "THB", unitCode: "ANN" },
+          description: catalogCopy.quotePrice[locale],
+        }
+      : {
+          "@type": "AggregateOffer",
+          priceCurrency: "THB",
+          lowPrice: fromPrice(product),
+          highPrice: Math.max(...product.tiers.map((tier) => tier.price)),
+          offerCount: product.tiers.length,
+        },
   };
 }

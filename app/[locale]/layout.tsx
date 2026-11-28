@@ -8,7 +8,7 @@ import "@fontsource-variable/jetbrains-mono";
 import "../globals.css";
 import "../redesign.css";
 import { brand, siteUrl, contact, channel, pageSeo } from "@/app/site-data";
-import { fastwork, fwProducts } from "@/app/catalog-data";
+import { fastwork, fromPrice, fwProducts } from "@/app/catalog-data";
 
 const siteDescription = pageSeo[""].description.th;
 
@@ -44,7 +44,7 @@ const organizationJsonLd = {
     "@type": "Offer",
     url: `${siteUrl}/th/products/${product.slug}`,
     priceCurrency: "THB",
-    price: Math.min(...product.tiers.map((tier) => tier.price)),
+    price: fromPrice(product),
     itemOffered: { "@type": "Service", name: product.name.th, description: product.oneLiner.th },
   })),
 };

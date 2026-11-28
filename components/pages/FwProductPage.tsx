@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { pageSeo, type Locale } from "@/app/site-data";
-import { catalogCopy, catalogGroups, fastwork, formatPrice, fromPrice, getFwProduct, type FwProduct } from "@/app/catalog-data";
+import { catalogCopy, catalogGroups, fastwork, formatPrice, fromPrice, getFwProduct, pricePer, type FwProduct } from "@/app/catalog-data";
 import { breadcrumbJsonLd, serviceJsonLd } from "@/app/seo";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { CtaBlock, FastworkBand } from "@/components/rd/Blocks";
@@ -11,7 +11,8 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
   const th = locale === "th";
   const group = catalogGroups.find((item) => item.id === product.group);
   const related = product.related.map((slug) => getFwProduct(slug)).filter((item): item is FwProduct => Boolean(item));
-  const orderUrl = product.fastworkUrl || fastwork.profileUrl;
+  // quote-based products are not sold on Fastwork: no order button, no Fastwork band
+  const orderUrl = product.quote ? product.fastworkUrl : product.fastworkUrl || fastwork.profileUrl;
   return (
     <main>
       <JsonLd data={serviceJsonLd(locale, product)} />
@@ -31,10 +32,12 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
             <p className="rd-pd-who"><b className="rd-mono rd-acc">{catalogCopy.forWho[locale]}</b>{product.forWho[locale]}</p>
             <div className="rd-pd-from">
               <span className="rd-mono">{catalogCopy.from[locale]}</span>
-              <strong>฿{formatPrice(fromPrice(product))}</strong>
+              <strong>฿{formatPrice(fromPrice(product))}{product.quote && <small>{pricePer(product, locale)}</small>}</strong>
             </div>
+            {product.quote && <p className="rd-pd-quote rd-mono">{catalogCopy.quotePrice[locale]}</p>}
             <div className="rd-ctas">
-              <a className="rd-btn rd-btn-acc" href="#tiers">{th ? "ดูแพ็กเกจ" : "See tiers"} ↓</a>
+              {product.demoUrl && <a className="rd-btn rd-btn-acc" href={product.demoUrl} target="_blank" rel="noopener">{catalogCopy.tryDemo[locale]} ↗</a>}
+              <a className={`rd-btn ${product.demoUrl ? "rd-btn-line" : "rd-btn-acc"}`} href="#tiers">{th ? "ดูแพ็กเกจ" : "See tiers"} ↓</a>
               {orderUrl && <a className="rd-btn rd-btn-line" href={orderUrl} target="_blank" rel="noopener noreferrer">{catalogCopy.orderFastwork[locale]} ↗</a>}
               <Link className="rd-btn rd-btn-line" href={`/${locale}/contact#quote`}>{th ? "ขอใบเสนอราคา" : "Request a quote"}</Link>
             </div>
@@ -50,7 +53,7 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
           <div className="rd-head rd-rv">
             <div>
               <div className="rd-eyebrow rd-mono">{th ? "แพ็กเกจ" : "Tiers"}</div>
-              <h2 className="rd-big">{catalogCopy.tiersTitle[locale]}</h2>
+              <h2 className="rd-big">{(product.quote ? catalogCopy.tiersTitleQuote : catalogCopy.tiersTitle)[locale]}</h2>
             </div>
           </div>
           <div className="rd-tiers">
@@ -61,8 +64,14 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
                   {index === product.popular && <span className="rd-tier-badge rd-mono">{catalogCopy.usual[locale]}</span>}
                 </div>
                 <h3>{tier.name[locale]}</h3>
-                <p className="rd-tier-price">฿{formatPrice(tier.price)}</p>
-                <p className="rd-tier-meta rd-mono">{tier.days} {catalogCopy.days[locale]} · {tier.revisions} {catalogCopy.revisions[locale]}</p>
+                {product.quote ? (
+                  <p className="rd-tier-meta rd-mono">{catalogCopy.quotePrice[locale]}</p>
+                ) : (
+                  <>
+                    <p className="rd-tier-price">฿{formatPrice(tier.price)}</p>
+                    <p className="rd-tier-meta rd-mono">{tier.days} {catalogCopy.days[locale]} · {tier.revisions} {catalogCopy.revisions[locale]}</p>
+                  </>
+                )}
                 <ul>
                   {tier.includesPrevious && <li className="plus">{catalogCopy.plus[locale]}</li>}
                   {tier.items.map((line) => <li key={line[0]}>{line[th ? 0 : 1]}</li>)}
@@ -71,7 +80,7 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
               </article>
             ))}
           </div>
-          <p className="rd-note">{catalogCopy.scopeNote[locale]}</p>
+          {!product.quote && <p className="rd-note">{catalogCopy.scopeNote[locale]}</p>}
           <div className="rd-pd-info rd-rv">
             <div><h3 className="rd-mono rd-acc">{catalogCopy.excludes[locale]}</h3><p>{product.excludes[locale]}</p></div>
             {product.note && <div><h3 className="rd-mono rd-acc">{th ? "ข้อควรทราบ" : "Good to know"}</h3><p>{product.note[locale]}</p></div>}
@@ -96,7 +105,7 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
         </div>
       </section>
 
-      <FastworkBand locale={locale} />
+      {!product.quote && <FastworkBand locale={locale} />}
 
       <nav className="rd-sec" aria-label={catalogCopy.related[locale]}>
         <div className="rd-wrap">
@@ -105,7 +114,7 @@ export function FwProductPage({ locale, product }: { locale: Locale; product: Fw
             {related.map((item) => (
               <Link key={item.slug} href={`/${locale}/products/${item.slug}`}>
                 <span>{item.name[locale]}</span>
-                <small className="rd-mono">{catalogCopy.from[locale]} ฿{formatPrice(fromPrice(item))}</small>
+                <small className="rd-mono">{catalogCopy.from[locale]} ฿{formatPrice(fromPrice(item))}{pricePer(item, locale)}</small>
                 <span className="rd-circ sm" aria-hidden="true">↗</span>
               </Link>
             ))}

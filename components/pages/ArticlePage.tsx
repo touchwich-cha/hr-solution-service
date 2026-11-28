@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { brand, pageSeo, siteUrl, videoPublished, videoUploadDate, type Locale } from "@/app/site-data";
 import { articles, getArticle, thaiDate, type Article, type Block } from "@/app/articles-data";
-import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
+import { formatPrice, fromPrice, getFwProduct, pricePer } from "@/app/catalog-data";
 import { breadcrumbJsonLd } from "@/app/seo";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { CtaBlock } from "@/components/rd/Blocks";
@@ -105,7 +105,7 @@ export function ArticlePage({ locale, article }: { locale: Locale; article: Arti
         {product && article.product && (
           <Link href={`/${locale}/products/${product.slug}`} className="rd-art-cta">
             <span>{article.product.cta}</span>
-            <b className="rd-mono">เริ่ม ฿{formatPrice(fromPrice(product))}</b>
+            <b className="rd-mono">เริ่ม ฿{formatPrice(fromPrice(product))}{pricePer(product, "th")}</b>
             <span className="rd-circ sm" aria-hidden="true">↗</span>
           </Link>
         )}
