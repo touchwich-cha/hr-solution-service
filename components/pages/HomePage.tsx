@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { elearningDemoUrl, siteUrl, videoPublished, videoUploadDate, type Locale } from "@/app/site-data";
-import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
+import { formatPrice, fromPrice, getFwProduct, pricePer } from "@/app/catalog-data";
 import {
   homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, homeWork, type ServiceItem,
 } from "@/app/home-data";
@@ -17,7 +17,7 @@ function ServiceLine({ item, locale }: { item: ServiceItem; locale: Locale }) {
     return (
       <li>
         <Link href={`/${locale}/products/${product.slug}`}>
-          {product.name[locale]}<small>{from} ฿{formatPrice(fromPrice(product))}</small>
+          {product.name[locale]}<small>{from} ฿{formatPrice(fromPrice(product))}{pricePer(product, locale)}</small>
         </Link>
       </li>
     );

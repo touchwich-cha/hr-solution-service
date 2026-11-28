@@ -1,11 +1,12 @@
-// ─── Product catalogue — the SAME 9 products, names, tiers and prices as the Fastwork listings ───
+// ─── Product catalogue — 9 products with the SAME names, tiers and prices as the Fastwork listings,
+//     plus the quote-based E-Learning system (not on Fastwork; priced per customer, from THB 9,999/year) ───
 //
 // Source of truth: Fastwork_HR_Solution_Service/products/Fastwork_Listings_v2.md (+ Fastwork_Listings.md).
 // 1 product = 1 Fastwork listing = 3 tiers (Basic / Standard / Premium). Change a price or a tier here
 // and on Fastwork together so the two never disagree.
 // Images are fictional sample screens (labelled on the page) — never real client data.
 
-import type { ProductIcon } from "@/app/site-data";
+import { elearningDemoUrl, type ProductIcon } from "@/app/site-data";
 
 type L = { th: string; en: string };
 /** One deliverable line, [Thai, English]. */
@@ -42,6 +43,10 @@ export type FwProduct = {
   seo: { title: L; description: L };
   /** This product's own Fastwork listing (same tiers and prices). */
   fastworkUrl?: string;
+  /** Quote-based product: tiers show "ask us" instead of prices; `from` is the starting price per `per`. */
+  quote?: { from: number; per: L };
+  /** Public try-it demo for this product. */
+  demoUrl?: string;
 };
 
 export type CatalogGroup = { id: GroupId; icon: ProductIcon; title: L; sub: L };
@@ -54,22 +59,26 @@ export const fastwork = {
 
 export const catalogCopy = {
   eyebrow: { th: "Products / สินค้า", en: "Products" },
-  title: { th: "9 สินค้า จัดเป็น 4 กลุ่มงาน — เลือกแพ็กเกจที่ใช่ได้เลย", en: "9 products in 4 groups — pick the tier that fits" },
+  title: { th: "10 สินค้า จัดเป็น 4 กลุ่มงาน — เลือกแพ็กเกจที่ใช่ได้เลย", en: "10 products in 4 groups — pick the tier that fits" },
   body: {
-    th: "ทุกสินค้ามี 3 แพ็กเกจ (Basic / Standard / Premium) เป็นงานชนิดเดียวกัน ต่างกันที่ขนาดและปริมาณงาน และมีประกาศชื่อเดียวกันบน Fastwork ด้วยแพ็กเกจและราคาเดียวกัน คุยขอบเขตกับเราก่อนสั่งซื้อได้เสมอ",
-    en: "Every product comes in 3 tiers (Basic / Standard / Premium) — the same work at different scale — and has a matching Fastwork listing with the same tiers and prices. Talk scope with us before you order.",
+    th: "ทุกสินค้ามี 3 แพ็กเกจ (Basic / Standard / Premium) เป็นงานชนิดเดียวกัน ต่างกันที่ขนาดและปริมาณงาน และมีประกาศชื่อเดียวกันบน Fastwork ด้วยแพ็กเกจและราคาเดียวกัน (ยกเว้นระบบ E-Learning ที่เสนอราคาตามฟีเจอร์) คุยขอบเขตกับเราก่อนสั่งซื้อได้เสมอ",
+    en: "Every product comes in 3 tiers (Basic / Standard / Premium) — the same work at different scale — and has a matching Fastwork listing with the same tiers and prices (except the E-Learning system, quoted by features). Talk scope with us before you order.",
   },
   from: { th: "เริ่มต้น", en: "From" },
   baht: { th: "฿", en: "THB " },
   days: { th: "วัน", en: "days" },
   revisions: { th: "แก้ไข", en: "revisions" },
   usual: { th: "ยอดนิยม", en: "Most chosen" },
+  quotePrice: { th: "ราคาตามฟีเจอร์ · ติดต่อสอบถาม", en: "Priced by features · ask us" },
+  quoteShort: { th: "ติดต่อสอบถาม", en: "Ask us" },
+  tryDemo: { th: "ทดลองใช้เดโมฟรี", en: "Try the free demo" },
   plus: { th: "ทุกอย่างในแพ็กเกจก่อนหน้า และ", en: "Everything in the previous tier, plus" },
   see: { th: "ดูแพ็กเกจและรายละเอียด", en: "See tiers & details" },
   ask: { th: "สอบถามแพ็กเกจนี้", en: "Ask about this tier" },
   orderFastwork: { th: "สั่งซื้อผ่าน Fastwork", en: "Order on Fastwork" },
   forWho: { th: "เหมาะกับใคร", en: "Who it's for" },
   tiersTitle: { th: "3 แพ็กเกจ — ชนิดงานเดียวกัน ต่างกันที่ขนาด", en: "3 tiers — the same work at different scale" },
+  tiersTitleQuote: { th: "เลือกฟีเจอร์ตามที่องค์กรต้องการ — ราคาตามฟีเจอร์", en: "Pick the features you need — priced by features" },
   excludes: { th: "ไม่รวมในแพ็กเกจ", en: "Not included" },
   samples: { th: "ตัวอย่างงาน", en: "Work samples" },
   related: { th: "สินค้าที่มักใช้ร่วมกัน", en: "Often used together" },
@@ -174,6 +183,61 @@ export const fwProducts: readonly FwProduct[] = [
     seo: {
       title: T("ทำวิดีโอสอนใช้งานระบบ SAP / ERP พร้อมเสียงบรรยายไทย", "How-to videos for SAP / ERP and company software, Thai voice-over"),
       description: T("วิดีโอสอนใช้งานระบบ 3 แพ็กเกจ เริ่มต้น 1,990 บาท จำลองหน้าจอ ซูม เคอร์เซอร์ มาสคอต และแบบทดสอบท้ายคลิป", "System how-to videos in 3 tiers from THB 1,990 — recreated screens, zoom, cursor, mascot host and quizzes."),
+    },
+  },
+  // ───────────── 10. E-Learning system (quote-based, yearly; not on Fastwork) ─────────────
+  {
+    slug: "elearning-system",
+    group: "training",
+    icon: "layers",
+    name: T("ระบบ E-Learning สำหรับองค์กร", "E-Learning system for your company"),
+    oneLiner: T(
+      "ระบบเรียนออนไลน์ของบริษัทคุณ เรียนทีละด่าน ดูวิดีโอ ตอบคำถาม สอบ รับใบรับรอง พร้อมหลังบ้าน HR และรายงานชั่วโมงอบรม",
+      "Your own online learning system — step-by-step lessons, video, quizzes, exams and certificates, with an HR back office and training-hour reports.",
+    ),
+    forWho: T(
+      "ฝ่าย HR และฝึกอบรมที่ต้องการให้พนักงานเรียนออนไลน์ได้ทั้งมือถือและคอมพิวเตอร์ และต้องมีหลักฐานการอบรมไว้ใช้ตอน Audit",
+      "HR and training teams who want staff to learn online on phone or computer, with training records ready for audits.",
+    ),
+    popular: 1,
+    quote: { from: 9999, per: T("/ปี", "/year") },
+    demoUrl: elearningDemoUrl,
+    tiers: [
+      { name: T("เริ่มต้น", "Starter"), price: 9999, days: 0, revisions: 0, includesPrevious: false, items: [
+        ["ระบบบน Google Workspace ของบริษัท", "Runs on your company's Google Workspace"],
+        ["พนักงานเข้าระบบด้วยอีเมลบริษัท + รหัส OTP", "Staff sign in with company email + one-time code"],
+        ["บทเรียนวิดีโอจากลิงก์ YouTube + คำถามระหว่างคลิป", "Video lessons from YouTube links + in-video questions"],
+        ["ข้อสอบท้ายหลักสูตร + ใบรับรองพร้อม QR ตรวจสอบ", "End-of-course exam + certificate with verification QR"],
+        ["หลังบ้าน HR: นำเข้าพนักงานจาก Excel สร้างหลักสูตร มอบหมายตามแผนก", "HR back office: import staff from Excel, build courses, assign by department"] ] },
+      { name: T("มาตรฐาน", "Standard"), price: 9999, days: 0, revisions: 0, includesPrevious: true, items: [
+        ["เส้นทางการเรียนแบบกระดานด่าน", "Game-board learning path"],
+        ["กันโกง: ห้ามข้ามวิดีโอ ลายน้ำชื่อผู้เรียน ตรวจการสลับหน้าจอระหว่างสอบ", "Anti-cheat: no video skipping, learner-name watermark, tab-switch checks in exams"],
+        ["แจ้งเตือนทางอีเมลเมื่อใกล้ครบกำหนด", "Email reminders before due dates"],
+        ["รายงานชั่วโมงอบรมรายคน / แผนก + ส่งออก Excel", "Training-hour reports per person / department + Excel export"],
+        ["ประวัติการอบรมรายคน พิมพ์ / PDF ได้", "Personal training record, printable / PDF"] ] },
+      { name: T("ตามความต้องการ", "Tailored"), price: 9999, days: 0, revisions: 0, includesPrevious: true, items: [
+        ["ชื่อบริษัท โลโก้ และสีตามแบรนด์บนระบบและใบรับรอง", "Your company name, logo and brand colour on the system and certificates"],
+        ["ปรับฟีเจอร์ตามขั้นตอนงานขององค์กร", "Features shaped to your own process"],
+        ["หัวหน้างานดูความคืบหน้าของลูกทีม", "Managers see their team's progress"],
+        ["ทำสื่ออบรมวิดีโอให้ด้วย (คิดตามสินค้าวิดีโออบรม)", "Training videos made for you (priced as our video products)"] ] },
+    ],
+    excludes: T(
+      "ค่าทำสื่อวิดีโออบรม (ดูสินค้าวิดีโออบรม) และบัญชี Google Workspace ของบริษัท",
+      "Making the training videos (see our video products) and your company's Google Workspace account.",
+    ),
+    note: T(
+      "ราคาขึ้นอยู่กับฟีเจอร์และตัวเลือกที่องค์กรต้องการ เริ่มต้น 9,999 บาท/ปี ติดต่อเราเพื่อรับใบเสนอราคา · ทดลองใช้เดโมได้ฟรีก่อนตัดสินใจ",
+      "Price depends on the features and options you need, from THB 9,999 per year. Contact us for a quotation — and try the free demo first.",
+    ),
+    cover: "/catalog/elearning-cover.webp",
+    samples: ["/catalog/elearning-1.webp", "/catalog/elearning-2.webp", "/catalog/elearning-3.webp"],
+    related: ["gmp-3d-video", "software-video", "training-exam"],
+    seo: {
+      title: T("ระบบ E-Learning สำหรับองค์กร เรียนออนไลน์ สอบ ออกใบรับรอง ทดลองฟรี", "E-Learning system for companies — online lessons, exams, certificates, free demo"),
+      description: T(
+        "ระบบเรียนออนไลน์ของบริษัท บทเรียนวิดีโอ คำถามระหว่างคลิป ข้อสอบ ใบรับรอง QR หลังบ้าน HR และรายงานชั่วโมงอบรม เริ่มต้น 9,999 บาท/ปี ทดลองใช้เดโมฟรี",
+        "Company online learning: video lessons, in-video questions, exams, QR certificates, an HR back office and training-hour reports. From THB 9,999 a year — try the free demo.",
+      ),
     },
   },
   // ───────────── 3. Logical Test ─────────────
@@ -379,7 +443,12 @@ export function productsInGroup(group: GroupId) {
 }
 
 export function fromPrice(product: FwProduct) {
-  return Math.min(...product.tiers.map((tier) => tier.price));
+  return product.quote ? product.quote.from : Math.min(...product.tiers.map((tier) => tier.price));
+}
+
+/** "/year" suffix for quote-based yearly products, empty otherwise. */
+export function pricePer(product: FwProduct, locale: "th" | "en") {
+  return product.quote ? product.quote.per[locale] : "";
 }
 
 export function formatPrice(value: number) {

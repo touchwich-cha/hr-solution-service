@@ -413,6 +413,9 @@ body::after {
 .rd-pd-who { display: flex; flex-direction: column; gap: 6px; color: var(--rd-muted); margin-top: 22px !important; max-width: 560px; }
 .rd-pd-from { display: flex; align-items: baseline; gap: 12px; margin-top: 26px; }
 .rd-pd-from strong { font-family: var(--font-display); font-size: 54px; line-height: 1; color: var(--rd-acc); }
+.rd-pd-from strong { white-space: nowrap; }
+.rd-pd-from strong small { font-size: .42em; margin-left: 4px; }
+.rd-pd-quote { margin: 10px 0 0; color: var(--rd-text); font-size: 13px; letter-spacing: .02em; }
 .rd-pd-cover { position: relative; aspect-ratio: 4 / 3; border-radius: 26px; overflow: hidden; border: 1px solid var(--rd-line-2); box-shadow: 0 50px 100px -40px rgba(255, 200, 30, .35); }
 .rd-pd-cover img { object-fit: cover; }
 .rd-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }

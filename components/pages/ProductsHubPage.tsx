@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { pageSeo, type Locale } from "@/app/site-data";
-import { catalogCopy, catalogGroups, formatPrice, fromPrice, fwProducts, productsInGroup } from "@/app/catalog-data";
+import { catalogCopy, catalogGroups, formatPrice, fromPrice, fwProducts, pricePer, productsInGroup } from "@/app/catalog-data";
 import { homeLab, homeServices } from "@/app/home-data";
 import { breadcrumbJsonLd, pageUrl } from "@/app/seo";
 import { JsonLd } from "@/components/shared/JsonLd";
@@ -65,11 +65,11 @@ export function ProductsHubPage({ locale }: { locale: Locale }) {
                     <p>{product.oneLiner[locale]}</p>
                     <ul aria-label={th ? "แพ็กเกจ" : "Tiers"}>
                       {product.tiers.map((tier) => (
-                        <li key={tier.name.en}><span>{tier.name[locale]}</span><b>฿{formatPrice(tier.price)}</b></li>
+                        <li key={tier.name.en}><span>{tier.name[locale]}</span><b>{product.quote ? catalogCopy.quoteShort[locale] : `฿${formatPrice(tier.price)}`}</b></li>
                       ))}
                     </ul>
                     <span className="rd-pcard-more">
-                      <span className="rd-mono">{catalogCopy.from[locale]} ฿{formatPrice(fromPrice(product))}</span>
+                      <span className="rd-mono">{catalogCopy.from[locale]} ฿{formatPrice(fromPrice(product))}{pricePer(product, locale)}</span>
                       <span className="rd-circ sm" aria-hidden="true">↗</span>
                     </span>
                   </div>

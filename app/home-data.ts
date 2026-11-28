@@ -109,7 +109,7 @@ export const homeServices = {
     {
       title: T("สื่ออบรมและคู่มือ", "Training media & manuals"),
       items: [
-        { slug: "gmp-3d-video" }, { slug: "software-video" },
+        { slug: "elearning-system" }, { slug: "gmp-3d-video" }, { slug: "software-video" },
         { label: T("คู่มือการใช้งาน Word + PDF", "User manual, Word + PDF"), url: "https://fastwork.co/user/hrsolutionservice/typing-and-data-entry-28623650", from: 499 },
       ],
     },

@@ -27,6 +27,7 @@
 - ตรวจแล้ว: lint / tsc / build ผ่าน, ทุกหน้าตอบ 200 บน production, มือถือ 375px ไม่มีเลื่อนแนวนอน
 
 ## 3. งานค้าง (เรียงตามความสำคัญ)
+0. **สินค้าใหม่ "ระบบ E-Learning สำหรับองค์กร" (`elearning-system`, 28/11/2569)** — ไม่มีบน Fastwork (เจ้าของสั่ง: ไม่ระบุราคาแพ็กเกจ "ติดต่อสอบถาม" ราคาตาม Feature/Option เริ่มต้น 9,999 บาท/ปี) · รองรับด้วยฟิลด์ `quote` + `demoUrl` ใน `FwProduct` (หน้าสินค้า/หน้ารวม/หน้าแรกแสดง "ติดต่อสอบถาม" แทนราคาแพ็กเกจ, ไม่มีปุ่ม/แถบ Fastwork) · ภาพ `public/catalog/elearning-*.webp` จากภาพหน้าจอเดโม (ข้อมูลสมมติ) · อยู่ branch เดียวกับปุ่มด้านล่าง
 0. **ปุ่ม "ทดลองใช้ระบบ E-Learning ฟรี" (28/11/2569)** — branch `feat/elearning-demo-button` (ปุ่มที่ 3 ใน hero หน้าแรก → `elearningDemoUrl` ใน `app/site-data.ts` = https://hr-solution-demo.vercel.app (เจ้าของเลือกใช้ลิงก์ vercel ไปก่อน 28/11), เปิดแท็บใหม่) · รอเจ้าของดู Preview แล้วสั่ง merge เข้า `main` · ถ้าจะใช้ชื่อสวยภายหลัง: เพิ่ม DNS ที่ Hostinger CNAME `demo` → `802ca0d36974bcc4.vercel-dns-017.com` (เดโมอยู่โปรเจกต์ Vercel แยก `hr-solution-demo`, ใช้ได้แล้วที่ https://hr-solution-demo.vercel.app · โค้ดเดโมอยู่ `C:\Users\touch\Desktop\Project E-Learning`)
 1. **Domain** — ✅ ผูกแล้ว 25/11/2569 · ⚠️ เจ้าของต้องกดยืนยันอีเมลจาก Hostinger ภายใน **9/12/2569** ไม่งั้นโดเมนถูกระงับ
    - Google Search Console: property แบบ Domain `hr-solution-service.com` ยืนยันด้วย TXT ใน DNS Hostinger แล้ว (บัญชี Google ของเจ้าของ) · ส่ง sitemap แล้ว Google อ่านได้ 28 หน้า · **ห้ามลบ TXT google-site-verification**
