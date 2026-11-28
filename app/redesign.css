@@ -557,3 +557,14 @@ body::after {
   .rd-art-cta { grid-template-columns: 1fr auto; }
   .rd-art-cta b { display: none; }
 }
+
+/* training-media: services we take on */
+.rd-msvc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rd-line); border: 1px solid var(--rd-line); border-radius: 22px; overflow: hidden; }
+.rd-msvc-item { background: var(--rd-bg); padding: 30px 28px 32px; display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 100px; }
+.rd-msvc-item h3 { font-size: 23px; line-height: 1.3; }
+.rd-msvc-item p { color: var(--rd-muted); margin: 0; }
+.rd-msvc-item ul { margin: 0; padding-left: 18px; font-size: 15px; display: grid; gap: 4px; }
+.rd-msvc-links { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.rd-msvc-art { font-size: 14px; color: var(--rd-acc); }
+@media (max-width: 980px) { .rd-msvc { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .rd-msvc { grid-template-columns: 1fr; } }

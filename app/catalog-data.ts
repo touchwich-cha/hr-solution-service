@@ -164,9 +164,9 @@ export const fwProducts: readonly FwProduct[] = [
     fastworkUrl: "https://fastwork.co/user/hrsolutionservice/teaching-material-design-16951669",
     group: "training",
     icon: "table",
-    name: T("วิดีโอสอนใช้งานระบบ / โปรแกรมบริษัท", "Software how-to video for your systems"),
-    oneLiner: T("จำลองหน้าจอระบบ SAP / ERP พร้อมเคอร์เซอร์ ซูม และเสียงบรรยายไทย", "Recreated SAP / ERP screens with cursor, zoom and Thai voice-over."),
-    forWho: T("ทีมฝึกอบรมและ IT ที่ต้องสอนพนักงานใช้ระบบใหม่ โดยไม่ต้องเปิดข้อมูลจริงบนหน้าจอ", "Training and IT teams teaching staff a new system without showing real data on screen."),
+    name: T("วิดีโอสอนใช้งานโปรแกรม / ระบบ ERP", "Software & ERP how-to video"),
+    oneLiner: T("รับทำวิดีโอสอนใช้งานโปรแกรมทีละขั้น ทั้ง SAP / ERP โปรแกรมสำเร็จรูป เว็บไซต์ และระบบภายในบริษัท จำลองหน้าจอพร้อมเคอร์เซอร์ ซูม และเสียงบรรยายไทย", "Step-by-step how-to videos for SAP / ERP, off-the-shelf software, websites and in-house systems — recreated screens with cursor, zoom and Thai voice-over."),
+    forWho: T("ทีมฝึกอบรม IT และบริษัทซอฟต์แวร์ ที่ต้องสอนพนักงานหรือลูกค้าใช้โปรแกรมใหม่ โดยไม่ต้องเปิดข้อมูลจริงบนหน้าจอ และไม่ต้องสอนซ้ำทุกครั้งที่มีคนใหม่", "Training and IT teams, and software vendors, teaching staff or customers a new program — without showing real data, and without re-teaching every newcomer."),
     popular: 1,
     tiers: [
       { name: T("คลิปสอน 1 ขั้นตอน", "1 how-to clip"), price: 1990, days: 5, revisions: 2, includesPrevious: false, items: [
@@ -181,8 +181,8 @@ export const fwProducts: readonly FwProduct[] = [
     samples: ["/catalog/software-video-1.webp", "/catalog/software-video-2.webp", "/catalog/software-video-3.webp"],
     related: ["gmp-3d-video", "training-exam"],
     seo: {
-      title: T("ทำวิดีโอสอนใช้งานระบบ SAP / ERP พร้อมเสียงบรรยายไทย", "How-to videos for SAP / ERP and company software, Thai voice-over"),
-      description: T("วิดีโอสอนใช้งานระบบ 3 แพ็กเกจ เริ่มต้น 1,990 บาท จำลองหน้าจอ ซูม เคอร์เซอร์ มาสคอต และแบบทดสอบท้ายคลิป", "System how-to videos in 3 tiers from THB 1,990 — recreated screens, zoom, cursor, mascot host and quizzes."),
+      title: T("รับทำวิดีโอสอนใช้งานโปรแกรม ระบบ SAP / ERP และเว็บไซต์ พร้อมเสียงบรรยายไทย", "How-to videos for software, SAP / ERP and websites, with Thai voice-over"),
+      description: T("รับทำวิดีโอสอนใช้งานโปรแกรม SAP / ERP โปรแกรมสำเร็จรูป และเว็บไซต์ 3 แพ็กเกจ เริ่มต้น 1,990 บาท จำลองหน้าจอ ซูม เคอร์เซอร์ มาสคอต และแบบทดสอบท้ายคลิป", "How-to videos for SAP / ERP, off-the-shelf software and websites in 3 tiers from THB 1,990 — recreated screens, zoom, cursor, mascot host and quizzes."),
     },
   },
   // ───────────── 10. E-Learning system (quote-based, yearly; not on Fastwork) ─────────────
