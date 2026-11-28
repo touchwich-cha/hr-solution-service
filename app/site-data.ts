@@ -69,7 +69,7 @@ export const nav = {
 } as const;
 
 /** Last real content update (used by the sitemap — never "now"). */
-export const siteUpdated = "2026-11-25";
+export const siteUpdated = "2026-11-28";
 
 /** Search snippet + breadcrumb label for each static page. Every page has its own title and description. */
 export const pageSeo = {
@@ -90,10 +90,10 @@ export const pageSeo = {
     crumb: { th: "สินค้า", en: "Products" },
   },
   "training-media": {
-    title: { th: "ผลงานสื่ออบรม GMP / Food Safety แบบ 3D และคลิปสอนใช้งานโปรแกรม", en: "3D GMP / Food Safety training media and how-to videos" },
+    title: { th: "รับทำสื่ออบรมพนักงาน ปฐมนิเทศ ความปลอดภัย GMP 3D Motion Graphic และ E-Learning", en: "Employee training media — onboarding, safety, 3D GMP, motion graphics and e-learning" },
     description: {
-      th: `ผลงานวิดีโออบรม 3D สำหรับโรงงานอาหาร ทั้ง 16:9 สำหรับห้องอบรม และ 9:16 สำหรับมือถือ พร้อมคลิปสอนใช้งานระบบทีละขั้น เผยแพร่จริงบน YouTube ${channel.videoCount} คลิป`,
-      en: `3D training videos for food factories — 16:9 for the training room and 9:16 for mobile — plus step-by-step how-to videos. ${channel.videoCount} videos published on YouTube.`,
+      th: `รับทำสื่ออบรมปฐมนิเทศพนักงานใหม่ สื่ออบรมความปลอดภัย วิดีโอ GMP 3D วิดีโอสอนใช้งานโปรแกรม Motion Graphic / Animation และสื่อ E-Learning สำหรับ LMS ดูผลงานจริง ${channel.videoCount} คลิป สอบถามเพื่อประเมินราคา`,
+      en: `Onboarding and safety training media, 3D GMP videos, software how-to videos, motion graphics / animation and e-learning content for your LMS. ${channel.videoCount} published videos — ask us for a quote.`,
     },
     crumb: { th: "สื่ออบรม", en: "Training media" },
   },

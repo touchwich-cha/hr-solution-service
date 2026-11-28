@@ -109,6 +109,13 @@ export function ArticlePage({ locale, article }: { locale: Locale; article: Arti
             <span className="rd-circ sm" aria-hidden="true">↗</span>
           </Link>
         )}
+        {!product && article.quote && (
+          <Link href={`/${locale}/contact#quote`} className="rd-art-cta">
+            <span>{article.quote}</span>
+            <b className="rd-mono">สอบถามเพื่อประเมินราคา</b>
+            <span className="rd-circ sm" aria-hidden="true">↗</span>
+          </Link>
+        )}
       </article>
 
       <section className="rd-sec" style={{ paddingTop: 30 }}>
