@@ -240,6 +240,15 @@ export const videoPublished: Readonly<Record<string, string>> = {
   "djgjUUzkm7A": "2026-06-07",
 };
 
+/**
+ * uploadDate for VideoObject structured data. Google wants a full ISO 8601 DateTime with a time
+ * zone, so the stored Bangkok date becomes midnight Bangkok time, e.g. "2026-11-18T00:00:00+07:00".
+ */
+export function videoUploadDate(id: string): string | undefined {
+  const date = videoPublished[id];
+  return date ? `${date}T00:00:00+07:00` : undefined;
+}
+
 // ─── Full video library, grouped the way the channel is organised ───
 
 export const videoGroups: readonly VideoGroup[] = [

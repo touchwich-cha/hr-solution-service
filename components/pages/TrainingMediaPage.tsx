@@ -6,7 +6,7 @@ import {
   servicePillars,
   siteUrl,
   videoGroups,
-  videoPublished,
+  videoPublished, videoUploadDate,
   type Locale,
   type VideoItem,
 } from "@/app/site-data";
@@ -46,7 +46,7 @@ export function TrainingMediaPage({ locale }: { locale: Locale }) {
           name: video.title[locale],
           description: video.title[locale],
           thumbnailUrl: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
-          uploadDate: videoPublished[video.id],
+          uploadDate: videoUploadDate(video.id),
           duration: isoDuration(video.duration),
           embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
           url: `https://youtu.be/${video.id}`,

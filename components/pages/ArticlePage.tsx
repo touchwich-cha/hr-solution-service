@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brand, pageSeo, siteUrl, videoPublished, type Locale } from "@/app/site-data";
+import { brand, pageSeo, siteUrl, videoPublished, videoUploadDate, type Locale } from "@/app/site-data";
 import { articles, getArticle, thaiDate, type Article, type Block } from "@/app/articles-data";
 import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
 import { breadcrumbJsonLd } from "@/app/seo";
@@ -53,7 +53,7 @@ export function ArticlePage({ locale, article }: { locale: Locale; article: Arti
         name: article.videoLabel ?? article.title,
         description: article.description,
         thumbnailUrl: `https://i.ytimg.com/vi/${article.videoId}/hqdefault.jpg`,
-        uploadDate: videoPublished[article.videoId],
+        uploadDate: videoUploadDate(article.videoId),
         embedUrl: `https://www.youtube-nocookie.com/embed/${article.videoId}`,
         url: `https://youtu.be/${article.videoId}`,
       }

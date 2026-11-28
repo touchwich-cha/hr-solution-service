@@ -1,6 +1,7 @@
 # HANDOFF — เว็บไซต์ HR Solution Service
 
 > ไฟล์นี้ให้ AI / คนที่มารับงานต่ออ่านก่อนเริ่มทุกครั้ง แล้วค่อยอ่าน `AGENTS.md`
+> **27 พ.ย. 2569: โฟลเดอร์เว็บย้ายมาอยู่ `D:\00_HR_Solution_Service\04_Website\my-next-app` (เว็บคือส่วนหนึ่งของธุรกิจ) บริบทธุรกิจ/น้ำเสียง: `../../บริบทธุรกิจ_HR_Solution_Service.md`**
 > อัปเดตล่าสุด: **25 พ.ย. 2569** (redesign 2026 ขึ้น production แล้ว · ผูก domain hr-solution-service.com แล้ว)
 > จบงานแต่ละครั้ง: แก้ส่วน "สถานะ" และ "งานค้าง" ในไฟล์นี้ แล้วใส่วันที่
 
@@ -14,7 +15,7 @@
 | Vercel | https://vercel.com/touchwichcha-1508s-projects/hr-solution-service |
 | Stack | Next.js 16 (App Router, อ่าน `node_modules/next/dist/docs/` ก่อนเขียนโค้ด) · React 19 · Tailwind 4 + CSS เอง · TypeScript |
 | ธุรกิจ | ขายบน Fastwork `@hrsolutionservice` · ราคา/แพ็กเกจบนเว็บต้องตรงกับ Fastwork เสมอ |
-| ไฟล์ธุรกิจ | `D:\03_YouTube\HR Solution Service\05_Business\Fastwork_HR_Solution_Service\` (HANDOFF.md, ร่างโปรไฟล์ `profile/`) |
+| ไฟล์ธุรกิจ | `D:\00_HR_Solution_Service\05_Fastwork_ร้าน\` (HANDOFF.md, ร่างโปรไฟล์ `profile/`) |
 
 ## 2. สถานะ (25/11/2569)
 - ✅ **Redesign 2026 ขึ้น production** (merge `feat/redesign-2026` → `main`, commit `cbe102f`)
@@ -63,7 +64,7 @@
 | redirect URL เก่า | `next.config.ts` |
 | SEO helper (breadcrumb, Service JSON-LD) / sitemap / robots | `app/seo.ts`, `app/sitemap.ts`, `app/robots.ts` |
 
-ต้นแบบดีไซน์ (HTML นิ่ง): `D:\03_YouTube\HR Solution Service\05_Business\Fastwork_HR_Solution_Service\web_mockup\home.html`
+ต้นแบบดีไซน์ (HTML นิ่ง): `D:\00_HR_Solution_Service\05_Fastwork_ร้าน\web_mockup\home.html`
 
 ## 6. คำสั่ง
 ```powershell
@@ -84,3 +85,4 @@ npx next start -p 3417   # ดูผลหลัง build ที่ http://local
 | 25/11/2569 | Merge ขึ้น production | `cbe102f` |
 | 25/11/2569 | ผูก domain hr-solution-service.com + ตั้ง NEXT_PUBLIC_SITE_URL · .vercel.app และ apex redirect 308 → www | (ตั้งค่าใน Hostinger/Vercel) |
 | 25/11/2569 | Google Search Console ยืนยันโดเมน + ส่ง sitemap (28 หน้า) | – |
+| 28/11/2569 | แก้ VideoObject `uploadDate` ให้มีเขตเวลา (+07:00) ตามที่ Search Console แจ้ง ใช้ `videoUploadDate()` ใน site-data.ts | (ดู git log) |

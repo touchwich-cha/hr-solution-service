@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { siteUrl, videoPublished, type Locale } from "@/app/site-data";
+import { siteUrl, videoPublished, videoUploadDate, type Locale } from "@/app/site-data";
 import { formatPrice, fromPrice, getFwProduct } from "@/app/catalog-data";
 import {
   homeAbout, homeFaq, homeHero, homeLab, homeMarquee, homeServices, homeStats, homeWork, type ServiceItem,
@@ -48,7 +48,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           name: video.label[locale],
           description: video.body[locale],
           thumbnailUrl: `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,
-          uploadDate: videoPublished[video.id],
+          uploadDate: videoUploadDate(video.id),
           embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
           url: `https://youtu.be/${video.id}`,
           publisher: { "@type": "Organization", name: "HR Solution Service", url: siteUrl },
