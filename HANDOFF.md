@@ -2,7 +2,7 @@
 
 > ไฟล์นี้ให้ AI / คนที่มารับงานต่ออ่านก่อนเริ่มทุกครั้ง แล้วค่อยอ่าน `AGENTS.md`
 > **27 พ.ย. 2569: โฟลเดอร์เว็บย้ายมาอยู่ `D:\00_HR_Solution_Service\04_Website\my-next-app` (เว็บคือส่วนหนึ่งของธุรกิจ) บริบทธุรกิจ/น้ำเสียง: `../../บริบทธุรกิจ_HR_Solution_Service.md`**
-> อัปเดตล่าสุด: **25 พ.ย. 2569** (redesign 2026 ขึ้น production แล้ว · ผูก domain hr-solution-service.com แล้ว)
+> อัปเดตล่าสุด: **28 พ.ย. 2569** (เพิ่มสินค้าระบบ E-Learning + ปุ่มเดโม) · ก่อนหน้า 25 พ.ย. 2569 (redesign 2026 ขึ้น production แล้ว · ผูก domain hr-solution-service.com แล้ว)
 > จบงานแต่ละครั้ง: แก้ส่วน "สถานะ" และ "งานค้าง" ในไฟล์นี้ แล้วใส่วันที่
 
 ## 1. ภาพรวม
@@ -27,8 +27,9 @@
 - ตรวจแล้ว: lint / tsc / build ผ่าน, ทุกหน้าตอบ 200 บน production, มือถือ 375px ไม่มีเลื่อนแนวนอน
 
 ## 3. งานค้าง (เรียงตามความสำคัญ)
+0. ✅ **ขึ้น production แล้ว 28/11/2569 (`01b1067`)** — 2 ข้อด้านล่างนี้เสร็จแล้ว ค้างแค่ DNS ชื่อ demo (ไม่บังคับ)
 0. **สินค้าใหม่ "ระบบ E-Learning สำหรับองค์กร" (`elearning-system`, 28/11/2569)** — ไม่มีบน Fastwork (เจ้าของสั่ง: ไม่ระบุราคาแพ็กเกจ "ติดต่อสอบถาม" ราคาตาม Feature/Option เริ่มต้น 9,999 บาท/ปี) · รองรับด้วยฟิลด์ `quote` + `demoUrl` ใน `FwProduct` (หน้าสินค้า/หน้ารวม/หน้าแรกแสดง "ติดต่อสอบถาม" แทนราคาแพ็กเกจ, ไม่มีปุ่ม/แถบ Fastwork) · ภาพ `public/catalog/elearning-*.webp` จากภาพหน้าจอเดโม (ข้อมูลสมมติ) · อยู่ branch เดียวกับปุ่มด้านล่าง
-0. **ปุ่ม "ทดลองใช้ระบบ E-Learning ฟรี" (28/11/2569)** — branch `feat/elearning-demo-button` (ปุ่มที่ 3 ใน hero หน้าแรก → `elearningDemoUrl` ใน `app/site-data.ts` = https://hr-solution-demo.vercel.app (เจ้าของเลือกใช้ลิงก์ vercel ไปก่อน 28/11), เปิดแท็บใหม่) · รอเจ้าของดู Preview แล้วสั่ง merge เข้า `main` · ถ้าจะใช้ชื่อสวยภายหลัง: เพิ่ม DNS ที่ Hostinger CNAME `demo` → `802ca0d36974bcc4.vercel-dns-017.com` (เดโมอยู่โปรเจกต์ Vercel แยก `hr-solution-demo`, ใช้ได้แล้วที่ https://hr-solution-demo.vercel.app · โค้ดเดโมอยู่ `C:\Users\touch\Desktop\Project E-Learning`)
+0. **ปุ่ม "ทดลองใช้ระบบ E-Learning ฟรี" (28/11/2569)** — branch `feat/elearning-demo-button` (ปุ่มที่ 3 ใน hero หน้าแรก → `elearningDemoUrl` ใน `app/site-data.ts` = https://hr-solution-demo.vercel.app (เจ้าของเลือกใช้ลิงก์ vercel ไปก่อน 28/11), เปิดแท็บใหม่) · merge เข้า `main` แล้ว · ถ้าจะใช้ชื่อสวยภายหลัง: เพิ่ม DNS ที่ Hostinger CNAME `demo` → `802ca0d36974bcc4.vercel-dns-017.com` (เดโมอยู่โปรเจกต์ Vercel แยก `hr-solution-demo`, ใช้ได้แล้วที่ https://hr-solution-demo.vercel.app · โค้ดเดโมอยู่ `C:\Users\touch\Desktop\Project E-Learning`)
 1. **Domain** — ✅ ผูกแล้ว 25/11/2569 · ⚠️ เจ้าของต้องกดยืนยันอีเมลจาก Hostinger ภายใน **9/12/2569** ไม่งั้นโดเมนถูกระงับ
    - Google Search Console: property แบบ Domain `hr-solution-service.com` ยืนยันด้วย TXT ใน DNS Hostinger แล้ว (บัญชี Google ของเจ้าของ) · ส่ง sitemap แล้ว Google อ่านได้ 28 หน้า · **ห้ามลบ TXT google-site-verification**
    - Bing Webmaster Tools: import จาก GSC แล้ว (บัญชี Google maizamag.cha@gmail.com, site https://hr-solution-service.com/) · ส่ง sitemap แล้ว · IndexNow key อยู่ที่ public/a891b8299439cdf08068ef509d14b9a5.txt (ห้ามลบ)
@@ -82,6 +83,7 @@ npx next start -p 3417   # ดูผลหลัง build ที่ http://local
 | วันที่ | งาน | commit |
 |---|---|---|
 | 25/11/2569 | Redesign หน้าแรก + shell + ธีมดำทอง | `acfb68e` |
+| 28/11/2569 | สินค้าใหม่ ระบบ E-Learning (ติดต่อสอบถาม เริ่ม 9,999/ปี) + ปุ่มทดลองเดโมหน้าแรก | `01b1067` |
 | 25/11/2569 | หน้าย่อยทั้งหมดสไตล์ใหม่ | `1f1e1c4` |
 | 25/11/2569 | SEO + เตรียม domain + og.jpg | `e75b273` |
 | 25/11/2569 | Merge ขึ้น production | `cbe102f` |
