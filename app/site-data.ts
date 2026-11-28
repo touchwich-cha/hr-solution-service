@@ -18,8 +18,11 @@ export const brand = {
  */
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://hr-solution-service.vercel.app").replace(/\/+$/, "");
 
-/** Public try-it demo of the E-Learning system (separate Vercel project "hr-solution-demo"). */
-export const elearningDemoUrl = "https://demo.hr-solution-service.com";
+/**
+ * Public try-it demo of the E-Learning system (separate Vercel project "hr-solution-demo").
+ * Switch to https://demo.hr-solution-service.com once the CNAME "demo" exists at Hostinger.
+ */
+export const elearningDemoUrl = "https://hr-solution-demo.vercel.app";
 
 export const contact = {
   email: "touchwich.cha@gmail.com",
